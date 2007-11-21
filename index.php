@@ -6,20 +6,18 @@
  * Subversion ID: $Id$
 **/
 
-define('FUSION_API', './api');
-
 class Fusion {
 
 	function __construct(){
 		// On construction of a Fusion Object, we load the APIs.
 		$this->api = array();
 		$this->hooks = array();
-		$files = scandir(FUSION_API);
+		$files = scandir('./api/');
 		foreach($files as $file){
-			if(is_file(FUSION_API . '/' . $file)){
+			if(is_file('./api/' . $file)){
 				$e = explode('.', $file, 2);
 				if(isset($e[1]) && $e[1] == 'php' && $e[0] != 'index'){
-					require_once(FUSION_API . '/' . $file);
+					require_once('./api/' . $file);
 					if(class_exists($e[0]) && method_exists($e[0], 'api_load')){
 						$this->api[$e[0]] = call_user_func(array($e[0], 'api_load'), $this);
 					} else {
