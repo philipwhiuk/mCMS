@@ -16,6 +16,7 @@ class Storage {
 				return new $c($config[$c], $fusion);
 			}
 		}
+		return Install::Storage($fusion);
 	}
 
 }

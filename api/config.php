@@ -26,13 +26,21 @@ class Config {
 			require_once("{$confdir}/default.php");
 			return $config;
 		} else {
-			return Install::Config();
+			return Install::Config($fusion);
 		}
 	}
 	
 	static function Storage($fusion, &$config){
-		
-	
+		if(isset($config['site'])){
+			$result = $fusion->storage->query("SELECT field, value FROM config WHERE site_id = %u", $config['site']);
+			if($result){
+				while($row = $result->fetch_row()){
+					$config[$row[0]] = $row[1];
+				}
+			}
+		} else {
+			Install::Site($fusion, &$config);
+		}
 	}
 	
 }
