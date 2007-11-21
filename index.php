@@ -6,12 +6,15 @@
  * Subversion ID: $Id$
 **/
 
+define('FUSION_API', './api');
+
 class Fusion {
 
 	function __construct(){
 		// On construction of a Fusion Object, we load the APIs.
 		$this->api = array();
-		$files = scandir(FUSION_API):
+		$this->hooks = array();
+		$files = scandir(FUSION_API);
 		foreach($files as $file){
 			if(is_file(FUSION_API . '/' . $file)){
 				$e = explode('.', $file, 2);
@@ -41,12 +44,14 @@ class Fusion {
 		**/
 	}
 	
-	function hook($name);
-		$args = func_get_args();
+	function hook($name){
 		$return = array();
-		$args[0] = $this;
-		foreach($this->hooks[$name] as $api){
-			$return[] = call_user_func_array(array($api, 'api_hook_' . $name), $args); // API::API_Hook_{NAME} (Fusion, ...)
+		if(isset($this->hooks[$name])){
+			$args = func_get_args();
+			$args[0] = $this;
+			foreach($this->hooks[$name] as $api){
+				$return[] = call_user_func_array(array($api, 'api_hook_' . $name), $args); // API::API_Hook_{NAME} (Fusion, ...)
+			}
 		}
 		return $return;
 	}
@@ -60,8 +65,8 @@ class Fusion {
 	
 	function logic(){
 		$this->user = User::Load($this);
-		$this->locale = Locale::Load($this):
-		$this->page = Page::Load($this):
+		$this->locale = Locale::Load($this);
+		$this->page = Page::Load($this);
 		
 		$this->page->logic();
 	}
@@ -71,7 +76,7 @@ class Fusion {
 		
 		$this->page->output();						// Generate templates etc
 		
-		$this->output->output($this->page)			// Display the page using the output module
+		$this->output->output($this->page);			// Display the page using the output module
 	}
 	
 	function unload(){
