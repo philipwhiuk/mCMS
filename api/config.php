@@ -8,8 +8,9 @@
 
 class Config {
 
-	static function File(){
+	static function File($fusion){
 		$confdir = './config';
+		$config = array();
 		$uri = explode('/', $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME']);
 		$server = explode('.', implode('.', array_reverse(explode(':', rtrim($_SERVER['HTTP_HOST'], '.')))));
 		for ($i = count($uri) - 1; $i > 0; $i--) {
@@ -29,6 +30,10 @@ class Config {
 		}
 	}
 	
+	static function Storage($fusion, &$config){
+		
+	
+	}
 	
 }
 

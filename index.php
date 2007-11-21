@@ -57,7 +57,7 @@ class Fusion {
 	function load(){
 		$this->config = Config::File($this);
 		$this->storage = Storage::Start($this, $this->config);
-		Config::Storage($this, $this->config);
+		Config::Storage($this, &$this->config);
 		$this->acl = ACL::Load($this);
 	}
 	
