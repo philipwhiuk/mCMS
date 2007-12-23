@@ -8,13 +8,13 @@
 
 class Fusion {
 
+	static  $_;
+	
 	function __construct(){
-		// On construction of a Fusion Object, we load the APIs.
 		$this->api = array();
-		$this->hooks = array();
 		$files = scandir('./api/');
 		foreach($files as $file){
-			if(is_file('./api/' . $file)){
+		if(is_file('./api/' . $file)){
 				$e = explode('.', $file, 2);
 				if(isset($e[1]) && $e[1] == 'php' && $e[0] != 'index'){
 					require_once('./api/' . $file);
@@ -26,20 +26,7 @@ class Fusion {
 				}
 			}
 		}
-		$this->hook('Fusion_Construct');	
-	}
-	
-	function error($code, $string, $parameters){
-		/**
-		Implement
-		
-		if(isset($this->locale)){
-			die(vspring
-		} else {
-		
-		} 
-		
-		**/
+		$this->hook('Fusion/Construct');	
 	}
 	
 	function hook($name){
@@ -55,36 +42,32 @@ class Fusion {
 	}
 	
 	function load(){
-		$this->config = Config::File($this);
-		$this->storage = Storage::Start($this, $this->config);
-		Config::Storage($this, &$this->config);
-		$this->acl = ACL::Load($this);
+		$this->log = Log::Open();
+		$this->config = Config::Load();
+		$this->storage = Storage::Load();
 	}
 	
-	function logic(){
-		$this->user = User::Load($this);
-		$this->locale = Locale::Load($this);
-		$this->page = Page::Load($this);
-		
-		$this->page->logic();
+	function personalize(){
+		$this->authentication = Authentication::Load();
+		$this->user = User::Load();
+		$this->locale = Locale::Load();
+	}
+	
+	function run(){
+		$this->page = Page::Load();
+		return $this->page->run();
 	}
 	
 	function output(){
-		$this->output = Output::Load($this);		// Load the output module
-		
-		$this->page->output();						// Generate templates etc
-		
-		$this->output->output($this->page);			// Display the page using the output module
+		$this->output = Output::Load();
+		$this->output->output($this->page->output());
 	}
 	
-	function unload(){
-		Storage::Stop($this);
-	}
-
 }
 
-$fusion = new Fusion();
-$fusion->load();
-$fusion->logic();
-$fusion->output();
-$fusion->unload();
+Fusion::$_ = new Fusion;
+Fusion::$_->load();
+Fusion::$_->personalize();
+if(Fusion::$_->run()){
+	Fusion::$_->output();
+}
