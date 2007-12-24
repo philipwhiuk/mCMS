@@ -34,7 +34,7 @@ class Config {
 	
 	static function Storage(){
 		if(isset(Fusion::$_->config['site'])){
-			$result = Fusion::$_->storage->query("SELECT field, value FROM config WHERE site_id = %u", $config['site']);
+			$result = Fusion::$_->storage->query("SELECT field, value FROM config WHERE site_id = %u", Fusion::$_->config['site']);
 			if($result){
 				while($row = $result->fetch_row()){
 					Fusion::$_->config[$row[0]] = $row[1];

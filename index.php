@@ -6,6 +6,12 @@
  * Subversion ID: $Id$
 **/
 
+function __autoload($class){
+	if(is_file('./api/' . $class . '.php')){
+		require_once('./api/' . $class . '.php');
+	}
+}
+
 class Fusion {
 
 	static  $_;
@@ -61,6 +67,7 @@ class Fusion {
 	
 	function output(){
 		$this->output = Output::Load();
+		$this->output->run();
 		$this->output->output($this->page->output());
 	}
 	
