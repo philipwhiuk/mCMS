@@ -8,15 +8,16 @@
 
 class Storage {
 
-	static function Start($fusion, $config){	
-		if(file_exists('./storage/' . $config['storage'] . '.php')){
-			require_once('./storage/' . $config['storage'] . '.php');
-			if(class_exists($config['storage'])){
-				$c = $config['storage'];
-				return new $c($config[$c], $fusion);
+	static function Load(){	
+		if(file_exists('./storage/' . Fusion::$_->config['storage'] . '.php')){
+			require_once('./storage/' . Fusion::$_->config['storage'] . '.php');
+			if(class_exists(Fusion::$_->config['storage'])){
+				$c = Fusion::$_->config['storage'];
+				Log::Message("Storage Engine {$c} loaded.");
+				return new $c(Fusion::$_->config[$c]);
 			}
 		}
-		return Install::Storage($fusion);
+		return Install::Storage();
 	}
 
 }

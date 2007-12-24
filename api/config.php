@@ -8,7 +8,7 @@
 
 class Config {
 
-	static function File($fusion){
+	static function File(){
 		$confdir = './config';
 		$config = array();
 		$uri = explode('/', $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME']);
@@ -17,12 +17,14 @@ class Config {
 			for ($j = count($server); $j > 0; $j--) {
 				$dir = implode('.', array_slice($server, -$j)) . implode('.', array_slice($uri, 0, $i));
 				if(file_exists("{$confdir}/{$dir}.php")) {
+					Log::Message("Config File {$confdir}/{$dir}.php used.");
 					require_once("{$confdir}/{$dir}.php");
 					return $config;
 				}
 			}
 		}
 		if(file_exists("{$confdir}/default.php")) {
+			Log::Message("Config File {$confdir}/default.php used.");
 			require_once("{$confdir}/default.php");
 			return $config;
 		} else {
@@ -30,16 +32,17 @@ class Config {
 		}
 	}
 	
-	static function Storage($fusion, &$config){
-		if(isset($config['site'])){
-			$result = $fusion->storage->query("SELECT field, value FROM config WHERE site_id = %u", $config['site']);
+	static function Storage(){
+		if(isset(Fusion::$_->config['site'])){
+			$result = Fusion::$_->storage->query("SELECT field, value FROM config WHERE site_id = %u", $config['site']);
 			if($result){
 				while($row = $result->fetch_row()){
-					$config[$row[0]] = $row[1];
+					Fusion::$_->config[$row[0]] = $row[1];
 				}
 			}
+			Log::Message("Dynamic configuration loaded.");
 		} else {
-			Install::Site($fusion, &$config);
+			Install::Site(&$config);
 		}
 	}
 	

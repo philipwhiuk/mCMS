@@ -43,12 +43,13 @@ class Fusion {
 	
 	function load(){
 		$this->log = Log::Open();
-		$this->config = Config::Load();
+		$this->config = Config::File();
 		$this->storage = Storage::Load();
+		Config::Storage();
 	}
 	
 	function personalize(){
-		$this->authentication = Authentication::Load();
+		$this->auth = Authentication::Load();
 		$this->user = User::Load();
 		$this->locale = Locale::Load();
 	}

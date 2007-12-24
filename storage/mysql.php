@@ -12,7 +12,13 @@ if(class_exists('mysqli')){
 
 		function __construct($config){
 			global $start;
-			return parent::__construct($config['host'], $config['user'], $config['password'], $config['database'], $config['port'], $config['socket']);
+			$result = @parent::__construct($config['host'], $config['user'], $config['password'], $config['database'], $config['port'], $config['socket']);
+			if($result){
+				return true;
+			} else {
+				Log::Message("MySQL connection established.");
+				return false;
+			}
 		}
 		
 		function escape($arg){
