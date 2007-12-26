@@ -8,10 +8,6 @@
 
 class Output {
 
-  function __construct($name){
-    $this->name = $name;
-  }
-
   function Run(){
     // Load Theme
     $sql = "SELECT * FROM theme WHERE id = %u";
@@ -54,6 +50,19 @@ class Output {
 
 }
 
+class Theme {
+
+  function __construct($data){
+    foreach($data as $f => $v){
+      $this->$f = $v;
+    }    
+  }
+
+}
+
 class Template {
 
+  function Display(){
+  
+  }
 }

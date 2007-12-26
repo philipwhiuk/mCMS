@@ -6,6 +6,12 @@
  * Subversion ID: $Id$
 **/
 
+function error($level, $message){
+	echo "<PRE>";
+	// Implement
+	exit;
+}
+
 function __autoload($class){
 	if(is_file('./api/' . $class . '.php')){
 		require_once('./api/' . $class . '.php');
@@ -20,7 +26,7 @@ class Fusion {
 		$this->api = array();
 		$files = scandir('./api/');
 		foreach($files as $file){
-		if(is_file('./api/' . $file)){
+			if(is_file('./api/' . $file)){
 				$e = explode('.', $file, 2);
 				if(isset($e[1]) && $e[1] == 'php' && $e[0] != 'index'){
 					require_once('./api/' . $file);
@@ -41,7 +47,7 @@ class Fusion {
 			$args = func_get_args();
 			$args[0] = $this;
 			foreach($this->hooks[$name] as $api){
-				$return[] = call_user_func_array(array($api, 'api_hook_' . $name), $args); // API::API_Hook_{NAME} (Fusion, ...)
+				$return[] = call_user_func_array(array($api, 'api_hook_' . str_replace('/', '_',$name)), $args); // API::API_Hook_{NAME} (Fusion, ...)
 			}
 		}
 		return $return;

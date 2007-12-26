@@ -115,6 +115,15 @@ class Page {
   
   function output_view(){
     // Create template and add blocks
+    $template = Fusion::$_->output->template('page/view');
+    $template->zones = array();
+    foreach($this->blocks as $block){
+      $t = $block->output();
+      if($t){
+        $templates->zones[] = array('block' => $t);
+      }
+    }
+    return $template;
   }
 
 }

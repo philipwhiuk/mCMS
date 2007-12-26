@@ -1,0 +1,29 @@
+
+body {
+  background-color: #E0E0E0;
+}
+
+* {
+  font-family: Verdana, Arial, sans-serif;
+}
+
+div.zone {
+  border: #C0C0C0 thin solid;
+}
+
+div.zone_inner {
+  padding: 0.5em;
+}
+
+div.zone_outer {
+  border: black;
+  margin: 0.5em;
+}
+
+div.page {
+  border: #C0C0C0 thin solid;
+  background-color: white;
+  clear: both;
+  float: left;
+  width: 100%;
+}

@@ -14,9 +14,10 @@ if(class_exists('mysqli')){
 			global $start;
 			$result = @parent::__construct($config['host'], $config['user'], $config['password'], $config['database'], $config['port'], $config['socket']);
 			if($result){
+				Log::Message("MySQL connection established.");
 				return true;
 			} else {
-				Log::Message("MySQL connection established.");
+				Log::Message($this->error);
 				return false;
 			}
 		}
@@ -46,7 +47,8 @@ if(class_exists('mysqli')){
 				return $result;
 			} else {
 				@header('Content-type: text/plain');
-				die("SQL: {$query} \r\n\r\nError: {$this->error}");
+				Log::Message("SQL: {$query} \r\n\r\nError: {$this->error}");
+				exit;
 			}
 		}
 
