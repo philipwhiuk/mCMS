@@ -47,8 +47,7 @@ if(class_exists('mysqli')){
 				return $result;
 			} else {
 				@header('Content-type: text/plain');
-				Log::Message("SQL: {$query} \r\n\r\nError: {$this->error}");
-				exit;
+				error("SQL: {$query} \r\n\r\nError: {$this->error}");
 			}
 		}
 

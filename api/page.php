@@ -74,20 +74,14 @@ class Page {
     return true;
   }
   
-  // Loader functions
+  // API
   
-  function load_blocks(){
-    $this->blocks = array();
-    $sql = "SELECT * FROM page_block LEFT JOIN block ON page_block.block_id = block.id WHERE page_id = %u";
-    $result = Fusion::$_->storage->query($sql, $alias);
-    if($result){
-      while($row = $result->fetch_assoc()){
-        $c = 'Block_' . $row['type'];
-        $obj = new $c($row);
-        if($obj->authorised()){
-          $this->blocks[$row['id']] = $obj;
-        }
-      }
+  
+  function URL(){
+    if($this->alias != ''){
+      return Fusion::$_->config['root'] . $this->alias . '/';
+    } else {
+      return Fusion::$_->config['root'];
     }
   }
   
@@ -106,23 +100,15 @@ class Page {
   // View operations
   
   function run_view(){
-    $this->load_blocks();
-    foreach($this->blocks as $block){
-      $block->run();
-    }
+    $this->zone = Zone::Load($this->template);
+    $this->zone->run($this, $this->remainder);
     return true;
   }
   
   function output_view(){
     // Create template and add blocks
     $template = Fusion::$_->output->template('page/view');
-    $template->zones = array();
-    foreach($this->blocks as $block){
-      $t = $block->output();
-      if($t){
-        $templates->zones[] = array('block' => $t);
-      }
-    }
+    $template->zone = $this->zone->output();
     return $template;
   }
 

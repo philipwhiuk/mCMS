@@ -6,9 +6,23 @@
  * Subversion ID: $Id$
 **/
 
-function error($level, $message){
-	echo "<PRE>";
-	// Implement
+function error($message){
+	Log::Message($message);
+	if(defined('FUSION_DEBUG')){
+		if(file_exists('krumo/class.krumo.php')){
+			header('Content-type: text/html');
+			require_once('krumo/class.krumo.php');
+			krumo(Fusion::$_);
+			krumo::backtrace();
+			krumo::includes();
+			krumo::functions();
+			krumo::classes();
+			krumo::defines();
+		} else {
+			header('Content-type: text/plain');
+			print_r(Fusion::$_);
+		}
+	}
 	exit;
 }
 
@@ -21,7 +35,32 @@ function __autoload($class){
 class Fusion {
 
 	static  $_;
-	
+
+	static function URL($string, $get = true){
+		// Helper function
+		
+		if($get){
+			$g = array();
+			
+			foreach($_GET as $k => $n){
+				if($k !== 'page'){
+					$g[] = $k . '=' . urlencode($n);
+				}
+			}
+			
+			if(count($g) > 0){
+				if(strpos($string, '?') === FALSE){
+					$string .= '?' . join($g, '&');
+				} else {
+					$string .= '&' . join($g, '&');
+				}
+			}
+		}
+		
+		return htmlentities($string);
+		
+	}
+
 	function __construct(){
 		$this->api = array();
 		$files = scandir('./api/');

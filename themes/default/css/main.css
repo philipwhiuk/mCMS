@@ -1,29 +1,95 @@
 
 body {
   background-color: #E0E0E0;
+  margin: 0.75em;
+  font-size: 0.75em;
 }
 
-* {
+body, textarea, input, select {
   font-family: Verdana, Arial, sans-serif;
+}
+
+pre {
+  font-family: monospace;
 }
 
 div.zone {
   border: #C0C0C0 thin solid;
+  background-color: white;
+  clear: both;
+  float: left;
 }
 
 div.zone_inner {
-  padding: 0.5em;
+  padding: 0.1em;
 }
 
 div.zone_outer {
   border: black;
+  margin: 0.25em;
+}
+
+div.block {
+  border: #D0D0D0 thin solid;
+}
+
+div.block_inner {
+  padding: 0.5em;
+}
+
+div.block_outer {
+  border: black;
   margin: 0.5em;
 }
 
-div.page {
-  border: #C0C0C0 thin solid;
-  background-color: white;
-  clear: both;
+div.block_modes {
+  float: right;
+  margin-bottom: 0.1em;
+}
+
+div.block_modes ul {
+  margin: 0;
+  margin-top: 0.25em;
+  padding: 0;
+}
+
+div.block_modes ul li {
+  display: inline;
+}
+
+div.block_modes ul li a {
+  background: black;
+  color: white;
+  padding: 0.25em;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 0.25em;
+}
+
+div.block_modes ul li a:hover, div.block_modes ul li a.selected {
+  color: black;
+  background: white;
+}
+
+div.block_modes ul li a.selected:hover {
+  color: white;
+  background: black;
+}
+
+div.block_title h1 {
   float: left;
-  width: 100%;
+}
+
+div.block_title {
+  padding-bottom: 0.25em;
+  border-bottom: #D0D0D0 thin solid;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 1.7em;
+  margin: 0;
 }
