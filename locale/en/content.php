@@ -8,3 +8,6 @@
 
 $this->strings['Content/mode/view'] = 'View';
 $this->strings['Content/mode/edit'] = 'Edit';
+$this->strings['Content/edit/title'] = 'Content Title:';
+$this->strings['Content/edit/body'] = 'Content Body:';
+$this->strings['Content/edit/submit'] = 'Update Content';

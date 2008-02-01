@@ -32,7 +32,7 @@ class Block {
     $this->page = $page;
   }
 
-  function URL($mode = 'View'){
+  function URL($mode = 'view'){
     return $this->page->URL() . $this->id . '/' . $mode;
   }
 

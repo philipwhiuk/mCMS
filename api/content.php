@@ -30,7 +30,26 @@ class Block_Content extends Block {
 		return $this->$m();
 	}
 	function Run_Edit(){
-	
+		$this->form = new Form('block_content_' . $this->id, Fusion::URL($this->URL('edit')));
+		$this->form->field('title',array(
+			'type' => 'textbox',
+			'validation' => 'required',
+			'value' => $this->content->title,
+			'title' => Fusion::$_->locale->get('Content/edit/title')
+		));
+		$this->form->field('body',array(
+			'type' => 'richtext,textarea',
+			'value' => $this->content->body,
+			'title' => Fusion::$_->locale->get('Content/edit/body')
+		));
+		$this->form->field('submit',array(
+			'type' => 'submit',
+			'title' => Fusion::$_->locale->get('Content/edit/submit')
+		));
+		
+		if($data = $this->form->run()){
+			
+		}
 	}
 	function Run_View(){
 	
@@ -48,9 +67,9 @@ class Block_Content extends Block {
 		return $template;
 	}
 	function Output_Edit(){
-		$template = Fusion::$_->output->template('content/view');
+		$template = Fusion::$_->output->template('content/edit');
 		$template->title = $this->content->title;
-		$template->body = $this->content->body;
+		$template->form = $this->form->output();
 		return $template;
 	}
 }
