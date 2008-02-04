@@ -65,7 +65,7 @@ class Block {
     return true;
   }  
   
-  function run(){
+  function run($render){
   
   }
   

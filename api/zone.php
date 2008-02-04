@@ -14,19 +14,19 @@ class Zone {
     foreach($data as $f => $v){ $this->$f = $v; }
   }
   
-  function run(Page $page, $remainder){
+  function run(Page $page, $remainder, $render_full = true){
     if(!$this->ran){
       $this->ran = true;
       $this->blocks = Block::Load($this->id, $page, $remainder);
       foreach($this->blocks as $b => &$row){
         foreach($row as $c => &$block){
-          $block->run();
+          $block->run($render_full);
         }
       }
       foreach($this->zones as $r => &$row){
         foreach($row as $c => &$col){
           foreach($col as $z => &$zone){
-            $zone->run($page, $remainder);
+            $zone->run($page, $remainder, $render_full);
           }
         }
       }

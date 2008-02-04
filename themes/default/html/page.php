@@ -1,18 +1,17 @@
-<?
+<?php	
 
 /**
- * Default Theme - HTML - View Content
+ * Default Theme - HTML - Page
  *
  * Subversion ID: $Id:$
 **/
 
+class Template_Default_HTML_Page extends Template {
 
-class Template_Default_HTML_Content extends Template {
-
-  function modes(){
-    if(count($this->modes) > 1 && $this->render){
+  function Modes(){
+    if(count($this->modes) > 1){
 ?>
-<div class="block_modes">
+<div class="page_modes">
   <ul>
     <? foreach($this->modes as $mode => $data){ ?>
       <li><a <? if($data['selected']){ ?> class="selected" <? } ?> href="<? echo $data['link']; ?>"><? echo $data['name']; ?></a></li>
@@ -25,5 +24,5 @@ class Template_Default_HTML_Content extends Template {
 <br clear="both" />
 <?
   }
-
+  
 }

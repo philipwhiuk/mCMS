@@ -16,38 +16,28 @@ class Field {
     foreach($data as $f => $v){
       $this->$f = $v;
     }
-  }
-
-  function Run($value, &$form){
-    $this->Validate(&$value, &$form);
-    if($this->error){
-      $data = $this->Interperet($value);
-      return false;
-    } else {
-      return true;
-    }
+    $this->Run();
   }
   
-  function Validate(&$value, &$form){
+  function Run(){
+  }
+  
+  function Validate($value){
+    $this->value = $value;
     $v = explode(',', $this->validation);
+    $errors = array();
     foreach($v as $i){
       if($i != ''){
         $f = 'Form_Validation_' . $i;
         if(function_exists($f)){
           $reason = '';
-          if($f(&$value, &$form, &$reason)){
-            $form->errors[] = $reason;
-            $this->error = true;
+          if($reason = $f(&$this->value)){
+            $errors[] = $reason;
           }
-        } else {
-          $this->error = true;
         }
       }
     }
-  }
-  
-  function Interperet($value){
-    return $value;
+    return $errors;
   }
   
   function Output(){ 
@@ -72,6 +62,15 @@ class Field_Textbox extends Field {
 }
 
 class Field_Submit extends Field {
+  
+  function Validate($value){
+    if(isset($value)){
+      $this->value = true;
+    } else {
+      $this->value = false;
+    }
+    return array();
+  }
   
   function Output(){ 
     $template = Fusion::$_->output->template('form/submit');

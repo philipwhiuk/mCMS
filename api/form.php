@@ -12,6 +12,10 @@ class Form {
     $this->id = $id;
     $this->link = $link;
     $this->fields = array();
+    $this->data = array();
+    $this->error = false;
+    $this->errors = array();
+    $this->submit = false;
   }
   
   function field($f, $data){
@@ -27,17 +31,31 @@ class Form {
   }
   
   function run(){
-    $this->data = array();
-    $this->error = false;
+    
+    // Have we submitted the form?
     if(isset($_POST[$this->id])){
-      $this->submit = true;
+      $this->submit = true;   // Yes
+      
+      // Are the fields valid?
       foreach($this->fields as $f => &$field){
-        $error = $field->run($_POST[$this->id][$f], &$form, &$this->data[$f]);
-        $this->error = $this->error ? true : $error;
+        $messages = $field->Validate($_POST[$this->id][$f]);
+        if(count($messages) > 0){
+          $this->error = true;
+          $this->form->errors[$f] = $messages;
+        }
       }
-      if(!$this->error){
-        return true;
+      
+      // Return if false
+      if($this->error){
+        return false;
       }
+
+      // Extract data
+      foreach($this->fields as $f => &$field){
+        $this->data[$f] = $field->value;
+      }
+      
+      return $this->data;
     }
     return false;
   }

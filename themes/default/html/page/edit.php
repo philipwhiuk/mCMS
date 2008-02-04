@@ -8,7 +8,7 @@
 
 require_once(dirname(__FILE__) . '/../page.php');
 
-class Template_Default_HTML_Page_View extends Template_Default_HTML_Page {
+class Template_Default_HTML_Page_Edit extends Template_Default_HTML_Page {
 
   function Display(){
 ?>

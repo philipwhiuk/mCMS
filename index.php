@@ -36,6 +36,11 @@ class Fusion {
 
 	static  $_;
 
+	function Redirect($url){
+		header("Location: $url");
+		exit();
+	}
+
 	static function URL($string, $get = true){
 		// Helper function
 		

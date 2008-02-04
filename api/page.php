@@ -57,13 +57,19 @@ class Page {
   
   function authorised($mode){
     $ms = explode('/',$mode,2);
-    
     // Implement authorisation here.    
-    $this->modes = array('view' => array());
+    $this->modes = array('view' => array(), 'edit' => array());
+    
+   // Localisation and links
+    foreach($this->modes as $mode => &$data){
+      $data['name'] = Fusion::$_->locale->get('Page/mode/' . $mode);
+      $data['selected'] = false;
+      $data['link'] = Fusion::URL($this->URL($mode));
+    }
     
     // Mode selector
-    if(isset($this->modes[$ms[0]])){
-      $this->mode = $mode;
+    if(isset($ms[0]) && isset($this->modes[strtolower($ms[0])])){
+      $this->mode = strtolower($ms[0]);
       $this->remainder = $ms[1];
     } elseif(isset($this->modes['view'])){
       $this->mode = 'view';
@@ -71,17 +77,20 @@ class Page {
     } else {
       return false;
     }
+    
+    $this->modes[$this->mode]['selected'] = true;
+    
     return true;
   }
   
   // API
   
   
-  function URL(){
+  function URL($mode = ''){
     if($this->alias != ''){
-      return Fusion::$_->config['root'] . $this->alias . '/';
+      return Fusion::$_->config['root'] . $this->alias . '/' . $mode;
     } else {
-      return Fusion::$_->config['root'];
+      return Fusion::$_->config['root'] . $mode;
     }
   }
   
@@ -94,20 +103,37 @@ class Page {
   
   function output(){
     $m = 'output_' . $this->mode;
-    return $this->$m();
+    $template = $this->$m();
+    $template->modes = $this->modes;
+    return $template;
   }
   
   // View operations
   
   function run_view(){
     $this->zone = Zone::Load($this->template);
-    $this->zone->run($this, $this->remainder);
+    $this->zone->run($this, $this->remainder, true);
     return true;
   }
   
   function output_view(){
     // Create template and add blocks
     $template = Fusion::$_->output->template('page/view');
+    $template->zone = $this->zone->output();
+    return $template;
+  }
+  
+  // Edit operations
+  
+  function run_edit(){
+    $this->zone = Zone::Load($this->template);
+    $this->zone->run($this, $this->remainder, false);
+    return true;
+  }
+  
+  function output_edit(){
+    // Create template and add blocks
+    $template = Fusion::$_->output->template('page/edit');
     $template->zone = $this->zone->output();
     return $template;
   }

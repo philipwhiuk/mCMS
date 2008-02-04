@@ -46,17 +46,35 @@ div.block_modes {
   margin-bottom: 0.1em;
 }
 
+div.page_modes {
+  margin: 0.25em;
+  margin-top: 0.5em;
+  padding-top: 0.5em;
+  width: 50%;
+  margin-left: 25%;
+  padding-bottom: 0.5em;
+  border: #C0C0C0 thin solid;
+  background: white;
+  text-align: center;
+}
+
 div.block_modes ul {
   margin: 0;
-  margin-top: 0.25em;
   padding: 0;
 }
 
-div.block_modes ul li {
+div.page_modes ul {
+  text-align: center;
+  display: block;
+  margin: 0.5em 0;
+  padding: 0;
+}
+
+div.block_modes ul li, div.page_modes ul li {
   display: inline;
 }
 
-div.block_modes ul li a {
+div.block_modes ul li a, div.page_modes ul li a {
   background: black;
   color: white;
   padding: 0.25em;
@@ -68,12 +86,12 @@ div.block_modes ul li a {
   margin-left: 0.25em;
 }
 
-div.block_modes ul li a:hover, div.block_modes ul li a.selected {
+div.block_modes ul li a:hover, div.block_modes ul li a.selected, div.page_modes ul li a:hover, div.page_modes ul li a.selected {
   color: black;
   background: white;
 }
 
-div.block_modes ul li a.selected:hover {
+div.block_modes ul li a.selected:hover, div.page_modes ul li a.selected:hover {
   color: white;
   background: black;
 }
