@@ -9,12 +9,15 @@
     Satisfy All
 </Files>
 
-RewriteEngine on
-
-RewriteBase /~Richard/fusion/
+## PHP CONFIG
 
 php_flag magic_quotes_gpc off
 php_flag register_globals 0
+
+## Rewrite
+
+RewriteEngine on
+RewriteBase /~Richard/fusion/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d	
 RewriteRule ^(.*)$                      index.php?page=$1  [QSA,L]
