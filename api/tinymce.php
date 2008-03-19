@@ -24,12 +24,12 @@ class Field_Richtext extends Field {
   
 }
 
-class TinyMCE {
+class TinyMCE extends API  {
 
   static $active = false;
   
   static function API_Load($fusion){
-    $fusion->hooks['HTML/Header'][] = 'tinymce';
+    $fusion->hooks['HTML/Header']['tinymce'] = true;
     return true;
   }
 

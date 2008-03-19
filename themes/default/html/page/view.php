@@ -13,15 +13,15 @@ class Template_Default_HTML_Page_View extends Template_Default_HTML_Page {
   function Display(){
 ?>
 <!-- Page -->
-<div class="page">
-<?
-    $this->zone->display();
+<div class="page page_view">
+<?php
+  $this->layout->display();
 ?>
-  <br clear="both" />
 </div>
-<? $this->Modes(); ?>
+<br clear="both" />
+<?php $this->Modes(); ?>
 <!-- End Page -->
-<?
+<?php
   }  
   
 }

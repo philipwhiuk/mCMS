@@ -6,8 +6,39 @@
  * Subversion ID: $Id$
 **/
 
-class Page {
+class Page extends API  {
 
+  // Construct a Page object from data
+  
+  function __construct($data){
+    $this->layout_type = 'page';
+    foreach($data as $f => $v){
+      $this->$f = $v;
+    }    
+  }
+  
+  // Load a page given a alias
+  
+  static function Get_By_Alias($alias){
+    $sql = "SELECT * FROM page WHERE alias = %s";
+    $result = Fusion::$_->storage->query($sql, $alias);
+    if($result && $row = $result->fetch_assoc()){
+      // Class
+      if($row['type'] != ''){
+        $c = 'Page_' . $row['type'];
+      }
+      if($row['type'] == '' || class_exists($c)){
+        $c = 'Page';
+      }
+      
+      $obj = new $c($row);
+      return $obj;
+    } 
+    return false;
+  }
+  
+  // Load the current page
+  
   static function Load(){
     $aliasi = array();
     $g = '';
@@ -23,48 +54,40 @@ class Page {
     }
     $aliasi[] = '';
     foreach($aliasi as $alias){
-      $sql = "SELECT * FROM page WHERE alias = %s";
-      $result = Fusion::$_->storage->query($sql, $alias);
-      if($result && $row = $result->fetch_assoc()){
-        if($row['type'] !== ''){
-          $c = 'Page_' . $row['type'];
-        } else {
-          $c = 'Page';
-        }
-        Log::Message("{$row['name']} ({$row['type']}) page loaded.");
-        
+      $page = Page::Get_By_Alias($alias);
+      if($page){
         if($g == ''){
           $mode = '';
         } else {
           $mode = trim(substr($g, strlen($row['alias'])), '/');
         }
-        
-        
-        $obj = new $c($row);
-        if($obj->authorised($mode)){
-          return $obj;
+        if($page->authorised($mode)){
+          Log::Message("Page " . $page->name . " loaded.");
+          return $page;
         }
       }
     }
     Install::Page();
   }
-
-  function __construct($data){
-    foreach($data as $f => $v){
-      $this->$f = $v;
-    }    
-  }
+  
+  // Check permissions and select mode
   
   function authorised($mode){
     $ms = explode('/',$mode,2);
-    // Implement authorisation here.    
-    $this->modes = array('view' => array(), 'edit' => array());
+    
+    // Permissions
+    $modes = Fusion::$_->auth->permissions('page', $this->id, array('view','edit','layout'));
+    $this->modes = array();
+    foreach($modes as $m){
+      $this->modes[$m] = array();
+    }
+    
     
    // Localisation and links
-    foreach($this->modes as $mode => &$data){
-      $data['name'] = Fusion::$_->locale->get('Page/mode/' . $mode);
+    foreach($this->modes as $cmode => &$data){
+      $data['name'] = Fusion::$_->locale->get('Page/mode/' . $cmode);
       $data['selected'] = false;
-      $data['link'] = Fusion::URL($this->URL($mode));
+      $data['link'] = $this->URL($cmode);
     }
     
     // Mode selector
@@ -83,14 +106,13 @@ class Page {
     return true;
   }
   
-  // API
-  
+  // Create a URL to this page
   
   function URL($mode = ''){
     if($this->alias != ''){
-      return Fusion::$_->config['root'] . $this->alias . '/' . $mode;
+      return Fusion::$_->url($this->alias . '/' . $mode);
     } else {
-      return Fusion::$_->config['root'] . $mode;
+      return Fusion::$_->url($mode);
     }
   }
   
@@ -111,15 +133,16 @@ class Page {
   // View operations
   
   function run_view(){
-    $this->zone = Zone::Load($this->template);
-    $this->zone->run($this, $this->remainder, true);
+    $this->layout = Layout::Page($this->id, $this->layout);
+    $this->layout->load_layout(true);
+    $this->layout->run('view');
     return true;
   }
   
   function output_view(){
     // Create template and add blocks
     $template = Fusion::$_->output->template('page/view');
-    $template->zone = $this->zone->output();
+    $template->layout = $this->layout->output();
     return $template;
   }
   
@@ -134,8 +157,8 @@ class Page {
   function output_edit(){
     // Create template and add blocks
     $template = Fusion::$_->output->template('page/edit');
-    $template->zone = $this->zone->output();
+    $template->zone = $this->zone->output($this);
     return $template;
   }
-
+  
 }

@@ -1,19 +1,11 @@
 <?php
 
-/**
- * Log File
- *
- * Subversion ID: $Id$
-**/
+class Log extends API  {
 
-class Log {
-
-  static function Message($string){
-    Fusion::$_->log[] = array(time(), $string);
-  }
-
-  static function Open(){
-    return array(array(time(), 'Log Started'));
+  static function Message($message){
+    if(isset(Fusion::$_->log)){
+      Fusion::$_->log->messages[] = $message;
+    }
   }
 
 }

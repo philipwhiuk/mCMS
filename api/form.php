@@ -6,7 +6,7 @@
  * Subversion ID: $Id: index.php 16 2007-12-26 19:47:06Z agentscorpion $
 **/
 
-class Form {
+class Form extends API  {
 
   function __construct($id, $link){
     $this->id = $id;
@@ -64,6 +64,7 @@ class Form {
     $template = Fusion::$_->output->template('form');
     $template->id = $this->id;
     $template->link = $this->link;
+    $template->fields = array();
     foreach($this->fields as $f => &$field){
       $template->fields[$f] = $field->output();
     }

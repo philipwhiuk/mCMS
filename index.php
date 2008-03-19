@@ -1,131 +1,83 @@
 <?php
-
 /**
  * Index File
  *
- * Subversion ID: $Id$
+ * This file starts off the Fusion Web Framework, loads essential files and loads the Fusion class.
+ * It is also reponsible for all the built-in helper functions such as the class autoloader and error handling.
+ * @version $Id$
+ * @package Fusion
 **/
 
-function error($message){
-	Log::Message($message);
-	if(defined('FUSION_DEBUG')){
-		if(file_exists('krumo/class.krumo.php')){
-			header('Content-type: text/html');
-			require_once('krumo/class.krumo.php');
-			krumo(Fusion::$_);
-			krumo::backtrace();
-			krumo::includes();
-			krumo::functions();
-			krumo::classes();
-			krumo::defines();
-		} else {
-			header('Content-type: text/plain');
-			print_r(Fusion::$_);
-		}
-	}
-	exit;
-}
+/**
+ * Fusion Directory
+ *
+ * This definition holds the location of the Fusion root. It allows the non web accessible files (ie everything apart from theme) to be moved to another place.
+**/
 
-function __autoload($class){
-	if(is_file('./api/' . $class . '.php')){
-		require_once('./api/' . $class . '.php');
-	}
-}
+define('FUSION', '.');
 
-class Fusion {
+/**
+ * Autoload
+ *
+ * This function resolves class dependacies automatically to allow for the APIs to be loaded in any order that is desired. It simply loads the API of the same name.
+**/
 
-	static  $_;
+  function __autoload($class){
+    if(is_file(FUSION . '/api/' . $class . '.php')){
+/**
+ * Fusion Class
+ *
+ * This simply loads the needed class file if it exists.
+ *
+**/
+      require_once(FUSION . '/api/' . $class . '.php');
+    }
+  }
+  
+/**
+ * Error Handler
+ *
+ * This function looks whether the Debugging settings are on.
+ *
+ * If they are, it invokes the Krumo debugger and dumps all relevant data.
+ *
+ * If not it exists.
+ *
+ * In any case, it will log a message.
+ *
+**/
+  
+  function __error($message = ''){
+    Log::Message($message);
+    if(defined('FUSION_DEBUG')){
+      if(file_exists('krumo/class.krumo.php')){
+        header('Content-type: text/html');
+        require_once('krumo/class.krumo.php');
+        krumo(Fusion::$_);
+        krumo::backtrace();
+        krumo::includes();
+        krumo::functions();
+        krumo::classes();
+        krumo::defines();
+      } else {
+        header('Content-type: text/plain');
+        print_r(Fusion::$_);
+      }
+    }
+    exit;
+  }
+  
+/**
+ * Fusion Class
+ *
+ * This simply loads the Fusion class in the API folder.
+ *
+**/
 
-	function Redirect($url){
-		header("Location: $url");
-		exit();
-	}
-
-	static function URL($string, $get = true){
-		// Helper function
-		
-		if($get){
-			$g = array();
-			
-			foreach($_GET as $k => $n){
-				if($k !== 'page'){
-					$g[] = $k . '=' . urlencode($n);
-				}
-			}
-			
-			if(count($g) > 0){
-				if(strpos($string, '?') === FALSE){
-					$string .= '?' . join($g, '&');
-				} else {
-					$string .= '&' . join($g, '&');
-				}
-			}
-		}
-		
-		return htmlentities($string);
-		
-	}
-
-	function __construct(){
-		$this->api = array();
-		$files = scandir('./api/');
-		foreach($files as $file){
-			if(is_file('./api/' . $file)){
-				$e = explode('.', $file, 2);
-				if(isset($e[1]) && $e[1] == 'php' && $e[0] != 'index'){
-					require_once('./api/' . $file);
-					if(class_exists($e[0]) && method_exists($e[0], 'api_load')){
-						$this->api[$e[0]] = call_user_func(array($e[0], 'api_load'), $this);
-					} else {
-						$this->api[$e[0]] = true;
-					}
-				}
-			}
-		}
-		$this->hook('Fusion/Construct');	
-	}
-	
-	function hook($name){
-		$return = array();
-		if(isset($this->hooks[$name])){
-			$args = func_get_args();
-			$args[0] = $this;
-			foreach($this->hooks[$name] as $api){
-				$return[] = call_user_func_array(array($api, 'api_hook_' . str_replace('/', '_',$name)), $args); // API::API_Hook_{NAME} (Fusion, ...)
-			}
-		}
-		return $return;
-	}
-	
-	function load(){
-		$this->log = Log::Open();
-		$this->config = Config::File();
-		$this->storage = Storage::Load();
-		Config::Storage();
-	}
-	
-	function personalize(){
-		$this->auth = Authentication::Load();
-		$this->user = User::Load();
-		$this->locale = Locale::Load();
-	}
-	
-	function run(){
-		$this->page = Page::Load();
-		return $this->page->run();
-	}
-	
-	function output(){
-		$this->output = Output::Load();
-		$this->output->run();
-		$this->output->output($this->page->output());
-	}
-	
-}
-
+require_once(FUSION . '/api/fusion.php');
 Fusion::$_ = new Fusion;
 Fusion::$_->load();
-Fusion::$_->personalize();
+Fusion::$_->personalise();
 if(Fusion::$_->run()){
 	Fusion::$_->output();
 }

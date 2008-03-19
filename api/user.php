@@ -1,23 +1,60 @@
 <?php
 
 /**
- * User API File
+ * User Management Class File
  *
- * Subversion ID: $Id$
+ * This file contains the User class which allows user management across the system.
+ * @version $Id:$
+ * @package Fusion
+ * @subpackage API
 **/
 
-// This file controls user management and settings.
-// Authentication is handled by the ACL.
-// The ACL passes a key => value pair which should identify the user.
+/**
+ * User
+ *
+ * User is the base class which represents all the users in the system.
+ * 
+ * It is responsible for managing these users and presenting a consistent information to allow data retrieval.
+ *
+ * @package Fusion
+ * @subpackage API
+**/
 
+class User extends API  {
 
-class User {
+/**
+ * User
+ *
+ * Simplistic constructor which allows initalisation of a User object.
+ *
+ * @param array $data Key => Value array of preset data.
+**/
 
-	function __construct($data){
+	function __construct($data = array()){
 		foreach($data as $f => $v){
 			$this->$f = $v;
 		}
 	}
+	
+/**
+ * Load
+ *
+ * Loads the user object.
+ *
+ * It firsts requests the relevant user data from the Authentication API.
+ *
+ * If this is valid, it the tries to find a user matching said data. It then creates a User object representing this user.
+ * 
+ * Otherwise, it looks for a Guest user to use instead.
+ *
+ * If both of these fail, then it passes to the installation function.
+ *
+ * @uses Authentication::authenticate()
+ * @uses Fusion::$storage
+ * @uses Log::Message()
+ * @uses User_Guest
+ * @uses Install::User()
+**/
 
 	static function Load(){
 		$user_data = Fusion::$_->auth->authenticate();
@@ -46,6 +83,15 @@ class User {
 	}
 	
 }
+
+/**
+ * Guest User
+ *
+ * This class represents any guest in the system. They are the default type of user if authentication fails.
+ *
+ * @package Fusion
+ * @subpackage Users
+**/
 
 class User_Guest extends User {
 

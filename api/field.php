@@ -6,7 +6,7 @@
  * Subversion ID: $Id: index.php 16 2007-12-26 19:47:06Z agentscorpion $
 **/
 
-class Field {
+class Field extends API  {
 
   function __construct($id, $data, $name, $idb){
     $this->error = false;
@@ -31,7 +31,7 @@ class Field {
         $f = 'Form_Validation_' . $i;
         if(function_exists($f)){
           $reason = '';
-          if($reason = $f(&$this->value)){
+          if($reason = $f($this->value)){
             $errors[] = $reason;
           }
         }

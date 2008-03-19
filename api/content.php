@@ -6,7 +6,7 @@
  * Subversion ID: $Id$
 **/
 
-class Content {
+class Content extends API  {
 	static function Load($block, $page, $locale){
 		$sql = "SELECT * FROM content WHERE block = %u AND page = %u ORDER BY id DESC LIMIT 1";
     $result = Fusion::$_->storage->query($sql, $block, $page);
@@ -37,16 +37,10 @@ class Block_Content extends Block {
 		parent::__construct($data, $page);
 		$this->content = Content::Load($this->id, $page->id, Fusion::$_->locale->id);
 	}
-	function Run($render_mode){
-		if($render_mode){
-			$m = 'Run_' . $this->mode;
-			$this->render = true;
-			return $this->$m();
-		} else {
-			$this->mode = 'view';
-			$this->render = false;
-			return $this->Run_View();
-		}
+	function Run(){
+		$m = 'Run_' . $this->mode;
+		$this->render = true;
+		return $this->$m();
 	}
 	function Run_Edit(){
 		$this->form = new Form('block_content_' . $this->id, Fusion::URL($this->URL('edit')));

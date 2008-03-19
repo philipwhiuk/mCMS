@@ -6,7 +6,7 @@
  * Subversion ID: $Id$
 **/
 
-class Config {
+class Config extends API  {
 
 	static function File(){
 		$confdir = './config';
@@ -42,7 +42,7 @@ class Config {
 			}
 			Log::Message("Dynamic configuration loaded.");
 		} else {
-			Install::Site(&$config);
+			Install::Site($config);
 		}
 	}
 	

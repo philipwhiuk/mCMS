@@ -6,7 +6,7 @@
  * Subversion ID: $Id$
 **/
 
-class Output {
+class Output extends API  {
 
   function Run(){
     // Load Theme
@@ -50,17 +50,18 @@ class Output {
 
 }
 
-class Theme {
+class Theme extends API  {
 
   function __construct($data){
     foreach($data as $f => $v){
       $this->$f = $v;
-    }    
+    }
+    $this->base = Fusion::$_->config['root'] . 'themes/' . $this->folder;
   }
 
 }
 
-class Template {
+class Template extends API  {
 
   function Display(){
   

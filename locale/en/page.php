@@ -8,3 +8,4 @@
 
 $this->strings['Page/mode/view'] = 'View';
 $this->strings['Page/mode/edit'] = 'Edit';
+$this->strings['Page/mode/layout'] = 'Layout';

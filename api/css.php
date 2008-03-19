@@ -6,18 +6,23 @@
  * Subversion ID: $Id$
 **/
 
-class CSS {
+class CSS extends API  {
 
   function __construct(){
     $this->name = 'css';
   }
 
-  static function API_Load($fusion){
-    $fusion->hooks['HTML/Header'][] = 'css';
-    return true;
+  static function Load_API(){
+    return array(
+      'call' => array(
+        'html_header' => array(
+          'func' => array('CSS', 'HTML')
+        )
+      )
+    );
   }
 
-  static function API_Hook_HTML_Header(){
+  static function HTML(){
     $template = Fusion::$_->output->Template('css');
     $template->file = Fusion::$_->config['root'] . 'themes/' . Fusion::$_->output->theme->folder . '/css/main.css';
     Fusion::$_->output->Header($template);

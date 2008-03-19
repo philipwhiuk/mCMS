@@ -1,16 +1,31 @@
 <?php
 
 /**
- * Block API File
+ * Block Management Class File
  *
- * Subversion ID: $Id: page.php 16 2007-12-26 19:47:06Z agentscorpion $
+ * This file contains the Block class which allows blocks to be represented across the system.
+ * @version $Id:$
+ * @package Fusion
+ * @subpackage API
 **/
 
-class Block {
+/**
+ * Block
+ *
+ * The block class represents the blocks which are displayed on pages. These show the content in the system to the user and control its retrieval, update and viewing.
+ * It is responsible for managing the blocks and for delegating functions to sub classes.
+ *
+ * To make a new block, simply derive a new class from this one.
+ *
+ * @package Fusion
+ * @subpackage API
+**/
+
+class Block extends API  {
 
   static function Load($zone, Page $page, $remainder){
     $blocks = array(); 
-    $sql = "SELECT * FROM page_template_blocks WHERE zone = %u";
+    $sql = "SELECT * FROM page_template_blocks WHERE zone = %d";
     $result = Fusion::$_->storage->query($sql, $zone);
     if($result){
       while($row = $result->fetch_assoc()){
@@ -25,6 +40,15 @@ class Block {
       }
     }
     return $blocks;
+  }
+  
+  static function Create($data){
+    $sqls = array();
+    foreach($data as $k => $v){
+      $sqls[] = " $k = %s ";
+    }
+    $sql = "INSERT INTO page_template_blocks SET " . join($sqls, ' , ');
+    return ($result = Fusion::$_->storage->query($sql, $data));
   }
 
   function __construct($data, Page $page){
@@ -50,7 +74,7 @@ class Block {
     }
     
     // Mode selector
-    if(isset($ms[1]) && $ms[0] == $this->id && isset($this->modes[strtolower($ms[1])])){
+    if(isset($ms[1]) && $ms[0] === $this->id && isset($this->modes[strtolower($ms[1])])){
       $this->mode = strtolower($ms[1]);
       $this->remainder = isset($ms[2]) ? $ms[2] : '';
     } elseif(isset($this->modes['view'])){

@@ -8,7 +8,7 @@
 
 // This file controles localisation
 
-class Locale {
+class Locale extends API  {
 
   function __construct($data){
     foreach($data as $f => $v){

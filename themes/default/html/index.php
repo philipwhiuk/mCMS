@@ -3,7 +3,21 @@
 /**
  * Default Theme - HTML - Index
  *
- * Subversion ID: $Id:$
+ * @version $Id:$
+ * @package Fusion
+ * @subpackage default_html_theme
+**/
+
+/**
+ * Index Template
+ *
+ * This class is responsible for rendering all pages.
+ *
+ * It simply renders the core html and the head section.
+ *
+ * It then passes the rest of to assigned templates.
+ * @package Fusion
+ * @subpackage default_html_theme
 **/
 
 class Template_Default_HTML_Index extends Template {

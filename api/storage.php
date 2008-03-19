@@ -6,7 +6,7 @@
  * Subversion ID: $Id$
 **/
 
-class Storage {
+class Storage extends API  {
 
 	static function Load(){	
 		if(file_exists('./storage/' . Fusion::$_->config['storage'] . '.php')){

@@ -13,16 +13,10 @@ class Template_Default_HTML_Content_View extends Template_Default_HTML_Content {
   function Display(){
     ?>
     <!-- Content Block (View) -->
-      <div class="block_outer">
-        <div class="block" style="width: <?php echo $this->width; ?>%;">
-          <div class="block_inner">
-            <div class="block_title">
-              <h1><? echo $this->title; ?></h1><? $this->modes(); ?>
-            </div>
-            <? echo $this->body; ?>
-          </div>
-        </div>
+      <div class="block_title">
+        <h1><? echo $this->title; ?></h1><? $this->modes(); ?>
       </div>
+      <? echo $this->body; ?>
     <!-- End Content Block (View) -->
     <?
   }

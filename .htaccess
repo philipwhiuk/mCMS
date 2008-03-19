@@ -18,3 +18,12 @@ php_flag register_globals 0
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d	
 RewriteRule ^(.*)$                      index.php?page=$1  [QSA,L]
+
+### XDEBUG Settings
+
+php_flag xdebug.default_enable on
+php_flag xdebug.auto_trace On
+php_value xdebug.collect_params 1
+#php_flag xdebug.collect_return On
+php_value xdebug.trace_output_dir "C:\Users\Richard\Documents\Coding\XDebug\fusion"
+php_value xdebug.trace_output_name fusion_%u_%R

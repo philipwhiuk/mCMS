@@ -1,115 +1,187 @@
-body {
-  background-color: #E0E0E0;
-  margin: 0.75em;
-  font-size: 0.75em;
-}
+/** Main Styles **/
 
-body, textarea, input, select {
-  font-family: Verdana, Arial, sans-serif;
-}
+  body {
+    background-color: #E0E0E0;
+    margin: 0.75em;
+    font-size: 0.75em;
+  }
 
-pre {
-  font-family: monospace;
-}
+  body, textarea, input, select {
+    font-family: Verdana, Arial, sans-serif;
+  }
 
-div.zone {
-  border: #C0C0C0 1px solid;
-  background-color: white;
-  clear: both;
-  float: left;
-}
+  pre {
+    font-family: monospace;
+  }
 
-div.zone_inner {
-  padding: 0.1em;
-}
+  h1 {
+    font-size: 1.7em;
+    margin: 0;
+  }
+  
+  img {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
 
-div.zone_outer {
-  border: black;
-  margin: 0.25em;
-}
+/** Page / Zone / Block Styles **/
 
-div.block {
-  border: #D0D0D0 1px solid;
-}
+  /** Page **/
+  
+    div.page {
+      border: #C0C0C0 1px solid;
+      background: white;
+      float:left;
+      width: 100%;
+    }
+  
+    div.page_modes {
+      margin: 0.25em;
+      margin-top: 0.5em;
+      padding-top: 0.5em;
+      width: 50%;
+      margin-left: 25%;
+      padding-bottom: 0.5em;
+      border: #C0C0C0 thin solid;
+      background: white;
+      text-align: center;
+    }
+    
+    div.page_modes ul {
+      text-align: center;
+      display: block;
+      margin: 0.5em 0;
+      padding: 0;
+    }
+  
+  /** Zone **/
+  
+    div.zone_a {
+      padding: 0.1em;
+    }
 
-div.block_inner {
-  padding: 0.5em;
-}
+    div.zone_b {
+      padding: 0em;
+    }
+    
+    div.page_edit div.zone_b {
+      padding: 0.5em;
+    }
 
-div.block_outer {
-  border: black;
-  margin: 0.5em;
-}
+    div.zone {
+      float: left;
+    }
+    
+    /** Edit Page Layout **/
+    
+      div.zone div.zone_header {
+        font-weight: bold;
+        background: #D0D0D0; 
+        padding: 0.25em;
+      }
+      
+      div.zone div.zone_header div.zone_tools {
+        float:right;
+        font-weight: normal;
+      }
+      
+      div.zone div.zone_header div.zone_tools a {
+        text-decoration: none;
+      }
+      
+      div.zone div.zone_header div.zone_tools img {
+        vertical-align: middle;
+      }
+      
+      div.page_edit div.zone_a div.zone_a {
+        border: 1px solid #D0D0D0; 
+      }
+    
+    
+  /** Block **/
 
-div.block_modes {
-  float: right;
-  margin-bottom: 0.1em;
-}
 
-div.page_modes {
-  margin: 0.25em;
-  margin-top: 0.5em;
-  padding-top: 0.5em;
-  width: 50%;
-  margin-left: 25%;
-  padding-bottom: 0.5em;
-  border: #C0C0C0 thin solid;
-  background: white;
-  text-align: center;
-}
+    div.block_a {
+      border: #D0D0D0 1px solid;
+      padding: 0.1em;
+    }
 
-div.block_modes ul {
-  margin: 0;
-  padding: 0;
-}
+    div.block_b {
+      padding: 0.5em;
+    }
 
-div.page_modes ul {
-  text-align: center;
-  display: block;
-  margin: 0.5em 0;
-  padding: 0;
-}
+    div.block {
+      border: black;
+      margin: 0.5em;
+    }
+    
+    /** Edit Page Layout **/
+    
+      div.block div.block_header {
+        font-weight: bold;
+        background: #D0D0D0; 
+        padding: 0.25em;
+        margin-bottom: 0.5em;
+      }
+      
+      div.zone div.block_header div.block_tools {
+        float:right;
+        font-weight: normal;
+      }
+      
+      div.zone div.block_header div.block_tools a {
+        text-decoration: none;
+      }
+      
+      div.zone div.block_header div.block_tools img {
+        vertical-align: middle;
+      }    
+    
+    /** Mode List **/
+    
+      div.block_modes {
+        float: right;
+        margin-bottom: 0.1em;
+      }
 
-div.block_modes ul li, div.page_modes ul li {
-  display: inline;
-}
+      div.block_modes ul {
+        margin: 0;
+        padding: 0;
+      }
 
-div.block_modes ul li a, div.page_modes ul li a {
-  background: black;
-  color: white;
-  padding: 0.25em;
-  padding-left: 0.75em;
-  padding-right: 0.75em;
-  font-size: 1.2em;
-  font-weight: bold;
-  text-decoration: none;
-  margin-left: 0.25em;
-}
+      div.block_modes ul li, div.page_modes ul li {
+        display: inline;
+      }
 
-div.block_modes ul li a:hover, div.block_modes ul li a.selected, div.page_modes ul li a:hover, div.page_modes ul li a.selected {
-  color: black;
-  background: white;
-}
+      div.block_modes ul li a, div.page_modes ul li a {
+        background: white;
+        color: black;
+        padding: 0.25em;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-decoration: none;
+        margin-left: 0.25em;
+      }      
 
-div.block_modes ul li a.selected:hover, div.page_modes ul li a.selected:hover {
-  color: white;
-  background: black;
-}
+      div.block_modes ul li a:hover,  div.page_modes ul li a:hover, div.block_modes ul li a.selected, div.page_modes ul li a.selected, div.block_modes ul li a.selected:hover, div.page_modes ul li a.selected:hover {
+        color: white;
+        background: black;
+      }
+      
+    /** Title **/
 
-div.block_title h1 {
-  float: left;
-}
-
-div.block_title {
-  padding-bottom: 0.25em;
-  border-bottom: #D0D0D0 1px solid;
-  margin-bottom: 0.5em;
-}
-
-h1 {
-  font-size: 1.7em;
-  margin: 0;
-}
+    div.block_title {
+      padding-bottom: 0.25em;
+      border-bottom: #D0D0D0 1px solid;
+      margin-bottom: 0.5em;
+    }
+    
+    div.block_title h1 {
+      float: left;
+    }
 
 /** FORM API **/
 
@@ -127,6 +199,10 @@ div.form_field input {
   padding: 0.5em;
   margin: 0.25em;
   margin-left: 0;
+}
+
+div.form_field_textbox input {
+  float: right;
 }
 
 div.form_field textarea {

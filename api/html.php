@@ -15,18 +15,13 @@ class Output_HTML extends Output {
    $this->head = array();
   }
   
-  function run(){
-   $ret = parent::run();
-   Fusion::$_->hook('HTML/Header');
-   return $ret;
-  }
-  
-  function Header($template){
+  function Header($template){            // HTML Header Helper Function
    $this->head[] = $template;
   }
   
   function Output($sub){
     $template = $this->Template('index');
+    Fusion::$_->api_call('html_header');    // Grab HTML Header
     $template->head = (array) $this->head;
     $template->main = $sub;
     $template->Display();

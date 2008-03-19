@@ -6,7 +6,7 @@
  * Subversion ID: $Id$
 **/
 
-class Install {
+class Install extends API  {
 
 
 
