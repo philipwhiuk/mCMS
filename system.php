@@ -75,7 +75,7 @@ class System {
 	
 	private function dirname($file){
 		$string = dirname($file);
-		return str_replace('\\', '/', $string);
+		return rtrim(str_replace('\\', '/', $string),'/');
 	}
 	
 	/**
