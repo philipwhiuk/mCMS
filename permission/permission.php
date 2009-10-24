@@ -17,7 +17,7 @@ abstract class Permission {
 		return $this->permission;
 	}
 	
-	abstract public function Get_By_Check($descriptor, $object);
+	abstract public static function Get_By_Check($descriptor, $object);
 	
 	public static function Check($descriptor, $permissions, $check_mode = null, $user = null){
 		

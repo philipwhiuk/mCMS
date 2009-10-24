@@ -12,7 +12,7 @@ class Guest_User extends User {
 		return false;
 	}
 	
-	public function Get_One($ip){
+	public static function Get_One($ip){
 		
 		try {
 			$gid = System::Get_Instance()->config()->get('guest_user');

@@ -12,6 +12,11 @@ ini_set('display_errors', 1);
  * @package CMS
  */
 
+// Stricts suck in most PHP versions!
+
+error_reporting(error_reporting() & ~E_STRICT);
+
+
 /**
  * Load exceptions
  * 

@@ -18,7 +18,7 @@ class Permission_User extends Permission {
 		
 	}
 	
-	public function Get_By_Check($descriptor, $user){
+	public static function Get_By_Check($descriptor, $user){
 		if($user instanceof User){
 			$user = $user->get_id();
 		}

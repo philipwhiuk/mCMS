@@ -18,7 +18,7 @@ class Permission_Group extends Permission {
 		
 	}
 	
-	public function Get_By_Check($descriptor, $group){
+	public static function Get_By_Check($descriptor, $group){
 		if($group instanceof Group){
 			$group = $group->get_id();
 		}
