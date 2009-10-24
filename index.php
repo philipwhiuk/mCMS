@@ -1,68 +1,51 @@
 <?php
+
 /**
- * Fusion - Index
- *
- * This is the entry point for the Fusion Web Framework
-**/
+ * Index File
+ * 
+ * This is the default entry point for the CMS.
+ * 
+ * This file simply allows very basic configuration of the system to be completed - or for intergration within a larger system.
+ * 
+ * @package CMS
+ */
 
 
-require_once('Doctrine.php');
+/**
+ * Valid Entry Point
+ * 
+ * This is simply used to verify that the user has entered the system at a valid entry point, in case the entire system is web accessible.
+ * 
+ * @var boolean
+ */
 
-spl_autoload_register(array('Doctrine', 'autoload'));
+define('CMS',true);
 
-class Site extends Model {
-	
-}
+/**
+ * Debugging
+ * 
+ * This sets up the level of debugging in the system. This is used by {@link CMS::$debug} to set the runtime debugging level.
+ * 
+ * @var int Debug level.
+ */
 
-class Fusion {
-	
-	 public static function Load(){
-	 	$return = new Fusion;
-	 	$return->Configure();
-	 	Doctrine_Manager::connection($return->config['storage'], 'sandbox'); 
-	 	$return->Site();
-	 	$return->API();
-	 }
-	 
-	 private function Site(){
-	 	global $storage;
-	 	
-	 }
-	 
-	 private function Configure(){
-		$config = array();
-		$uri = explode('/', $_SERVER['SCRIPT_NAME'] ? $_SERVER['SCRIPT_NAME'] : $_SERVER['SCRIPT_FILENAME']);
-		$server = explode('.', implode('.', array_reverse(explode(':', rtrim($_SERVER['HTTP_HOST'], '.')))));
-		for ($i = count($uri) - 1; $i > 0; $i--) {
-			for ($j = count($server); $j > 0; $j--) {
-				$dir = implode('.', array_slice($server, -$j)) . implode('.', array_slice($uri, 0, $i));
-				if(file_exists("{$confdir}/{$dir}.php")) {
-					require_once("{$confdir}/{$dir}.php");
-					$this->config = $config;
-				}
-			}
-		}
-		if(file_exists("{$confdir}/default.php")) {
-			require_once("{$confdir}/default.php");
-			$this->config = $config;
-		} else {
-			Fusion::Install();
-		}
-	 }
-	
-}
+define('CMS_DEBUG',1);
 
-// Setup Site Table
+/** 
+ * Default output
+ */
 
+define('CMS_FORMAT_DEFAULT','html');
 
+/**
+ * Loads the CMS file.
+ * 
+ * This loads the main CMS system as {@link CMS::File()} is not available yet.
+ * 
+ * @see cms.php
+ * 
+ */
 
+require_once(dirname(__FILE__) . '/system.php');
 
-// Start Fusion
-
-global $fusion;
-
-$fusion = Fusion::Load();
-if($fusion->run())
-	$fusion->output();
-	
-$fusion = NULL
+System::Get_Instance()->run();
