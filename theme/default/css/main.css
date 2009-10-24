@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #dddddd;
+	font-size: 85%;
+	font-family: Arial, sans-serif;
+}
+
+h1 {
+	margin: 0;	
+}
+
+div.content-text {
+	margin-top: 1em;
+}
+
+div.page-blocks, div.page-main {
+	border: thin black solid;
+	background: white;
+	margin: 2em;
+	padding: 1em;
+}
+
+div.page-blocks-left {
+	float: left;
+}
+div.page-blocks-right {
+	float: right;
+}
+
