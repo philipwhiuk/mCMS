@@ -4,7 +4,7 @@ class Permission_Module extends Module {
 	
 	public function load(){
 		
-		Module::Get('user');
+		Module::Get('user','authentication');
 		$this->files('exception','permission','user');
 		
 		try {
