@@ -71,6 +71,13 @@ class System {
 	
 	public $modules;
 	
+	// Dirname (Windows compatible) 
+	
+	private function dirname($file){
+		$string = dirname($file);
+		return str_replace('\\', '/', $string);
+	}
+	
 	/**
 	 * Constructor
 	 * 
@@ -86,7 +93,9 @@ class System {
 		
 		// Debug configuration
 		
-		$this->remote_path = defined('CMS_REMOTE_PATH') ? CMS_REMOTE_PATH : (dirname($_SERVER['PHP_SELF']) . '/');
+		
+		
+		$this->remote_path = defined('CMS_REMOTE_PATH') ? CMS_REMOTE_PATH : ($this->dirname($_SERVER['PHP_SELF']) . '/');
 		$this->debug = defined('CMS_DEBUG') ? CMS_DEBUG : 0;
 		$this->path = defined('CMS_PATH') ? CMS_PATH : isset($_GET['path']) ? $_GET['path'] : '';
 		$this->formats = array();
