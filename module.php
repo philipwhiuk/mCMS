@@ -57,7 +57,6 @@ abstract class Module {
 				}
 				$modules[$module['dir']] = new $class($module);
 			} catch (Exception $e){
-				print_r($e);
 				// Module not loaded.
 			}		
 		}

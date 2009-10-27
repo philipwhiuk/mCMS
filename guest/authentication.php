@@ -6,10 +6,26 @@ class Guest_Authentication extends Authentication {
 		parent::__construct($data);
 	} 
 	
+	public function authentication_available(){
+		return CMS_AUTHENTICATION_UNAVAILABLE;
+	}
+	
+	public function release_user(){
+		// Guest user :-P
+	}
+	
+	public function authenticate_user($user){
+		return false;
+	}
+	
 	public function retrieve_user(){
-		$this->get_module()->load_section('User');
+		try {
+			$gid = System::Get_Instance()->config()->get('guest_user');
+		} catch(Exception $e){
+			$gid = System::Get_Instance()->site()->get('guest_user');
+		}
 		
-		return Guest_User::Get_One($_SERVER['REMOTE_ADDR']);
+		return User::Get_By_ID($gid);
 	}	
 	
 }

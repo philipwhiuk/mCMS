@@ -84,6 +84,9 @@ abstract class Database_MySQLi_Query implements IDatabase_Query {
 				$clause = "`%s`";
 				$this->args[] = $operand;
 				break;
+			case "bool":
+				$clause = ($operand) ? 1 : 0;
+				break;
 			case "s":
 				$clause = "'%s'";
 				$this->args[] = $operand;
@@ -153,6 +156,20 @@ class Database_MySQLi_Select_Query extends Database_MySQLi_Query implements IDat
 			$sql .= ' ' . $this->generate_where();
 		}
 		
+		if(count($this->order) > 0){
+			$sql .= ' ORDER BY ';
+			$sqls = array();
+			foreach($this->order as $col => $sort){
+				if($sort){
+					$sqls[] = '`%s` ASC';
+				} else {
+					$sqls[] = '`%s` DESC';
+				}
+				$this->args[] = $col;
+			}
+			$sql .= join(',', $sqls);
+		}
+		
 		if(isset($this->limit)){
 			if(isset($this->offset)){
 				$sql .= ' LIMIT %u, %u';
@@ -162,20 +179,6 @@ class Database_MySQLi_Select_Query extends Database_MySQLi_Query implements IDat
 				$sql .= ' LIMIT %u';
 				$this->args[] = $this->limit;
 			}
-		}
-		
-		if(count($this->order) > 0){
-			$sql .= ' ORDER BY ';
-			$sqls = array();
-			foreach($this->order as $col){
-				if($col[1]){
-					$sqls[] = '`%s` ASC';
-				} else {
-					$sqls[] = '`%s` DESC';
-				}
-				$this->args[] = $col[0];
-			}
-			$sql .= join(',', $sqls);
 		}
 		
 		return $sql;

@@ -31,7 +31,7 @@ abstract class Permission {
 		}
 		
 		if(!isset($user)){
-			$user = Authentication::User();
+			$user = Authentication::Retrieve();
 		}
 		
 		// First check super user permision.
