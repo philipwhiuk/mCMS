@@ -105,8 +105,8 @@ abstract class Authentication {
 		
 		foreach(System::Get_Instance()->authentication_plugins as $auth){
 			try {
-				if($auth->authentication_available()){
-					return true;
+				if($auth->authenticate_user($user)){
+					return;
 				}
 			} catch(Exception $e){
 				// Ignore exception

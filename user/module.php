@@ -3,7 +3,7 @@
 class User_Module extends Module {
 	
 	public function load(){
-		$this->files('user');
+		$this->files('user','exception');
 	}
 	
 }

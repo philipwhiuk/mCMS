@@ -10,6 +10,7 @@
  * @package CMS
  */
 
+// session_start(); session_destroy(); exit;
 
 /**
  * Valid Entry Point
@@ -29,7 +30,7 @@ define('CMS',true);
  * @var int Debug level.
  */
 
-define('CMS_DEBUG',1);
+define('CMS_DEBUG',2);
 
 /** 
  * Default output

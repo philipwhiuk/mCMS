@@ -36,21 +36,25 @@ class Page {
 		$this->blocks = Page_Block::Load($this->resource()->get_id());
 	}
 	
-	public static function Load($resource){
-		try {
-			if($resource == ''){
-				$resource = 'home';
-			}
-			return new Page(Resource::Load($resource));
-		} catch(Exception $e){
-			// Noooooooooo! Exception
-			
-			// Let's try again with a Page_Error
-			
-			// TODO: Implement Page_Error
-			
-			throw $e;
+	public static function Load($path){
+		if($path == ''){
+			$path = 'home';
 		}
+		$exceptions = array();
+		$resources = Resource::Get_By_Paths(array($path,'error'));
+		foreach($resources as $resource){
+			try {
+				return new Page($resource);
+			} catch(Exception $e){
+				$exceptions[] = $e;
+			}
+		}
+		
+		// Darn, critical error. What do we do now?
+		
+		// TODO: Implement last gasp system
+		
+		throw new Page_Fatal_Exception($exceptions);
 	}
 	
 	

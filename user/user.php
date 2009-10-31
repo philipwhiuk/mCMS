@@ -14,6 +14,12 @@ class User {
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
 	
+	public function get($key){
+		if(isset($this->$key)){
+			return $this->$key;
+		}
+	}
+	
 	public static function Get_One($operator, $operand){
 		
 		$query = System::Get_Instance()->database()->Select()->table('users')->where($operator, $operand)->limit(1);

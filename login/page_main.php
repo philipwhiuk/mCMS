@@ -7,15 +7,20 @@ class Login_Page_Main extends Page_Main {
 	public function __construct($parent, $login){
 		parent::__construct($parent);
 		$this->login = $login;
-		$this->login->load($this->parent->resource());
-		//$this->available = Login::Get_All_Active();
-		print_r($this);
+		try {
+			$user = $this->login->load($this->parent->resource());
+			Authentication::Authenticate($user);
+			$system = System::Get_Instance();
+			$system->redirect($system->url('home'));
+			exit;
+		} catch(Login_Incomplete_Exception $e){
+		}
 	}
 	
 	public static function Load($parent){
 		
 		if(!Authentication::Authenticable()){
-			throw new Login_Unavailable_Exception();
+			throw new Login_Page_Unavailable_Exception();
 		}
 		
 		$exceptions = array();

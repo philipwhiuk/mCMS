@@ -37,6 +37,10 @@ class Resource {
 		$this->additional = ($argument == "") ? $this->additional : explode('/', trim((string) $argument,'/'));
 	}
 	
+	public function url(){
+		return System::Get_Instance()->URL($this->path);
+	}
+	
 	public function __construct(){
 		$this->base = ($this->base == "") ? array() : explode('/', trim($this->base,'/'));
 		$this->additional = ($this->additional == "") ? array() : explode('/', trim($this->additional,'/'));
@@ -55,28 +59,67 @@ class Resource {
 		
 		$result = $query->execute();
 		
-		if($result->num_rows == 0){
+		if($result->num_rows < 1){
 			throw new Resource_Not_Found_Exception($operator, $operand);
 		}
 		
-		if($result->num_rows > 1){
-			throw new Resource_Not_Unique_Exception($operator, $operand);
+		return $result->fetch_object('Resource');
+	}
+	
+	private static function Get_Resources($path, $argument){
+		
+		$query = System::Get_Instance()->database()->Select()->table('resources')->where('=', 
+			array(
+				array('col', 'path'),
+				array('s', $path)
+			)
+		)->order(
+			array(
+				'priority' => false
+			)
+		);
+		
+		$result = $query->execute();
+		
+		$return = array();
+		
+		while($row = $result->fetch_object('Resource')){
+			$row->set_additional($argument);
+			$return[] = $row;
 		}
 		
-		return $result->fetch_object('Resource');
+		if(count($return) > 0){
+			return $return;
+		}
+		
+		throw new Resource_Not_Found_Exception($path, $argument);
+	}
+	
+	public static function Get_By_Argument($module, $argument){
+		// Argh!!
+		
+		/// TODO
+		
+		exit('Resource::Get_By_Argument');
 		
 	}
 	
-	public static function Load_Resource($path, $argument){
-		
-		$resource = self::Get_One('=', array(array('col','path'), array('s', $path)));
-		
-		$resource->set_additional($argument);
-
-		return $resource;
+	public static function Get_By_Paths($paths){
+		$return = array();
+		foreach($paths as $path){
+			try {
+				$resources = self::Get_By_Path($path);
+				foreach($resources as $resource){
+					$return[] = $resource;
+				}
+			} catch (Exception $e){
+				
+			}
+		}
+		return $return;
 	}
 	
-	public static function Load($path = ''){
+	public static function Get_By_Path($path = ''){
 		
 		// Resource Load Order
 		
@@ -95,7 +138,7 @@ class Resource {
 		
 		foreach($paths as $path){
 			try {
-				return self::Load_Resource($path[0], $path[1]);
+				return self::Get_Resources($path[0], $path[1]);
 			} catch(Exception $e){
 				// Ignore resource
 				$exceptions[] = $e;

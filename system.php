@@ -339,6 +339,11 @@ class System {
 		return $this->output;
 	}
 	
+	public function redirect($url){
+		header('Location: ' . $url, 303);
+		exit;
+	}
+	
 	public function url($url){
 		return $this->remote_path . $url;
 	}

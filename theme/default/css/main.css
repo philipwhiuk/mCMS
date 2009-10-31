@@ -1,5 +1,7 @@
 @CHARSET "UTF-8";
 
+/** Main Styles **/
+
 body {
 	margin: 0;
 	padding: 0;
@@ -12,9 +14,7 @@ h1 {
 	margin: 0;	
 }
 
-div.content-text {
-	margin-top: 1em;
-}
+/** Page **/
 
 div.page-blocks, div.page-main {
 	border: thin black solid;
@@ -30,3 +30,64 @@ div.page-blocks-right {
 	float: right;
 }
 
+/** Content **/
+
+div.content-text {
+	margin-top: 1em;
+}
+
+/** Form **/
+
+div.form {
+	margin: 1em;
+	padding: 1em;
+	border: thin #aaaaaa solid;
+}
+
+div.form form {
+	margin: 0;
+	padding: 0;
+}
+
+div.form div.form-field {
+	width: 100%;
+	display: block;
+	float: left;
+}
+
+div.form div.form-field-label {
+	float: left;
+	width: 30%;
+	margin: 0;
+	padding: 0;
+	display: block;	
+	text-align: right;
+}
+
+div.form div.form-field-label label {
+	font-weight: bold;
+	margin: 1em;
+	display: block;
+}
+
+div.form div.form-field-input {
+	width: 70%;
+	float: left;	
+}
+
+div.form div.form-field-input input{
+	margin: 0.6em;
+	padding: 0.4em;
+}
+
+div.form div.form-field-submit div.form-field-input {
+	width: 60%;
+	float: left;
+	text-align: center;	
+}
+
+div.form div.form-field-submit div.form-field-input input{
+	margin: 0.6em;
+	padding: 0.4em;
+	font-weight: bold;
+}

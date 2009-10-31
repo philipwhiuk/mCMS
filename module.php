@@ -25,6 +25,10 @@ abstract class Module {
 		}
 	}
 	
+	public function get_directory(){
+		return $this->dir;
+	}
+	
 	public static function Get_ID($id){
 		foreach(System::Get_Instance()->modules as $k => $module){
 			if($module->id == $id){
@@ -63,6 +67,12 @@ abstract class Module {
 		
 		return $modules;
 		
+	}
+	
+	public static function Available($module){
+		if(!isset(System::Get_Instance()->modules[$module])){
+			throw new Module_Not_Available_Exception($module);
+		}
 	}
 	
 	public static function Get($module){
@@ -105,7 +115,6 @@ abstract class Module {
 		} catch(Exception $e){
 			throw new Module_File_Not_Found_Exception($this->name, $path);
 		}
-		
 	}
 	
 	public function files(){
