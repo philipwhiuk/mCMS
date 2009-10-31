@@ -10,8 +10,6 @@
  * @package CMS
  */
 
-// session_start(); session_destroy(); exit;
-
 /**
  * Valid Entry Point
  * 

@@ -24,7 +24,6 @@ class Template_Theme_Default_HTML_Page extends Template {
 <div class="page-main">
 <?php $this->main->display(); ?>
 </div>
-<br clear="all">
 <?php $this->blocks('bottom'); ?>
 </div>
 <?php	

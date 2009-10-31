@@ -1,4 +1,4 @@
-@CHARSET "UTF-8";
+@charset "UTF-8";
 
 /** Main Styles **/
 
@@ -25,9 +25,11 @@ div.page-blocks, div.page-main {
 
 div.page-blocks-left {
 	float: left;
+	width: 20%;
 }
 div.page-blocks-right {
 	float: right;
+	width: 20%;
 }
 
 /** Content **/

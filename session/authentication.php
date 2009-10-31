@@ -16,7 +16,6 @@ class Session_Authentication extends Authentication {
 	
 	public function release_user(){
 		unset($_SESSION['user']);
-		session_destroy();
 	}
 	
 	public function authenticate_user($user){

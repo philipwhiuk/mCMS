@@ -28,7 +28,6 @@ class Template_Theme_Default_HTML_Form_Field_Submit extends Template {
 		<div class="form-field-input">
 			<input type="submit" id="<?php echo $this->id(); ?>" <?php if(isset($this->label)){ ?> value="<?php echo $this->label; ?>" <?php } ?>name="<?php echo $this->name(); ?>" class="form-field form-field-submit">
 		</div>
-		<br clear='all'>
 	</div>
 <?php 	
 	}

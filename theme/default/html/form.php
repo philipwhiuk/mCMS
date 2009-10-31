@@ -12,7 +12,6 @@ class Template_Theme_Default_HTML_Form extends Template {
 	} 
 ?>
 		</form>
-		<br clear='all'>
 	</div>
 <?php 
 	}

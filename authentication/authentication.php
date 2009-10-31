@@ -119,6 +119,7 @@ abstract class Authentication {
 	}
 	
 	public static function Release(){
+		Authentication::Load();
 		
 		unset(System::Get_Instance()->authentication_user);
 		
