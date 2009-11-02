@@ -6,6 +6,9 @@ interface IDatabase {
 	
 	public function query_array($sql, $args);
 	
+	public function select();
+	public function update();
+	
 }
 
 interface IDatabase_Query {
@@ -14,11 +17,21 @@ interface IDatabase_Query {
 	
 }
 
+interface IDatabase_Update_Query extends IDatabase_Query {
+	
+	public function where($operator, $operands);
+	public function limit($number);
+	public function set($data);
+	
+	
+}
+
 interface IDatabase_Select_Query extends IDatabase_Query {
 	
-	public function where($opertator, $operands);
+	public function where($operator, $operands);
 	public function limit($number);
 	public function offset($number);
+	public function order($cols);
 	
 	
 }

@@ -18,6 +18,17 @@ class Content {
 		return $this->id;
 	}
 	
+	public function update($data){
+		$query = System::Get_Instance()->database()->Update()->table('content')
+			->set(array(
+					'title' => array('s', $data['title']),
+					'body' => array('s', $data['body'])
+			))
+			->where('=', array(array('col','id'), array('u', $this->id)))->limit(1);
+		
+		$query->execute();
+	}
+	
 	public static function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}

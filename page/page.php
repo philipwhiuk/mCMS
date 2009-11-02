@@ -24,6 +24,10 @@ class Page {
 		return $this->resource;
 	}
 	
+	public function url($url){
+		return System::Get_Instance()->url($url);
+	}
+	
 	public function __construct($resource){
 		$this->resource = $resource;
 		$class = $resource->get_module()->load_section('Page_Main');

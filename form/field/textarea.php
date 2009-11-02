@@ -1,6 +1,6 @@
 <?php
 
-class Form_Field_Textbox extends Form_Field {
+class Form_Field_Textarea extends Form_Field {
 	
 	private $label;
 	private $error = false;
@@ -25,7 +25,7 @@ class Form_Field_Textbox extends Form_Field {
 	}
 	
 	public function display($parent){
-		$template = System::Get_Instance()->output()->start(array('form','field','textbox'));
+		$template = System::Get_Instance()->output()->start(array('form','field','textarea'));
 		
 		$id = $parent->get_id();
 		$id[] = $this->name;

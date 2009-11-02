@@ -7,17 +7,27 @@ abstract class Login {
 	private $active;
 	private $sort;
 	private $resource;
+	private $parent;
+	
+	public function get_id(){
+		return $this->id;
+	}
 	
 	public function resource(){
 		return $this->resource;
+	}
+	
+	public function parent(){
+		return $this->parent;
 	}
 	
 	protected function __construct($data = array()){
 		foreach($data as $f => $v){ $this->$f = $v; }
 	}
 	
-	public function load($resource){
+	public function load($resource, $parent){
 		$this->resource = $resource;
+		$this->parent = $parent;
 	}
 	
 	abstract public function display();

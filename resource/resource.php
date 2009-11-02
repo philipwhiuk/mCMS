@@ -7,6 +7,7 @@ class Resource {
 	private $module;
 	private $base;
 	private $additional;
+	private $changed;
 	private $pointer = 0;
 	
 	public function get_id(){
@@ -34,11 +35,18 @@ class Resource {
 	}
 	
 	public function set_additional($argument){
-		$this->additional = ($argument == "") ? $this->additional : explode('/', trim((string) $argument,'/'));
+		$argument = trim((string) $argument,'/');
+		if($argument != '' && $argument != join('/', $this->additional)){
+			$this->additional = explode('/', $argument);
+			$this->changed = true;
+		}
 	}
 	
 	public function url(){
-		return System::Get_Instance()->URL($this->path);
+		if($this->changed){
+			return implode('/', array_merge(explode('/', trim($this->path, '/')), $this->additional));
+		}
+		return $this->path;
 	}
 	
 	public function __construct(){
@@ -98,9 +106,55 @@ class Resource {
 	public static function Get_By_Argument($module, $argument){
 		// Argh!!
 		
-		/// TODO
+		$mid = ($module instanceof Module) ? $module->id() : $module; 
 		
-		exit('Resource::Get_By_Argument');
+		$argument = trim($argument, '/');
+		
+		$t = $s = explode('/',$argument);
+		
+		$args = array(
+			$argument => ''
+		);
+		
+		$left = array(
+		);
+		
+		foreach($t as $k){
+			$l = array_pop($s);
+			array_unshift($left, $l);
+			$args[join('/',$s)] = join('/', $left);
+		}
+		
+		foreach($args as $base => $additional){
+			
+			echo "{$base} : {$additional}";
+			
+			$query = System::Get_Instance()->database()->Select()->table('resources')->where('and', 
+				array(
+					array('=',array(
+						array('col', 'module'),
+						array('u', $mid)
+					)),
+					array('=',array(
+						array('col', 'base'),
+						array('s', $base)
+					))
+				)
+			)->order(
+				array(
+					'priority' => false
+				)
+			);
+			
+			$result = $query->execute();
+			
+			if($row = $result->fetch_object('Resource')){
+				$row->set_additional($additional);
+				return $row;
+			}
+		}
+		
+		throw new Resource_Not_Found_Exception($module, $argument);
 		
 	}
 	

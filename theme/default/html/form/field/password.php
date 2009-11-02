@@ -34,7 +34,9 @@ class Template_Theme_Default_HTML_Form_Field_Password extends Template {
 		}
 ?>
 		<div class="form-field-input">
-			<input type="password" id="<?php echo $this->id(); ?>" value="" name="<?php echo $this->name(); ?>" class="form-field form-field-password">
+			<div class="form-field-input-inner">
+				<input type="password" id="<?php echo $this->id(); ?>" value="" name="<?php echo $this->name(); ?>" class="form-field form-field-password">
+			</div>
 		</div>
 	</div>
 <?php 	

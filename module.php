@@ -25,6 +25,10 @@ abstract class Module {
 		}
 	}
 	
+	public function id(){
+		return $this->id;
+	}
+	
 	public function get_directory(){
 		return $this->dir;
 	}

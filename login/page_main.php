@@ -8,13 +8,17 @@ class Login_Page_Main extends Page_Main {
 		parent::__construct($parent);
 		$this->login = $login;
 		try {
-			$user = $this->login->load($this->parent->resource());
+			$user = $this->login->load($this->parent->resource(), $this);
 			Authentication::Authenticate($user);
 			$system = System::Get_Instance();
 			$system->redirect($system->url('home'));
 			exit;
 		} catch(Login_Incomplete_Exception $e){
 		}
+	}
+	
+	public function url($url){
+		return $this->parent->url($url);
 	}
 	
 	public static function Load($parent){

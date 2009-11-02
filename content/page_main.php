@@ -28,7 +28,6 @@ abstract class Content_Page_Main extends Page_Main {
 				$parent->resource()->get_module()->file('page_main/view');
 				return new Content_Page_Main_View($parent, $content);
 			} catch(Exception $e){
-				print_r($e); exit('Content_Page_Main::Load'); 
 				// Content Invalid / Unavailable
 				$exceptions[] = $e;
 			}

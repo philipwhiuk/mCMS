@@ -16,13 +16,14 @@ class Local_Login extends Login {
 		}
 	}
 	
-	public function load($resource){
-		parent::load($resource);
+	public function load($resource, $parent){
+		parent::load($resource, $parent);
+		$parent = $this->parent();
 		$language = Language::Retrieve();
 
 		$module = Module::Get('local');
 		
-		$this->form = new Form(array('local','login'), $resource->url());
+		$this->form = new Form(array('local','login'), $parent->url($resource->url()));
 		
 		$username = Form_Field::Create('username', array('textbox'));
 		$username->set_label($language->get($module, array('login','username')));

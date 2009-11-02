@@ -1,6 +1,6 @@
 <?php
 
-class Template_Theme_Default_HTML_Form_Field_Textbox extends Template {
+class Template_Theme_Default_HTML_Form_Field_Textarea extends Template {
 	
 	public $label;
 	
@@ -24,7 +24,7 @@ class Template_Theme_Default_HTML_Form_Field_Textbox extends Template {
 	
 	public function display(){
 ?> 
-	<div class="form-field form-field-textbox">
+	<div class="form-field form-field-textarea">
 <?php 
 		if(isset($this->label)){
 ?>
@@ -36,7 +36,7 @@ class Template_Theme_Default_HTML_Form_Field_Textbox extends Template {
 ?>
 		<div class="form-field-input">
 			<div class="form-field-input-inner">
-				<input type="text" id="<?php echo $this->id(); ?>" value="<?php echo $this->value; ?>" name="<?php echo $this->name(); ?>" class="form-field form-field-textbox">
+				<textarea id="<?php echo $this->id(); ?>" name="<?php echo $this->name(); ?>" class="form-field form-field-textarea"><?php echo $this->value; ?></textarea>
 			</div>
 		</div>
 	</div>

@@ -59,7 +59,7 @@ div.form div.form-field {
 
 div.form div.form-field-label {
 	float: left;
-	width: 30%;
+	width: 15%;
 	margin: 0;
 	padding: 0;
 	display: block;	
@@ -68,22 +68,30 @@ div.form div.form-field-label {
 
 div.form div.form-field-label label {
 	font-weight: bold;
-	margin: 1em;
+	margin: 1.5em;
 	display: block;
 }
 
 div.form div.form-field-input {
-	width: 70%;
-	float: left;	
+	width: 80%;
+	float: left;
 }
 
-div.form div.form-field-input input{
-	margin: 0.6em;
-	padding: 0.4em;
+div.form div.form-field-input div.form-field-input-inner {
+	margin: 1em;
+}
+
+div.form div.form-field-password input, div.form div.form-field-textbox input, div.form div.form-field-textarea textarea {
+	width: 100%;
+	font-size: 0.9em;
+	padding: 0.5em;
+	border: thin #aaaaaa solid;
+	font-family: Arial, sans-serif;
 }
 
 div.form div.form-field-submit div.form-field-input {
-	width: 60%;
+	width: 80%;
+	margin-left: 15%;
 	float: left;
 	text-align: center;	
 }
