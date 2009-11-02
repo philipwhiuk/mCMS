@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+body {
+	margin: 0.5em;
+	padding: 0.5em;
+	background: white;
+	font-size: 85%;
+	font-family: Arial, sans-serif;
+}
+
+h1 {
+	margin: 0;	
+}

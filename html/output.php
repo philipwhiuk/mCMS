@@ -3,6 +3,7 @@
 class HTML_Output extends Output {
 	
 	private $theme;
+	private $head = array();
 	
 	public function __construct(){
 		$this->theme = Theme::Load();
@@ -14,8 +15,13 @@ class HTML_Output extends Output {
 		
 	}
 	
+	public function head($key, $data){
+		$this->head[$key] = $data;
+	}
+	
 	public function render($data){
 		$template = System::Get_Instance()->output()->start(array('main'));
+		$template->head = $this->head;
 		$template->main = $data;
 		$template->display();
 	}

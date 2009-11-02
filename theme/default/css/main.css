@@ -81,7 +81,10 @@ div.form div.form-field-input div.form-field-input-inner {
 	margin: 1em;
 }
 
-div.form div.form-field-password input, div.form div.form-field-textbox input, div.form div.form-field-textarea textarea {
+div.form div.form-field-password input, 
+div.form div.form-field-textbox input, 
+div.form div.form-field-textarea textarea, 
+div.form div.form-field-tinymce textarea {
 	width: 100%;
 	font-size: 0.9em;
 	padding: 0.5em;
