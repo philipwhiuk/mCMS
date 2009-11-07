@@ -127,8 +127,6 @@ class Resource {
 		
 		foreach($args as $base => $additional){
 			
-			echo "{$base} : {$additional}";
-			
 			$query = System::Get_Instance()->database()->Select()->table('resources')->where('and', 
 				array(
 					array('=',array(

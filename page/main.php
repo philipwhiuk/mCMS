@@ -4,7 +4,7 @@ abstract class Page_Main {
 	
 	protected $parent;
 	
-	public function __construct($parent){
+	protected function __construct($parent){
 		$this->parent = $parent;
 	}
 	

@@ -18,6 +18,6 @@ abstract class Output {
 		throw new Output_Not_Found_Exception($formats, $exceptions);
 	}
 	
-	abstract public function render($data);
-	abstract public function start($path, $data = array()); 
+	abstract public function logic($path);
+	abstract public function render($data); 
 }

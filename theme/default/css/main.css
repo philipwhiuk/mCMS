@@ -2,6 +2,10 @@
 
 /** Main Styles **/
 
+a {
+	text-decoration: none;
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -36,6 +40,27 @@ div.page-blocks-right {
 
 div.content-text {
 	margin-top: 1em;
+}
+
+/** File **/
+
+div.file dl {
+	border: thin solid #aaaaaa;
+	padding: 1em;
+}
+
+div.file dl dt {
+	float: left;
+	width: 20%;
+	margin: 1em;
+	font-weight: bold;
+}
+
+div.file dl dd {
+	float: right;
+	width: 75%;
+	margin: 1em;
+	text-align: left;
 }
 
 /** Form **/

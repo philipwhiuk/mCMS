@@ -26,6 +26,10 @@ class HTML_Output extends Output {
 		$template->display();
 	}
 	
+	public function logic($path){		
+		return Page::Load($path);
+	}
+	
 	public function start($path, $data = array()){
 		// Add data to path
 		array_unshift($path, 'html');

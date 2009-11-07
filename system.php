@@ -244,15 +244,13 @@ class System {
 		
 		// Ensure core modules are loaded.
 		
-		Module::Get('page');
 		Module::Get('output');
 		
 		// Okay, system has been loaded
 		
-		
-		$this->logic = Page::Load($this->path);
-		
 		$this->output = Output::Load($this->formats);
+		
+		$this->logic = $this->output->logic($this->path);
 		
 	}
 	
@@ -344,8 +342,19 @@ class System {
 		exit;
 	}
 	
-	public function url($url){
+	public function url($url, $get = array()){
+		if(count($get > 0)){
+			$gets = array();
+			foreach($get as $k => $v){
+				$gets[] = "{$k}={$v}";
+			}
+			$url .= '?' . implode('&', $gets);
+		}
 		return $this->remote_path . $url;
+	}
+	
+	public function local_path($path = ''){
+		return $this->local_path . $path;
 	}
 	
 }
