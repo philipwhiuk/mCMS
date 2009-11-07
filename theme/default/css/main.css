@@ -6,6 +6,10 @@ a {
 	text-decoration: none;
 }
 
+pre {
+	font-size: 1.15em;
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -38,28 +42,73 @@ div.page-blocks-right {
 
 /** Content **/
 
-div.content-text {
+div.content-text, div.image-text {
 	margin-top: 1em;
 }
+
+/** Image **/
+
+div.image-files ul {
+	list-style: none;
+	overflow: hidden;
+	margin: 0 0 0 0;
+	padding: 1em;
+}
+
+div.image-files ul li {
+	float: left;
+	list-style: none;
+	margin: 0 0 0 0;
+	padding: 1em;
+	background: #dddddd;
+	border: thin solid #777777;
+	display: block;
+	overflow: hidden;
+	width: 20%;
+	text-align: center;
+	color: #333333;
+}
+
+div.image-files ul li img {
+	width: 100%;
+	margin-bottom: 1em;
+	border: thin solid #555555;
+}
+
+div.image-file img {
+	height: 200px;
+	margin: auto;
+	display: block;
+	padding: 0.5em;
+}
+
+div.image-file div.image-file-info {
+	padding: 1em;
+	margin: 1em;
+	border: thin solid #aaaaaa;
+	overflow: hidden;	
+}
+
 
 /** File **/
 
 div.file dl {
 	border: thin solid #aaaaaa;
 	padding: 1em;
+	overflow: hidden;
 }
 
-div.file dl dt {
+div.image-file dl dt, div.file dl dt {
 	float: left;
 	width: 20%;
-	margin: 1em;
+	margin: 0.5em;
 	font-weight: bold;
 }
 
-div.file dl dd {
+div.image-file dl dd, div.file dl dd {
 	float: right;
 	width: 75%;
-	margin: 1em;
+	margin: 0.5em;
 	text-align: left;
 }
 
@@ -76,56 +125,9 @@ div.form form {
 	padding: 0;
 }
 
-div.form div.form-field {
-	width: 100%;
-	display: block;
-	float: left;
-}
+div.form ol {list-style: none;}
+div.form ol li {list-style: none; margin-bottom: 1em; clear: left;}
 
-div.form div.form-field-label {
-	float: left;
-	width: 15%;
-	margin: 0;
-	padding: 0;
-	display: block;	
-	text-align: right;
-}
-
-div.form div.form-field-label label {
-	font-weight: bold;
-	margin: 1.5em;
-	display: block;
-}
-
-div.form div.form-field-input {
-	width: 80%;
-	float: left;
-}
-
-div.form div.form-field-input div.form-field-input-inner {
-	margin: 1em;
-}
-
-div.form div.form-field-password input, 
-div.form div.form-field-textbox input, 
-div.form div.form-field-textarea textarea, 
-div.form div.form-field-tinymce textarea {
-	width: 100%;
-	font-size: 0.9em;
-	padding: 0.5em;
-	border: thin #aaaaaa solid;
-	font-family: Arial, sans-serif;
-}
-
-div.form div.form-field-submit div.form-field-input {
-	width: 80%;
-	margin-left: 15%;
-	float: left;
-	text-align: center;	
-}
-
-div.form div.form-field-submit div.form-field-input input{
-	margin: 0.6em;
-	padding: 0.4em;
-	font-weight: bold;
-}
+div.form {}
+div.form label {float: left; width: 15em; text-align: right; margin-right: 1em;}
+div.form div.form-field-submit { display: block; text-align: center; margin: auto; }

@@ -343,7 +343,7 @@ class System {
 	}
 	
 	public function url($url, $get = array()){
-		if(count($get > 0)){
+		if(count($get) > 0){
 			$gets = array();
 			foreach($get as $k => $v){
 				$gets[] = "{$k}={$v}";

@@ -4,6 +4,10 @@ a {
 	text-decoration: none;
 }
 
+pre {
+	font-size: 1.15em;
+}
+
 body {
 	margin: 0.5em;
 	padding: 0.5em;
