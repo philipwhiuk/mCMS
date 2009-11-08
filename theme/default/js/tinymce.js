@@ -12,6 +12,7 @@ function tinymce_init(tinymce, filemanager, css){
 		        width : 700,  // Your dimensions may differ - toy around with them!
 		        height : 400,
 		        resizable : "yes",
+		        popup_css : false,
 		        inline : "yes",  // This parameter only has an effect if you use the inlinepopups plugin!
 		        close_previous : "no"
 		    }, {
@@ -39,6 +40,8 @@ function tinymce_init(tinymce, filemanager, css){
 			theme_advanced_statusbar_location : "bottom",
 			theme_advanced_resizing : true,
 			theme_advanced_resize_horizontal : false,
+			
+			inline : true,
 			
 			file_browser_callback : tinymce_filebrowser,
 			

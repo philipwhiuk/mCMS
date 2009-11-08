@@ -4,8 +4,16 @@ class TinyMCE_Page_Main_Files extends TinyMCE_Page_Main {
 	
 	private $url;
 	private $type;
+	
+	// Image browser
+	
 	private $images = array();
 	private $image = false;
+	
+	// File browser
+	
+	private $files = array();
+	private $file = false;
 	
 	public function __construct($parent, $type, $url){
 		parent::__construct($parent);
@@ -29,6 +37,17 @@ class TinyMCE_Page_Main_Files extends TinyMCE_Page_Main {
 			case "media":
 				break;
 			case "file":
+				$this->type = 'file';
+				$this->files = File::Get_All();
+				$arg = $parent->resource()->get_argument();
+				if(is_numeric($arg)){
+					try {
+						$this->file = File::Get_By_ID((int) $arg);
+						$parent->resource()->consume_argument();
+					} catch(Exception $e){
+						$this->file = false;
+					} 
+				}
 				break;
 			default:
 				throw new TinyMCE_Page_Main_Files_Type_Exception($type);
@@ -39,8 +58,36 @@ class TinyMCE_Page_Main_Files extends TinyMCE_Page_Main {
 		
 		$module = Module::Get('tinymce');
 		$system = System::Get_Instance();
+		$language = Language::Retrieve();
 		
 		switch($this->type){
+			case "file":
+				$template = $system->output()->start(array('tinymce','page','files','file'));
+				foreach($this->files as $file){
+					$template->files[] = array(
+						'name' => $file->name(),
+						'url' => $system->url(Resource::Get_By_Argument($module, 'files/' . $file->id())->url(), array(
+							'tinymce[type]' => 'file',
+							'tinymce[url]' => $this->url,
+							'output' => 'inline'
+						))
+					);
+				}
+				if($this->file !== false){
+					$template->file = array(
+						'name' => $this->file->name(),
+						'path' => $this->file->url(),
+						'size' => $this->file->size(),
+						'mime' => $this->file->mime(),
+						
+						'path_label' => $language->get($module, array('files', 'path')),
+						'size_label' => $language->get($module, array('files', 'size')),
+						'mime_label' => $language->get($module, array('files', 'mime'))
+					);
+				} else {
+					$template->file = false;
+				}
+				break;
 			case "image":
 				$template = $system->output()->start(array('tinymce','page','files','image'));
 				foreach($this->images as $image){
@@ -68,9 +115,9 @@ class TinyMCE_Page_Main_Files extends TinyMCE_Page_Main {
 				} else {
 					$template->image = false;
 				}
+				break;
 		}
 		
-		$language = Language::Retrieve();
 		$template->title = $language->get($module, array('files', 'title'));
 
 		return $template;

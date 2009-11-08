@@ -41,6 +41,20 @@ class File {
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
 	
+	public static function Get_All(){
+		$query = System::Get_Instance()->database()->Select()->table('files');
+		
+		$result = $query->execute();
+		
+		$return = array();
+		
+		while($row = $result->fetch_object('File')){
+			$return[] = $row;
+		}
+		
+		return $return;
+	}
+	
 	public static function Get_One($operator, $operand){
 		
 		$query = System::Get_Instance()->database()->Select()->table('files')->where($operator, $operand)->limit(1);
