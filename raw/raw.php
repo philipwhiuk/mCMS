@@ -14,25 +14,19 @@ abstract class Raw {
 	abstract public function mimetype();
 	abstract public function output();
 	
-	public static function Load($path){
-		if($path == ''){
-			$path = 'home';
-		}
+	public static function Load($resource){
 		$exceptions = array();
-		$resources = Resource::Get_By_Paths(array($path,'error'));
-		foreach($resources as $resource){
-			try {				
-				$class = $resource->get_module()->load_section('Raw');
-				$raw = call_user_func(array($class, 'Load'), $resource);
-				
-				if(!($raw instanceof Raw)){
-					throw new Raw_Invalid_Exception($class, $raw);
-				}
-				
-				return $raw;
-			} catch(Exception $e){
-				$exceptions[] = $e;
+		try {				
+			$class = $resource->get_module()->load_section('Raw');
+			$raw = call_user_func(array($class, 'Load'), $resource);
+			
+			if(!($raw instanceof Raw)){
+				throw new Raw_Invalid_Exception($class, $raw);
 			}
+			
+			return $raw;
+		} catch(Exception $e){
+			$exceptions[] = $e;
 		}
 		
 		// Darn, critical error. What do we do now?	

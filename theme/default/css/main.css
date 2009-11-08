@@ -18,8 +18,74 @@ body {
 	font-family: Arial, sans-serif;
 }
 
-h1 {
+h1, h2 {
 	margin: 0;	
+}
+
+/** TinyMCE Filebrowser **/
+
+div.tinymce-files div.tinymce-files-list {
+	float: left;
+	width: 25%;
+	padding: 0;
+	margin: 0;
+	margin-top: 1em; 
+}
+
+div.tinymce-files div.tinymce-files-show {
+	float: right;
+	width: 75%;
+	padding: 0;
+	margin: 0;
+	margin-top: 1em; 
+}
+
+div.tinymce-files div.tinymce-files-show-inner {
+	border: thin solid #999999;
+	padding: 1em;
+	margin: 1em;
+}
+
+div.tinymce-files div.tinymce-files-list ul {
+	list-style-type: none;
+	margin: 1em;
+	border: thin solid #999999;
+	padding: 0.5em;
+}
+
+div.tinymce-files div.tinymce-files-list ul li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0.5em;
+	font-size: 0.85em;
+	background: white;	
+}
+
+div.tinymce-files div.tinymce-files-show div.tinymce-image-files ul {
+	list-style: none;
+	overflow: hidden;
+	margin: 0 0 0 0;
+	padding: 1em;
+}
+
+div.tinymce-files div.tinymce-files-show div.tinymce-image-files ul li {
+	float: left;
+	list-style: none;
+	margin: 0 0 0 0;
+	padding: 1em;
+	background: #dddddd;
+	border: thin solid #777777;
+	display: block;
+	overflow: hidden;
+	width: 20%;
+	text-align: center;
+	color: #333333;
+}
+
+div.tinymce-files div.tinymce-files-show div.tinymce-image-files ul li img {
+	width: 100%;
+	margin-bottom: 1em;
+	border: thin solid #555555;
 }
 
 /** Page **/
@@ -29,6 +95,11 @@ div.page-blocks, div.page-main {
 	background: white;
 	margin: 2em;
 	padding: 1em;
+	overflow: hidden;
+}
+
+div.page-inline div.page-main {
+	margin: 1em	
 }
 
 div.page-blocks-left {

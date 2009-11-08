@@ -8,7 +8,12 @@ abstract class Output {
 		$exceptions = array();
 		foreach($formats as $format){
 			try {
-				$class = Module::Get($format)->load_section('Output');
+				if(!($format instanceof Module)){
+					$module = Module::Get($format); 
+				} else {
+					$module = $format;
+				}
+				$class = $module->load_section('Output');
 				$output = call_user_func(array($class, 'Create'));
 				return $output;
 			} catch (Exception $e){

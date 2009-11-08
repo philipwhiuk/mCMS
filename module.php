@@ -91,6 +91,7 @@ abstract class Module {
 	
 	private static function Load_Module($module){
 		// 	Dependandcy resolver.
+		
 		if(!isset(System::Get_Instance()->modules[$module])){
 			throw new Module_Not_Found_Exception($module);
 		}

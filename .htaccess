@@ -16,6 +16,5 @@ php_flag magic_quotes_runtime off
 RewriteBase /~richard/cms/
 
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
 	
 RewriteRule ^(.+)$                    index.php?path=$1  [QSA,L]

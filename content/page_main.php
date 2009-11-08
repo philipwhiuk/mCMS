@@ -14,13 +14,13 @@ abstract class Content_Page_Main extends Page_Main {
 				
 				switch($parent->resource()->get_argument()){
 					case "edit":
-						$parent->resource()->consume_argument();
 						$parent->resource()->get_module()->file('page_main/edit');
+						$parent->resource()->consume_argument();
 						return new Content_Page_Main_Edit($parent, $content);
 						break;
 					case "view":
-						$parent->resource()->consume_argument();
 						$parent->resource()->get_module()->file('page_main/view');
+						$parent->resource()->consume_argument();
 						return new Content_Page_Main_View($parent, $content);
 						break;
 				}

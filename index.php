@@ -30,12 +30,6 @@ define('CMS',true);
 
 define('CMS_DEBUG',2);
 
-/** 
- * Default output
- */
-
-define('CMS_FORMAT_DEFAULT','html');
-
 /**
  * Loads the CMS file.
  * 

@@ -22,6 +22,21 @@ class Image {
 		return Image_File::Get_By_Image($this);
 	}
 	
+	public static function Get_All(){
+		
+		$query = System::Get_Instance()->database()->Select()->table('images');
+		
+		$result = $query->execute();
+		
+		$return = array();
+		
+		while($row = $result->fetch_object('Image')){
+			$return[] = $row;
+		}
+		
+		return $return;
+	}
+	
 	static public function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
@@ -36,10 +51,7 @@ class Image {
 			throw new Image_Not_Found_Exception($operator, $operand);
 		}
 		
-		$site = $result->fetch_object('Image');
-		
-		return $site;
-		
+		return $result->fetch_object('Image');		
 	}
 	
 }

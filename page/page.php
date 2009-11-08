@@ -6,16 +6,20 @@ class Page {
 	
 	private $main;
 	private $blocks;
+	private $inline;
 	
 	public function display(){
 		$template = System::Get_Instance()->output()->start(array('page'));
 		$template->main = $this->main->display();
+		$template->inline = $this->inline;
 		$template->blocks = array();
-		foreach($this->blocks as $block){
-			$template->blocks[$block->get_layout()][$block->get_order()] = $block->display();
-		}
-		foreach($template->blocks as $layout => $blocks){
-			ksort($template->blocks[$layout]);
+		if(!$this->inline){
+			foreach($this->blocks as $block){
+				$template->blocks[$block->get_layout()][$block->get_order()] = $block->display();
+			}
+			foreach($template->blocks as $layout => $blocks){
+				ksort($template->blocks[$layout]);
+			}
 		}
 		return $template;
 	}
@@ -28,8 +32,9 @@ class Page {
 		return System::Get_Instance()->url($url);
 	}
 	
-	public function __construct($resource){
+	public function __construct($resource, $inline){
 		$this->resource = $resource;
+		$this->inline = $inline;
 		$class = $resource->get_module()->load_section('Page_Main');
 		$this->main = call_user_func(array($class, 'Load'), $this);
 		
@@ -37,21 +42,17 @@ class Page {
 			throw new Page_Main_Invalid_Exception($class, $this);
 		}
 		
-		$this->blocks = Page_Block::Load($this->resource()->get_id());
+		if(!$inline){
+			$this->blocks = Page_Block::Load($this->resource()->get_id());
+		}
 	}
 	
-	public static function Load($path){
-		if($path == ''){
-			$path = 'home';
-		}
+	public static function Load($resource, $inline = false){
 		$exceptions = array();
-		$resources = Resource::Get_By_Paths(array($path,'error'));
-		foreach($resources as $resource){
-			try {
-				return new Page($resource);
-			} catch(Exception $e){
-				$exceptions[] = $e;
-			}
+		try {
+			return new Page($resource, $inline);
+		} catch(Exception $e){
+			$exceptions[] = $e;
 		}
 		
 		// Darn, critical error. What do we do now?

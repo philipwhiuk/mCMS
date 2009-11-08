@@ -17,14 +17,18 @@ class Template_Theme_Default_HTML_Page extends Template {
 	
 	public function display(){
 ?>		
-<div class="page">
-<?php $this->blocks('top'); ?>
-<?php $this->blocks('left'); ?>
-<?php $this->blocks('right'); ?>
+<div class="page <?php if($this->inline){ ?>page-inline<?php } ?>">
+<?php if(!$this->inline){ ?>
+<?php 	$this->blocks('top'); ?>
+<?php 	$this->blocks('left'); ?>
+<?php 	$this->blocks('right'); ?>
+<?php } ?>
 <div class="page-main">
 <?php $this->main->display(); ?>
 </div>
+<?php if(!$this->inline){ ?>
 <?php $this->blocks('bottom'); ?>
+<?php } ?>
 </div>
 <?php	
 	}	

@@ -25,7 +25,14 @@ class TinyMCE_Field extends Form_Field {
 	}
 	
 	public function display($parent){
-		$template = System::Get_Instance()->output()->start(array('tinymce'));
+		
+		$module = Module::Get('tinymce');
+		
+		$system = System::Get_Instance();
+		
+		$url = $system->url(Resource::Get_By_Argument($module, 'files')->url());
+		
+		$template = $system->output()->start(array('tinymce','field'), array('filebrowser' => $url));
 		
 		$id = $parent->get_id();
 		$id[] = $this->name;

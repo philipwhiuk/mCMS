@@ -102,14 +102,7 @@ class System {
 		
 		$this->remote_path = defined('CMS_REMOTE_PATH') ? CMS_REMOTE_PATH : ($this->dirname($_SERVER['PHP_SELF']) . '/');
 		$this->debug = defined('CMS_DEBUG') ? CMS_DEBUG : 0;
-		$this->path = defined('CMS_PATH') ? CMS_PATH : isset($_GET['path']) ? $_GET['path'] : '';
-		$this->formats = array();
-		if(defined('CMS_FORMAT'))
-			$this->formats[] = CMS_FORMAT;
-		if(isset($_GET['output']))
-			$this->formats[] = $_GET['output'];
-		if(defined('CMS_FORMAT_DEFAULT'))
-			$this->formats[] = CMS_FORMAT_DEFAULT;
+		$this->path = defined('CMS_PATH') ? CMS_PATH : isset($_GET['path']) && trim($_GET['path'],'/') != '' ? $_GET['path'] : 'home';
 		$this->local_path = defined('CMS_LOCAL_PATH') ? CMS_LOCAL_PATH : (dirname(__FILE__) . '/');
 		
 	}
@@ -245,12 +238,35 @@ class System {
 		// Ensure core modules are loaded.
 		
 		Module::Get('output');
+		Module::Get('resource');
 		
-		// Okay, system has been loaded
+		// Resource(s)
 		
-		$this->output = Output::Load($this->formats);
+		$this->resources = Resource::Get_By_Paths(array($this->path,'error'));
 		
-		$this->logic = $this->output->logic($this->path);
+		$exceptions = array();
+		
+		foreach($this->resources as $resource){
+			try {
+				$this->formats = array();
+				if(defined('CMS_FORMAT'))
+					$this->formats[] = CMS_FORMAT;
+				if(isset($_GET['output']))
+					$this->formats[] = $_GET['output'];
+				$this->formats[] = $resource->get_output();
+				if(defined('CMS_FORMAT_DEFAULT'))
+					$this->formats[] = CMS_FORMAT_DEFAULT;
+					
+				$this->output = Output::Load($this->formats);
+				$this->logic = $this->output->logic($resource);
+				return;
+			} catch (Exception $e){
+				$exceptions[] = $e;
+			}
+		}
+		
+		
+		throw new System_Load_Resource_Exception($exceptions);
 		
 	}
 	
@@ -342,7 +358,8 @@ class System {
 		exit;
 	}
 	
-	public function url($url, $get = array()){
+	public function url($url, $get = array()){		
+		$url = rtrim($url, '/');
 		if(count($get) > 0){
 			$gets = array();
 			foreach($get as $k => $v){

@@ -9,6 +9,14 @@ class Resource {
 	private $additional;
 	private $changed;
 	private $pointer = 0;
+	private $output;
+	
+	public function get_output(){
+		if(!($this->output instanceof Module)){
+			$this->output = Module::Get_ID($this->output);
+		}
+		return $this->output;
+	}
 	
 	public function get_id(){
 		return $this->id;
