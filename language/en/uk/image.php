@@ -7,5 +7,8 @@ return array(
 		'mime' => 'Type',
 		'width' => 'Width',
 		'height' => 'Height'
+	),
+	'list' => array(
+		'title' => 'Image List'
 	)
 );

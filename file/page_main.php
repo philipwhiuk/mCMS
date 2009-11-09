@@ -6,7 +6,12 @@ abstract class File_Page_Main extends Page_Main {
 		$exceptions = array();
 		$arg = $parent->resource()->get_argument();
 		
-		if(is_numeric($arg)){
+		if($arg == 'list'){
+			$parent->resource()->consume_argument();
+			$parent->resource()->get_module()->file('page_main/list');
+			return new File_Page_Main_List($parent);
+			break;
+		} elseif(is_numeric($arg)){
 			try {
 				$file = File::Get_By_ID((int) $arg);
 				$parent->resource()->consume_argument();

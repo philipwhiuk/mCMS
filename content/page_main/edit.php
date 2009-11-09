@@ -10,7 +10,7 @@ class Content_Page_Main_Edit extends Content_Page_Main {
 		$language = Language::Retrieve();
 		$module = Module::Get('content');
 		
-		Permission::Check(array('content',$content->id()), array('view','edit','add','delete'),'edit');
+		Permission::Check(array('content',$content->id()), array('view','edit','add','delete','list'),'edit');
 		
 		$this->form = new Form(array('content',$content->id(), 'edit'), $this->parent->url($this->parent->resource()->url()));
 		

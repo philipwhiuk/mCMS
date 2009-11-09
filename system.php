@@ -265,7 +265,6 @@ class System {
 			}
 		}
 		
-		
 		throw new System_Load_Resource_Exception($exceptions);
 		
 	}

@@ -8,7 +8,7 @@ class Image_Page_Main_View extends Image_Page_Main {
 		parent::__construct($parent);
 		$this->image = $image;
 		$this->files = $this->image->files();
-		Permission::Check(array('image',$image->id()), array('view','edit','add','delete'),'view');
+		Permission::Check(array('image',$image->id()), array('view','edit','add','delete','list'),'view');
 	}
 	
 	public function display(){

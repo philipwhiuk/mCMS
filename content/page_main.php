@@ -7,7 +7,13 @@ abstract class Content_Page_Main extends Page_Main {
 		$exceptions = array();
 		$arg = $parent->resource()->get_argument();
 		
-		if(is_numeric($arg)){
+		if($arg == 'add'){
+		
+		} elseif($arg == 'list'){
+			$parent->resource()->get_module()->file('page_main/list');
+			$parent->resource()->consume_argument();
+			return new Content_Page_Main_List($parent);
+		} elseif(is_numeric($arg)){
 			try {
 				$content = Content::Get_By_ID((int) $arg);
 				$parent->resource()->consume_argument();

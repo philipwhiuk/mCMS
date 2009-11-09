@@ -6,7 +6,11 @@ abstract class Image_Page_Main extends Page_Main {
 		$exceptions = array();
 		$arg = $parent->resource()->get_argument();
 		
-		if(is_numeric($arg)){
+		if($arg == 'list'){
+			$parent->resource()->consume_argument();
+			$parent->resource()->get_module()->file('page_main/list');
+			return new Image_Page_Main_List($parent);
+		} elseif(is_numeric($arg)){
 			try {
 				$image = Image::Get_By_ID((int) $arg);
 				$parent->resource()->consume_argument();
@@ -25,7 +29,7 @@ abstract class Image_Page_Main extends Page_Main {
 				}
 				
 				/*
-				switch($parent->resource()->get_argument()){
+				switch($arg){
 					case "edit":
 						$parent->resource()->consume_argument();
 						$parent->resource()->get_module()->file('page_main/edit');

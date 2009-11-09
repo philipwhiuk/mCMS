@@ -29,6 +29,20 @@ class Content {
 		$query->execute();
 	}
 	
+	public static function Get_All(){
+		$query = System::Get_Instance()->database()->Select()->table('content');
+		
+		$result = $query->execute();
+		
+		$return = array();
+		
+		while($row = $result->fetch_object('Content')){
+			$return[] = $row;
+		}
+		
+		return $return;
+	}
+	
 	public static function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
