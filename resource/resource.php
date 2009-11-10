@@ -17,6 +17,26 @@ class Resource {
 		}
 		return $this->output;
 	}
+
+	public function equal($that){
+		if($this->module->id() == $that->module->id()){
+			$eq = 1;
+			$a_args = array_merge($this->base, $this->additional);
+			$b_args = array_merge($that->base, $that->additional);
+			foreach($a_args as $k => $arg){
+				if(!isset($b_args[$k])){
+					return $eq;
+				}
+				if($b_args[$k] != $a_args[$k]){
+					return $eq;
+				}
+				$eq ++;
+			}
+			return true;
+		} else {
+			return 0;
+		}
+	}
 	
 	public function get_id(){
 		return $this->id;

@@ -81,10 +81,7 @@ class Content {
 			throw new Content_Not_Found_Exception($operator, $operand);
 		}
 		
-		
-		$site = $result->fetch_object('Content');
-		
-		return $site;
+		return $result->fetch_object('Content');
 		
 	}
 }

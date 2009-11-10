@@ -43,7 +43,7 @@ class Page {
 		}
 		
 		if(!$inline){
-			$this->blocks = Page_Block::Load($this->resource()->get_id());
+			$this->blocks = Page_Block::Load($this->resource());
 		}
 	}
 	
