@@ -202,5 +202,5 @@ div.form ol {list-style: none;}
 div.form ol li {list-style: none; margin-bottom: 1em; clear: left;}
 
 div.form {}
-div.form label {float: left; width: 15em; text-align: right; margin-right: 1em;}
+div.form label {float: left; width: 8%; text-align: right; margin-right: 1em;}
 div.form div.form-field-submit { display: block; text-align: center; margin: auto; }

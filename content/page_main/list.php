@@ -13,6 +13,8 @@ class Content_Page_Main_List extends Content_Page_Main {
 	public function display(){
 		$template = System::Get_Instance()->output()->start(array('content','page','list'));
 		
+		$language = Language::Retrieve();
+		
 		$system = System::Get_Instance();
 		
 		$module = Module::Get('content');

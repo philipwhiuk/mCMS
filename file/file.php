@@ -42,7 +42,7 @@ class File {
 	}
 	
 	public static function Get_All(){
-		$query = System::Get_Instance()->database()->Select()->table('files');
+		$query = System::Get_Instance()->database()->Select()->table('files')->order(array('name' => true));
 		
 		$result = $query->execute();
 		

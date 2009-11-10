@@ -1,6 +1,6 @@
 <?php
 
-System::Get_Instance()->files('database/mysqli/exception','database/mysqli/query','database/mysqli/select','database/mysqli/update');
+System::Get_Instance()->files('database/mysqli/exception','database/mysqli/query','database/mysqli/select','database/mysqli/update', 'database/mysqli/insert');
 
 class Database_MySQLi extends MySQLi implements IDatabase {
 	
@@ -43,6 +43,10 @@ class Database_MySQLi extends MySQLi implements IDatabase {
 		}
 		
 		return $result;
+	}
+	
+	public function insert(){
+		return new Database_MySQLi_Insert_Query();
 	}
 	
 	public function Select(){

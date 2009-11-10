@@ -8,12 +8,19 @@ interface IDatabase {
 	
 	public function select();
 	public function update();
+	public function insert();
 	
 }
 
 interface IDatabase_Query {
 	
 	public function table($table);
+	
+}
+
+interface IDatabase_Insert_Query extends IDatabase_Query {
+	
+	public function set($data);
 	
 }
 

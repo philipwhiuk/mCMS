@@ -36,10 +36,6 @@ class Content_Page_Main_Edit extends Content_Page_Main {
 			
 			System::Get_Instance()->redirect($this->parent->url($resource->url()));
 		} catch(Form_Incomplete_Exception $e){
-		} catch(Exception $f){
-			// Form is incomplete. Oh dear.
-			print_r($f);
-			exit;
 		}
 		
 	}

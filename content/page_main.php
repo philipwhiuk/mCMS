@@ -8,7 +8,9 @@ abstract class Content_Page_Main extends Page_Main {
 		$arg = $parent->resource()->get_argument();
 		
 		if($arg == 'add'){
-		
+			$parent->resource()->get_module()->file('page_main/add');
+			$parent->resource()->consume_argument();
+			return new Content_Page_Main_Add($parent);
 		} elseif($arg == 'list'){
 			$parent->resource()->get_module()->file('page_main/list');
 			$parent->resource()->consume_argument();

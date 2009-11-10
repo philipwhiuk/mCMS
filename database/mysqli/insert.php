@@ -1,6 +1,6 @@
 <?php
 
-class Database_MySQLi_Update_Query extends Database_MySQLi_Query implements IDatabase_Update_Query {
+class Database_MySQLi_Insert_Query extends Database_MySQLi_Query implements IDatabase_Insert_Query {
 	
 	private $limit;
 	private $offset;
@@ -16,18 +16,9 @@ class Database_MySQLi_Update_Query extends Database_MySQLi_Query implements IDat
 			throw new Database_MySQLi_Update_Invalid_Query_Exception($this, 'set');
 		}
 		
-		$sql = "UPDATE `{$this->table}`";
+		$sql = "INSERT INTO `{$this->table}`";
 		
 		$sql .= $this->generate_set();
-		
-		if($this->where){
-			$sql .= ' ' . $this->generate_where();
-		}
-		
-		if(isset($this->limit)){
-			$sql .= ' LIMIT %u';
-			$this->args[] = $this->limit;
-		}
 		
 		return $sql;
 	}
@@ -49,23 +40,12 @@ class Database_MySQLi_Update_Query extends Database_MySQLi_Query implements IDat
 		try {
 			return parent::execute();
 		} catch(Exception $e){
-			throw new Database_MySQLi_Update_Query_Exception($e);
+			throw new Database_MySQLi_Insert_Query_Exception($e);
 		}
 	}
 	
 	public function set($data){
 		$this->set = $data;
-		return $this;
-	}
-	
-	public function where($operator, $operand){
-		$this->where = true;
-		return parent::where($operator, $operand);
-	}
-	
-	
-	public function limit($number){
-		$this->limit = $number;
 		return $this;
 	}
 	

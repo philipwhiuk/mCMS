@@ -6,6 +6,10 @@ class Content {
 	private $title;
 	private $body;
 	
+	private function __construct($data = array()){
+		foreach($data as $k => $v){ $this->$k = $v; }
+	}
+	
 	public function get_title(){
 		return $this->title;
 	}
@@ -18,6 +22,23 @@ class Content {
 		return $this->id;
 	}
 	
+	public function Add($data){
+		$database = System::Get_Instance()->database();
+		$query = $database->insert()->table('content')
+			->set(array(
+					'title' => array('s', $data['title']),
+					'body' => array('s', $data['body'])
+			));
+		
+		$query->execute();
+		
+		return new Content(array(
+			'title' => $data['title'],
+			'body' => $data['body'],
+			'id' => $database->insert_id		// TODO: Fix!
+		));
+	}
+	
 	public function update($data){
 		$query = System::Get_Instance()->database()->Update()->table('content')
 			->set(array(
@@ -25,8 +46,11 @@ class Content {
 					'body' => array('s', $data['body'])
 			))
 			->where('=', array(array('col','id'), array('u', $this->id)))->limit(1);
-		
+			
 		$query->execute();
+		
+		$this->title = $data['title'];
+		$this->body = $data['body'];
 	}
 	
 	public static function Get_All(){
