@@ -1,6 +1,5 @@
 # CMS APACHE HTACCESS FILE
 
-
 Options FollowSymLinks
 RewriteEngine On
 
@@ -14,7 +13,4 @@ php_flag magic_quotes_gpc off
 php_flag magic_quotes_runtime off
 
 RewriteBase /~richard/cms/
-
-RewriteCond %{REQUEST_FILENAME} !-f
-	
-RewriteRule ^(.+)$                    index.php?path=$1  [QSA,L]
+RewriteRule ^(.+)$                    index.php?path=$1 [QSA,L]

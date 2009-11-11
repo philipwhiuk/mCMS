@@ -357,8 +357,10 @@ class System {
 		exit;
 	}
 	
-	public function url($url, $get = array()){		
-		$url = rtrim($url, '/');
+	public function url($url, $get = array(), $internal = true){
+		if($internal){		
+			$url = rtrim($url, '/') . '/';
+		}
 		if(count($get) > 0){
 			$gets = array();
 			foreach($get as $k => $v){

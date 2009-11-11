@@ -42,8 +42,8 @@ class Theme {
 		
 	}
 	
-	public function url($path){
-		return System::Get_Instance()->url('theme/' . $this->directory . '/' . $path);
+	public function url($path, $internal = false){
+		return System::Get_Instance()->url('theme/' . $this->directory . '/' . $path, array(), $internal);
 	}
 	
 	public function start($path, $data = array()){
