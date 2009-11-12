@@ -6,6 +6,7 @@ class News_Page_Main_Article_View extends News_Page_Main {
 	
 	public function __construct($parent, $category, $article){
 		parent::__construct($parent);
+		Permission::Check(array('news/article',$category->id()), array('view','edit','add','delete'),'view');
 		$this->category = $category;
 		$this->article = $article;
 		$this->article->content();
