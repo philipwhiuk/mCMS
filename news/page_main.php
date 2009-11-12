@@ -39,6 +39,13 @@ abstract class News_Page_Main extends Page_Main {
 				} else {
 					// View Article
 					
+					if($arg == 'view'){
+						$parent->resource()->consume_argument();
+					}
+					
+					$parent->resource()->get_module()->file('page_main/article/view');
+					return new News_Page_Main_Article_View($parent, $category, $article);
+					
 				}
 				
 			}

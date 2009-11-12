@@ -22,6 +22,10 @@ h1, h2 {
 	margin: 0;	
 }
 
+h2 {
+	font-size: 1.3em;
+}
+
 /** TinyMCE Filebrowser **/
 
 div.tinymce-files div.tinymce-files-list {
@@ -182,6 +186,18 @@ div.image-file div.image-file-info {
 
 li.menu-trail a.menu-trail {
 	font-weight: bold;
+}
+
+/** News **/
+
+ul.news-category-list-articles {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+div.news-article-date {
+	font-style: italic;
+	margin: 1em 0;
 }
 
 /** File **/

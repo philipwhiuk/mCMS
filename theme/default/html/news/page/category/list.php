@@ -28,7 +28,7 @@ class Template_Theme_Default_HTML_News_Page_Category_List extends Template {
 		<li>
 			<div class="news-article">
 				<h2><a href="<?php echo $article['url']; ?>"><?php echo $article['title']; ?></a></h2>
-				<div class="news-date"><?php echo $article['time']; ?></div>
+				<div class="news-article-date"><?php echo $article['time']; ?></div>
 				<div class="news-article-text">
 					<?php echo $article['body']; ?> 
 				</div> 
