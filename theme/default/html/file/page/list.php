@@ -17,3 +17,4 @@ class Template_Theme_Default_HTML_File_Page_List extends Template {
 <?php	
 	}	
 }
+

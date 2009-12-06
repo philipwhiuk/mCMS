@@ -35,7 +35,7 @@ class Menu_Page_Block_Main_View extends Content_Page_Block_Main {
 		
 		// $eqRating represents the current equality between components
 		
-		$eqRating = 0;
+		$eqRating = $this->menu->req_factor();
 		$current = null;
 		
 		$parent = $this->parent->parent();

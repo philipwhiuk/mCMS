@@ -4,11 +4,16 @@ class Menu {
 
 	private $id;
 	private $name;
+	private $req_factor;
 	
 	private $resources;
 	
 	public function id(){
 		return $this->id;
+	}
+	
+	public function req_factor(){
+		return $this->req_factor;
 	}
 	
 	public function resources(){

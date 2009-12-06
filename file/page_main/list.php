@@ -23,7 +23,9 @@ class File_Page_Main_List extends File_Page_Main {
 		
 		foreach($this->files as $file){
 			$template->files[] = array(
+				'id' => $file->id(),
 				'name' => $file->name(),
+				'furl' => $file->url(),
 				'url' => $system->url(Resource::Get_By_Argument($module, $file->id())->url())
 			);
 		}
