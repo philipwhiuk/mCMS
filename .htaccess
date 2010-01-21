@@ -13,4 +13,4 @@ php_flag magic_quotes_gpc off
 php_flag magic_quotes_runtime off
 
 RewriteBase /~richard/cms/
-RewriteRule ^(.+)$                    index.php?path=$1 [QSA,L]
+RewriteRule ^(.*)$                    index.php?path=$1 [QSA,L]

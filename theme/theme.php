@@ -48,7 +48,11 @@ class Theme {
 	
 	public function start($path, $data = array()){
 		// Add data to path
-		array_unshift($path, 'theme', $this->directory);
+		$e = array_reverse(explode('/', $this->directory));
+		foreach($e as $f){
+			array_unshift($path, $f);
+		}
+		array_unshift($path, 'theme');
 		$data['theme'] = $this;
 		return Template::Start($path, $data);
 	}

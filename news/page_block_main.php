@@ -1,6 +1,6 @@
 <?php
 
-abstract class News_Page_Main extends Page_Main {
+abstract class News_Page_Block_Main extends Page_Block_Main {
 	
 	public static function Load($parent){
 		
@@ -43,8 +43,8 @@ abstract class News_Page_Main extends Page_Main {
 						$parent->resource()->consume_argument();
 					}
 					
-					$parent->resource()->get_module()->file('page_main/article/view');
-					return new News_Page_Main_Article_View($parent, $category, $article);
+					$parent->resource()->get_module()->file('page_block_main/article/view');
+					return new News_Page_Block_Main_Article_View($parent, $category, $article);
 					
 				}
 			} elseif(is_numeric($arg)){			// ID from Category
@@ -62,8 +62,8 @@ abstract class News_Page_Main extends Page_Main {
 						$parent->resource()->consume_argument();
 					}
 					
-					$parent->resource()->get_module()->file('page_main/article/view');
-					return new News_Page_Main_Article_View($parent, $category, $article);
+					$parent->resource()->get_module()->file('page_block_main/article/view');
+					return new News_Page_Block_Main_Article_View($parent, $category, $article);
 					
 				}
 				
@@ -79,8 +79,8 @@ abstract class News_Page_Main extends Page_Main {
 				$parent->resource()->consume_argument();
 			}
 			
-			$parent->resource()->get_module()->file('page_main/category/list');
-			return new News_Page_Main_Category_List($parent, $category);
+			$parent->resource()->get_module()->file('page_block_main/category/list');
+			return new News_Page_Block_Main_Category_List($parent, $category);
 		}
 		
 	}

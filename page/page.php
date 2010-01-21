@@ -15,7 +15,7 @@ class Page {
 		$template->blocks = array();
 		if(!$this->inline){
 			foreach($this->blocks as $block){
-				$template->blocks[$block->get_layout()][$block->get_order()] = $block->display();
+				$template->blocks[$block->get_layout()][$block->get_order()][] = $block->display();
 			}
 			foreach($template->blocks as $layout => $blocks){
 				ksort($template->blocks[$layout]);

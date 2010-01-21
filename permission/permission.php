@@ -123,6 +123,7 @@ abstract class Permission {
 			while($local > 0){
 				$mlocal = $local % 3;
 				$local -= $mlocal;
+				$local = $local / 3;
 				if($mlocal == CMS_PERM_DISALLOWED || $mlocal == CMS_PERM_ALLOWED){
 					// User overrides
 					$dmodes[$i] = $mlocal;
@@ -155,3 +156,4 @@ abstract class Permission {
 	} 
 	
 }
+
