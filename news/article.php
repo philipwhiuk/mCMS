@@ -6,6 +6,15 @@ class News_Article {
 	private $time;
 	private $content;
 	private $category;
+	private $brief;
+
+	public function brief(){
+		if(!($this->brief instanceof Content)){
+			$this->brief = Content::Get_By_ID($this->brief);
+		}
+		return $this->brief;
+	}
+
 	
 	public function content(){
 		if(!($this->content instanceof Content)){
@@ -22,7 +31,7 @@ class News_Article {
 		return $this->time;
 	}
 	
-	public static function Get_By_Category($category){
+	public static function Get_By_Category($category, $limit = null, $offset = null){
 		
 		if($category instanceof News_Category){
 			$category = $category->id();
@@ -32,14 +41,22 @@ class News_Article {
 						->database()
 						->Select()
 						->table('news_articles')
-						->where('=', array(array('col','category'), array('u', $category)));
+						->where('=', array(array('col','category'), array('u', $category)))
+						->order(array('time' => false));
+
+		if(isset($limit)){
+			$query->limit($limit);
+			if(isset($offset)){
+				$query->offset($offset);
+			}
+		}
 		
 		$result = $query->execute();
 		
 		$return = array();
 		
 		while($row = $result->fetch_object('News_Article')){
-			$return[] = $row;
+			$return[$row->id()] = $row;
 		}
 		
 		return $return;
@@ -52,7 +69,7 @@ class News_Article {
 		}
 		//array('=', array(array('col','category'), array('u', $category))),
 
-		$query = System::Get_Instance()->database()->Select()->table('news_articles')->where('=', array(array('col','category'), array('u', $category)))->order(array('time' => true))->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('news_articles')->where('=', array(array('col','category'), array('u', $category)))->order(array('time' => false))->limit(1);
 		
 		$result = $query->execute();
 		

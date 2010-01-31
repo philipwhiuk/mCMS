@@ -42,9 +42,9 @@ class News_Category {
 		return $this->children;
 	}
 	
-	public function articles(){
+	public function articles($limit = null, $offset = null){
 		if(!isset($this->articles)){
-			$this->articles = News_Article::Get_By_Category($this);
+			$this->articles = News_Article::Get_By_Category($this, $limit, $offset);
 		}
 		return $this->articles;
 	}
@@ -55,14 +55,12 @@ class News_Category {
 			$parent = $parent->id();
 		}
 		
-		$query = System::Get_Instance()
-						->database()
+		$query = System::Get_Instance()	->database()
 						->Select()
 						->table('news_categories')
 						->where('=', array(array('col','parent'), array('u', $parent)));
 		
 		$result = $query->execute();
-		
 		$return = array();
 		
 		while($row = $result->fetch_object('News_Category')){
@@ -70,7 +68,6 @@ class News_Category {
 		}
 		
 		return $return;
-		
 	}
 	
 	public static function Get_By_ID_Parent($id, $parent){

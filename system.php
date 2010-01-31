@@ -264,6 +264,7 @@ class System {
 				$exceptions[] = $e;
 			}
 		}
+
 		
 		throw new System_Load_Resource_Exception($exceptions);
 		
@@ -282,7 +283,7 @@ class System {
 				print_r(array('exception' => $exception, 'request' => $_REQUEST, 'server' => $_SERVER, 'system' => $this));
 				break;
 			case System::dump_file:
-				$dump = '<?php $dump[] = \'' . serialize(array('system' => $this, 'request' => $_REQUEST, 'server' => $_SERVER, 'exception' => $exception)) . '\'; ?>';
+				$dump = '<' . '?php $dump[] = \'' . serialize(array('system' => $this, 'request' => $_REQUEST, 'server' => $_SERVER, 'exception' => $exception)) . '\'; ?' . '>';
 				file_put_contents($this->local_path . 'system/logs/dump.' . time() . '.php', $dump, FILE_APPEND);
 				break;
 			case System::dump_log:

@@ -9,6 +9,7 @@ class News_Page_Block_Main_Article_View extends News_Page_Block_Main {
 		Permission::Check(array('news/article',$category->id()), array('view','edit','add','delete'),'view');
 		$this->category = $category;
 		$this->article = $article;
+		$this->article->brief();
 		$this->article->content();
 	}
 	
@@ -21,12 +22,17 @@ class News_Page_Block_Main_Article_View extends News_Page_Block_Main {
 		
 		$df = $language->get($module, array('category','list', 'date'));
 		
-		$url = join('/', $this->category->parents()) . '/article/' . $this->article->id();
+		$furl = join('/', $this->category->parents()) . '/article/' . $this->article->id();
+		$surl = join('/', $this->category->parents()) . '/list/article/' . $this->article->id();
 
-		$template->title = $this->article->content()->get_title();
-		$template->body = $this->article->content()->get_body();
+		$template->b_title = $this->article->brief()->get_title();
+		$template->b_body = $this->article->brief()->get_body();
+
+		$template->c_title = $this->article->content()->get_title();
+		$template->c_body = $this->article->content()->get_body();
 		$template->time = date($df, $this->article->time());
-		$template->url = $system->url(Resource::Get_By_Argument($module, $url)->url());
+		$template->furl = $system->url(Resource::Get_By_Argument($module, $furl)->url());
+		$template->surl = $system->url(Resource::Get_By_Argument($module, $surl)->url());
 		return $template;
 	}
 }
