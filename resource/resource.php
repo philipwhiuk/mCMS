@@ -19,7 +19,19 @@ class Resource {
 	}
 
 	public function equal($that){
-		if($this->module->id() == $that->module->id()){
+		if($this->module instanceof Module){
+			$aid = (int) $this->module->id();
+		} else {
+			$aid = (int) $this->module;
+		}
+
+		if($that->module instanceof Module){
+			$bid = (int) $that->module->id();
+		} else {
+			$bid = (int) $that->module;
+		}
+
+		if($aid == $bid){
 			$eq = 1;
 			$a_args = array_merge($this->base, $this->additional);
 			$b_args = array_merge($that->base, $that->additional);
@@ -43,6 +55,9 @@ class Resource {
 	}
 	
 	public function get_module(){
+		if(!($this->module instanceof Module)){
+			$this->module = Module::Get_ID($this->module);
+		}
 		return $this->module;
 	}
 	
@@ -80,10 +95,9 @@ class Resource {
 	public function __construct(){
 		$this->base = ($this->base == "") ? array() : explode('/', trim($this->base,'/'));
 		$this->additional = ($this->additional == "") ? array() : explode('/', trim($this->additional,'/'));
-		if(!($this->module instanceof Module)){
-			$this->module = Module::Get_ID($this->module);
-		}
 	}
+
+	
 	
 	public static function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
