@@ -6,6 +6,7 @@
 class Gallery_Page_Main_View extends Gallery_Page_Main {
 	public function __construct($parent, $gallery){
 		parent::__construct($parent);
+		Module::Get('gallery')->file('gallery_item/page_main/view');
 		Permission::Check(array('gallery',$gallery->id()), array('view','edit','add','delete'),'view');
 		$g = $this->gallery = $gallery;
 		$g->content();
@@ -45,6 +46,7 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 			$g->selected = true;
 			$c = $g->children();
 			$o = $g->objects();
+			$g->items = array();
 
 			foreach($c as $child){ $child->content(); }
 
@@ -65,34 +67,63 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 				$oo = current($o);
 				$oo->selected = true;
 			}
-		}
+
+			if(count($o) > 0){
+				$g->section = $class = $g->module()->load_section('Gallery_Item_Page_Main_View');
+				foreach($o as $k => $object){
+					$g->items[$k] = new $class($object);
+				}
+			}
+
+		} 
 	}
 
-	public function display_sub(&$g, &$t){
+	public function display_sub(&$g, &$t, $furl, $surl, $first){
+		if(!$first){
+			$furl .= $g->id() . '/';
+			$surl .= $g->id() . '/';
+		}
+		$rf = Resource::Get_By_Argument($this->module, $furl);
+		$rs = Resource::Get_By_Argument($this->module, $surl);
 		$t = array(
 			'title' => $g->content()->get_title(),
 			'body' => $g->content()->get_body(),
+			'furl' => $this->system->url($rf->url()),
+			'surl' => $this->system->url($rs->url()),
 			'children' => array(),
 			'objects' => array(),
 			'selected' => isset($g->selected) ? $g->selected : false
 		);
+		
+		if(isset($g->items) && count($g->items) > 0){
+			foreach($g->items as $g => $item){
+				$t['objects'][$g] = $item->display();
+				if($item->selected()){
+					$t['objselected'] = $g;
+				}
+			}		
+		}
+
 		if(isset($g->selected) && $g->selected){
 			foreach($g->children() as $sg){
 				$st = &$t['children'][];
-				$this->display_sub($sg, $st);
+				$this->display_sub($sg, $st, $furl, $surl, false);
 			}
 		}
 	}
 
 	public function display(){
-		$system = System::Get_Instance();
-		$module = Module::Get('gallery');
-		$template = $system->output()->start(array('gallery','page','view'));
+		$this->system = System::Get_Instance();
+		$this->module = Module::Get('gallery');
+		$template = $this->system->output()->start(array('gallery','page','view'));
 		
 		$g = $this->gallery;
 		$template->gallery = array();
 		$t = &$template->gallery;
-		$this->display_sub($g, $t);
+
+		$url = join('/',$this->gallery->parents()). '/';
+
+		$this->display_sub($g, $t, $url, $url . 'view/gallery/', true );
 		return $template;
 	}	
 

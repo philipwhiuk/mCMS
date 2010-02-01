@@ -2,6 +2,22 @@
 
 class Image_Gallery_Item extends Gallery_Item {
 
+	private $id;
+	private $image;
+	private $gallery;
+	private $sort;
+
+	public function id(){
+		return (int) $this->id;
+	}
+
+	public function image(){
+		if(!($this->image instanceof Image)){
+			$this->image = Image::Get_By_ID($this->image);
+		}
+		return $this->image;
+	}
+
 	public static function Get_By_Gallery($gallery){
 
 		if($gallery instanceof Gallery){

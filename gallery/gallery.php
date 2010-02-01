@@ -12,6 +12,13 @@ class Gallery {
 		return $this->id;
 	}
 
+	public function module(){
+		if(!($this->module instanceof Module)){
+			$this->module = Module::Get_ID($this->module);
+		}
+		return $this->module;
+	}
+
 	public function content(){
 		if(!($this->content instanceof Content)){
 			$this->content = Content::Get_By_ID($this->content);
@@ -41,21 +48,11 @@ class Gallery {
 
 	public function objects(){
 		if(!isset($this->objects)){
-			try {
-				$class = Module::Get_ID($this->module)->load_section('Gallery_Item');
-			} catch(Exception $e){ print_r($e); }
+			$class = $this->module()->load_section('Gallery_Item');
 			$this->objects = call_user_func(array($class, 'Get_By_Gallery'), $this);
 		}
 		return $this->objects;
 	}
-
-
-/*	public function members(){
-		if(!isset($this->members)){
-			$this->members = Team_Member::Get_By_Team($this);
-		}
-		return $this->members;
-	}*/
 
 	public static function Get_By_Parent($parent){
 		

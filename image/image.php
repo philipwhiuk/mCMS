@@ -4,6 +4,7 @@ class Image {
 	
 	private $id;
 	private $description;
+	private $files;
 	
 	private function __construct(){}
 	
@@ -19,7 +20,10 @@ class Image {
 	}
 	
 	public function files(){
-		return Image_File::Get_By_Image($this);
+		if(!isset($this->files)){
+			$this->files = Image_File::Get_By_Image($this);
+		}
+		return $this->files;
 	}
 	
 	public static function Get_All(){

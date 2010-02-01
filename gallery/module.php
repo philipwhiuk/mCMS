@@ -3,7 +3,7 @@
 class Gallery_Module extends Module {
 
 	public function load(){
-		$this->files('gallery','item','exception');
+		$this->files('gallery','gallery_item','exception');
 	}
 
 }
