@@ -1,9 +1,9 @@
 <?php
 
-class Image_Gallery_Item extends Gallery_Item {
+class Video_Gallery_Item extends Gallery_Item {
 
 	private $id;
-	private $image;
+	private $video;
 	private $gallery;
 	private $sort;
 
@@ -11,11 +11,11 @@ class Image_Gallery_Item extends Gallery_Item {
 		return (int) $this->id;
 	}
 
-	public function image(){
-		if(!($this->image instanceof Image)){
-			$this->image = Image::Get_By_ID($this->image);
+	public function video(){
+		if(!($this->video instanceof Image)){
+			$this->video = Video::Get_By_ID($this->video);
 		}
-		return $this->image;
+		return $this->video;
 	}
 
 	public static function Get_By_Gallery_ID($gallery, $id){
@@ -30,14 +30,14 @@ class Image_Gallery_Item extends Gallery_Item {
 
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('gallery_images')->where($operator, $operand)->limit(1);	
+		$query = System::Get_Instance()->database()->Select()->table('gallery_videos')->where($operator, $operand)->limit(1);	
 		$result = $query->execute();
 		
 		if($result->num_rows == 0){
 			throw new Gallery_Item_Not_Found_Exception($operator, $operand);
 		}
 		
-		return $result->fetch_object('Image_Gallery_Item');
+		return $result->fetch_object('Video_Gallery_Item');
 		
 	}
 
@@ -50,14 +50,14 @@ class Image_Gallery_Item extends Gallery_Item {
 		
 		$query = System::Get_Instance()	->database()
 						->Select()
-						->table('gallery_images')
+						->table('gallery_videos')
 						->where('=', array(array('col','gallery'), array('u', $gallery)))
 						->order(array('sort' => true));
 		
 		$result = $query->execute();
 		$return = array();
 		
-		while($row = $result->fetch_object('Image_Gallery_Item')){
+		while($row = $result->fetch_object('Video_Gallery_Item')){
 			$return[$row->id()] = $row;
 		}
 		
