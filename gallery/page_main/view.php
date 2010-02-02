@@ -68,7 +68,7 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 				$oo->selected = true;
 			}
 
-			if(count($o) > 0){
+			if(!$continue && count($o) > 0){
 				$g->section = $class = $g->module()->load_section('Gallery_Item_Page_Main_View');
 				foreach($o as $k => $object){
 					$g->items[$k] = new $class($object);
@@ -83,6 +83,7 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 			$furl .= $g->id() . '/';
 			$surl .= $g->id() . '/';
 		}
+		$ret = false;
 		$rf = Resource::Get_By_Argument($this->module, $furl);
 		$rs = Resource::Get_By_Argument($this->module, $surl);
 		$t = array(
@@ -95,21 +96,25 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 			'selected' => isset($g->selected) ? $g->selected : false
 		);
 		
-		if(isset($g->items) && count($g->items) > 0){
-			foreach($g->items as $g => $item){
-				$t['objects'][$g] = $item->display();
-				if($item->selected()){
-					$t['objselected'] = $g;
-				}
-			}		
-		}
-
 		if(isset($g->selected) && $g->selected){
 			foreach($g->children() as $sg){
 				$st = &$t['children'][];
+				$ret = true;
 				$this->display_sub($sg, $st, $furl, $surl, false);
 			}
+			if(!$ret && isset($g->items) && count($g->items) > 0){
+				foreach($g->items as $g => $item){
+					$item->gallery_furl = $furl;
+					$item->gallery_surl = $surl;
+					$t['objects'][$g] = $item->display();
+					if($item->selected()){
+						$t['objselected'] = $g;
+					}
+				}
+			}
 		}
+
+
 	}
 
 	public function display(){
