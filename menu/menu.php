@@ -5,22 +5,30 @@ class Menu {
 	private $id;
 	private $name;
 	private $req_factor;
-	
+	private $implementation;
 	private $resources;
 	
 	public function id(){
 		return $this->id;
 	}
+
+	public function module(){
+		if(!($this->module instanceof Module)){
+			$this->module = Module::Get_ID($this->module);
+		}
+		return $this->module;
+	}
+
+	public function impl(){
+		if(!isset($this->implementation)){
+			$class = $this->module()->load_section("Menu_Impl");
+			$this->implementation = new $class($this);
+		}
+		return $this->implementation;
+	}
 	
 	public function req_factor(){
 		return $this->req_factor;
-	}
-	
-	public function resources(){
-		if(!isset($this->resources)){
-			$this->resources = Menu_Resource::Get_By_Menu($this);
-		}
-		return $this->resources;
 	}
 	
 	public static function Get_By_ID($id){

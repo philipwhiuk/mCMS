@@ -12,9 +12,10 @@ abstract class Menu_Page_Block_Main extends Page_Block_Main {
 				
 				switch($parent->resource()->get_argument()){
 					case "view":
+						$parent->resource()->get_module()->file('menu_page_block_main_view');
+						$class = $menu->module()->load_section("Menu_Page_Block_Main_View");
 						$parent->resource()->consume_argument();
-						$parent->resource()->get_module()->file('page_block_main/view');
-						return new Menu_Page_Block_Main_View($parent, $menu);
+						return new $class($parent, $menu);
 						break;
 				}
 				
@@ -31,3 +32,4 @@ abstract class Menu_Page_Block_Main extends Page_Block_Main {
 	}
 	
 }
+

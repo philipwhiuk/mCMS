@@ -148,7 +148,7 @@ abstract class Permission {
 		if(isset($check_mode)){
 			// Check for Mode
 			if(!$result[$check_mode]){
-				throw new Permission_Unauthorised_Exception($descriptor, $result, $mode);
+				throw new Permission_Unauthorised_Exception($descriptor, $result, $check_mode);
 			}
 		}
 		
