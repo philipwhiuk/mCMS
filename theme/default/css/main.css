@@ -119,6 +119,10 @@ div.page-blocks-left {
 	margin-right: 2em;	
 }
 
+div.page-block-bottom {
+	margin: 2em;
+}
+
 div.page-inline div.page-main {
 	margin: 0.5em;
 	padding: 0.5em;	

@@ -1,13 +1,18 @@
 <?php
 
 class Template_Theme_Default_HTML_Page extends Template {
-	public function blocks($block){
-		if(isset($this->blocks[$block])){
+	public function blocks($b){
+		if(isset($this->blocks[$b])){
 ?>
-<div class="page-blocks-<?php echo $block; ?> page-blocks">
-<?php 
-	foreach($this->blocks[$block] as $block){
-		$block->display();
+<div class="page-blocks-<?php echo $b; ?> page-blocks">
+<?php $y = 0;
+	foreach($this->blocks[$b] as $o => $order){
+		$y ++; $z = 0;
+		foreach($this->blocks[$b][$o] as $block){
+			$z++;
+			if($z == count($order) && $y == count($this->blocks[$b])){ $block->last = true; }
+			$block->display();
+		}
 	}
 ?>
 </div>
