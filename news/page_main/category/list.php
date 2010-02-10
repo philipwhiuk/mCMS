@@ -17,6 +17,7 @@ class News_Page_Main_Category_List extends News_Page_Main {
 			$arg = $this->parent->resource()->get_argument();
 			if(is_numeric($arg)){
 				$this->page = ((int) $arg);
+				$this->parent->resource()->consume_argument();
 				$this->articles = $category->articles(6, 5 * (((int) $arg) - 1));
 			} else {
 				$this->page = 1;
@@ -29,6 +30,7 @@ class News_Page_Main_Category_List extends News_Page_Main {
 			$arg = $this->parent->resource()->get_argument();
 			if((int) $arg != 0){
 				$this->page = ((int) $arg);
+				$this->parent->resource()->consume_argument();
 				$this->articles = News_Article::Get_By_Category($category, 5, 5 * (((int) $arg) - 1));
 			} else {
 				$this->page = 1;
