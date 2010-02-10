@@ -95,7 +95,7 @@ class News_Page_Main_Category_List extends News_Page_Main {
 					'time' => date($df, $article->time()),
 					'selected' => ($this->selected == $article),
 					'furl' => $system->url(Resource::Get_By_Argument($module, $url . 'article/' . $article->id())->url()),
-					'surl' => $system->url(Resource::Get_By_Argument($module, $url . 'list/article/' . $article->id())->url()),
+					'surl' => $system->url(Resource::Get_By_Argument($module, $url . 'list/' . $this->page . '/article/' . $article->id())->url()),
 				);
 			}
 		}
