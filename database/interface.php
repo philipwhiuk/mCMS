@@ -33,6 +33,10 @@ interface IDatabase_Update_Query extends IDatabase_Query {
 	
 }
 
+interface IDatabase_Count_Query extends IDatabase_Query {
+	public function where($operator, $operands);
+}
+
 interface IDatabase_Select_Query extends IDatabase_Query {
 	
 	public function where($operator, $operands);

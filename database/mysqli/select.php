@@ -1,11 +1,10 @@
 <?php
 
-class Database_MySQLi_Select_Query extends Database_MySQLi_Query implements IDatabase_Select_Query {
+class Database_MySQLi_Select_Query extends Database_MySQLi_Select_Base_Query implements IDatabase_Select_Query {
 	
 	private $limit;
 	private $offset;
 	private $order = array();
-	private $where = false;
 	
 	protected function generate_sql(){
 		if(!isset($this->table)){
@@ -58,12 +57,6 @@ class Database_MySQLi_Select_Query extends Database_MySQLi_Query implements IDat
 		$this->order = $cols;
 		return $this;
 	}
-	
-	public function where($operator, $operand){
-		$this->where = true;
-		return parent::where($operator, $operand);
-	}
-	
 	
 	public function limit($number){
 		$this->limit = $number;

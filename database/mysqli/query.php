@@ -72,12 +72,14 @@ abstract class Database_MySQLi_Query implements IDatabase_Query {
 				}
 				$clause = join(',', $sqls);
 				break;
+			case ">":
+			case "<":
 			case "=":
 				if(count($operand) != 2){
 					throw new Database_MySQLi_Query_Clause_Invalid_Exception($operator, $operand);
 				}
 				$clause = $this->generate_param_clause($operand[0][0], $operand[0][1]);
-				$clause .= '=';
+				$clause .= $operator;
 				$clause .= $this->generate_param_clause($operand[1][0], $operand[1][1]);
 				break;
 			default:

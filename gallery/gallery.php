@@ -3,6 +3,7 @@
 class Gallery {
 
 	private $id;
+	private $clas;
 	private $content;
 	private $parent;
 	private $sort;
@@ -46,33 +47,45 @@ class Gallery {
 		}
 	}
 
-	public function objects(){
+	public function objects($offset, $limit){
 		if(!isset($this->objects)){
-			$class = $this->module()->load_section('Gallery_Item');
-			$this->objects = call_user_func(array($class, 'Get_By_Gallery'), $this);
+			if(!isset($this->class)){
+				$this->class = $this->module()->load_section('Gallery_Item');
+			}
+			$this->objects = call_user_func(array($this->class, 'Get_By_Gallery'), $this, $offset, $limit);
 		}
 		return $this->objects;
 	}
 
+	public function object_count(){
+		if(!isset($this->count)){
+			if(!isset($this->class)){
+				$this->class = $this->module()->load_section('Gallery_Item');
+			} 
+			$this->count = call_user_func(array($this->class, 'Count_By_Gallery'), $this);
+		}
+		return $this->count;
+	}
+
 	public static function Get_By_Parent($parent){
-		
+
 		if($parent instanceof Gallery){
 			$parent = $parent->id();
 		}
-		
+
 		$query = System::Get_Instance()	->database()
-						->Select()
-						->table('galleries')
-						->where('=', array(array('col','parent'), array('u', $parent)))
-						->order(array('sort' => true));
-		
+			->Select()
+			->table('galleries')
+			->where('=', array(array('col','parent'), array('u', $parent)))
+			->order(array('sort' => true));
+
 		$result = $query->execute();
 		$return = array();
-		
+
 		while($row = $result->fetch_object('Gallery')){
 			$return[$row->id()] = $row;
 		}
-		
+
 		return $return;
 	}
 
@@ -94,9 +107,9 @@ class Gallery {
 			$parent = $parent->id();
 		}
 		return self::Get_One('AND',array(
-			array('=', array(array('col','id'), array('u', $id))),
-			array('=', array(array('col','parent'), array('u', $parent))),
-		));
+					array('=', array(array('col','id'), array('u', $id))),
+					array('=', array(array('col','parent'), array('u', $parent))),
+					));
 	}
 
 }

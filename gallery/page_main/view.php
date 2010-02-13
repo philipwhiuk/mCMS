@@ -31,6 +31,17 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 			if(count($this->selected['gallery']) != 0){ $gp = 0; }
 		}
 
+		$this->page = 1;
+
+		if($arg == 'page'){
+			$parent->resource()->consume_argument();
+			$arg = $parent->resource()->get_argument();
+			if(is_numeric($arg)){
+				$this->page = (int) $arg;
+				$parent->resource()->consume_argument();
+			}
+		}
+
 		if($arg == 'object'){
 			$parent->resource()->consume_argument();
 			$arg = $parent->resource()->get_argument();
@@ -45,11 +56,12 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 		while($continue){
 			$g->selected = true;
 			$c = $g->children();
-			$o = $g->objects();
+			$oc = $g->object_count();
+			if(($this->page - 1) * 10 >= $oc){ $page = 0; } else { $page = $this->page - 1; }
 			$g->items = array();
+			$o = $g->objects($page * 10, 10);
 
 			foreach($c as $child){ $child->content(); }
-
 			if($gp !== -1 && isset($this->selected['gallery'][$gp]) && isset($c[$this->selected['gallery'][$gp]])){
 				// Select Gallery!
 				$g = $c[$this->selected['gallery'][$gp]];
@@ -57,7 +69,7 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 			} elseif(isset($this->selected['object']) && isset($o[$this->selected['object']])){
 				$continue = false;
 				$o[$this->selected['object']]->selected = true;
-			} elseif(count($o) == 0 && count($c) > 0){
+			} elseif($oc == 0 && count($c) > 0){
 				$gp = -1; // Invalidate
 				reset($c);
 				$g = current($c);
@@ -68,11 +80,14 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 				$oo->selected = true;
 			}
 
-			if(!$continue && count($o) > 0){
+			if(!$continue && $oc > 0){
 				$g->section = $class = $g->module()->load_section('Gallery_Item_Page_Main_View');
 				foreach($o as $k => $object){
 					$g->items[$k] = new $class($object);
 				}
+				$g->page = $page + 1;
+				$pages = (int) ($oc / 10);
+				$g->pages = $pages + (($pages * 10 >= $oc) ? 0 : 1);
 			}
 
 		} 
@@ -93,6 +108,7 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 			'surl' => $this->system->url($rs->url()),
 			'children' => array(),
 			'objects' => array(),
+			'pages' => array(),
 			'selected' => isset($g->selected) ? $g->selected : false
 		);
 		
@@ -101,15 +117,25 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 				$st = &$t['children'][];
 				$ret = true;
 				$this->display_sub($sg, $st, $furl, $surl, false);
-			}
+			} 
 			if(!$ret && isset($g->items) && count($g->items) > 0){
-				foreach($g->items as $g => $item){
+				foreach($g->items as $i => $item){
 					$item->gallery_furl = $furl;
 					$item->gallery_surl = $surl;
-					$t['objects'][$g] = $item->display();
+					$t['objects'][$i] = $item->display();
 					if($item->selected()){
-						$t['objselected'] = $g;
+						$t['objselected'] = $i;
 					}
+				} 
+				if(isset($g->page) && isset($g->pages) && $g->pages > 1){
+					for($i = 1; $i <= $g->pages; $i ++){
+						$t['pages'][$i] = array(
+							'selected' => false,
+							'furl' => $this->system->url(Resource::Get_By_Argument($this->module, $furl . 'page/' . $i . '/')->url()),
+							'surl' => $this->system->url(Resource::Get_By_Argument($this->module, $surl . 'page/' . $i . '/')->url())
+						);
+					}
+					$t['pages'][$g->page]['selected'] = true;
 				}
 			}
 		}
