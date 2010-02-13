@@ -43,7 +43,7 @@ class Template_Theme_Default_HTML_Menu_Page_Block_View extends Template {
 <div class="menu page-block-menu menu-view page-block-menu-view">
 	<ul>
 <?php 
-		foreach($items as $item){
+		foreach($this->items as $item){
 			$class = array();
 			if($item['trail']){
 				$class[] = 'menu-trail';
