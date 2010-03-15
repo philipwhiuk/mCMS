@@ -71,7 +71,11 @@ class Menu_Menu_Page_Block_Main_View extends Menu_Page_Block_Main_View {
 					$iqRating = $resource->equal($presource);
 					$cqRating = ($item->logic) ? $item->logic->eqRating : 0;
 					
-					if($iqRating === true){
+					if($cqRating === true){
+                                                $eqOld = $eqCurrent;
+                                                $eqCurrent = array($item,false);
+                                                $eqRating = true;
+                                        } elseif($iqRating === true){
 						if($item->logic){ $item->logic->clearRating(); }
 						$eqOld = $eqCurrent;
 						$eqCurrent = array($item,true);

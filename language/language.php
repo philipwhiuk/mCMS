@@ -116,7 +116,7 @@ class Language {
 		$result = $query->execute();
 		
 		if($result->num_rows == 0){
-			throw new Theme_Not_Found_Exception($operator, $operand);
+			throw new Language_Not_Found_Exception($operator, $operand);
 		}
 		
 		$site = $result->fetch_object('Language');
@@ -126,3 +126,4 @@ class Language {
 	}
 	
 }
+

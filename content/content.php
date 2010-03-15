@@ -40,6 +40,7 @@ class Content {
 	}
 	
 	public function update($data){
+
 		$query = System::Get_Instance()->database()->Update()->table('content')
 			->set(array(
 					'title' => array('s', $data['title']),

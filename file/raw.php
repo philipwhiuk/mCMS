@@ -20,6 +20,8 @@ class File_Raw extends Raw {
 	}
 	
 	public function output(){
+		header("Cache-Control: public");				// Try and cache
+		header("Expires: Sat, 1 Jan 2030 05:00:00 GMT"); 		// Force cachine.
 		if($this->download){
 			header('Content-Disposition: attachment; filename="' . $this->file->name() . '"');
 		} else {

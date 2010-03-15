@@ -3,7 +3,7 @@
 class Gallery {
 
 	private $id;
-	private $clas;
+	private $class;
 	private $content;
 	private $parent;
 	private $sort;

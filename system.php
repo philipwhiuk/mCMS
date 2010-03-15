@@ -60,7 +60,9 @@ class System {
 	
 	// Configuration
 	
-	private $debug;
+	private $debug_type;
+	public $debug_default_level;
+	private $debug_level;
 	private $local_path;
 	private $remote_path;
 	private $path;
@@ -82,6 +84,16 @@ class System {
 		$string = dirname($file);
 		return rtrim(str_replace('\\', '/', $string),'/');
 	}
+
+        const dump_notice = 2;
+        const dump_warning = 1;
+        const dump_error = 0;
+	    
+        const dump_screen = 0;
+        const dump_file = 1;
+        const dump_ilog = 2;
+	const dump_log = 3;
+	const dump_none = 4;
 	
 	/**
 	 * Constructor
@@ -99,12 +111,19 @@ class System {
 		// Debug configuration
 		
 		
-		
 		$this->remote_path = defined('CMS_REMOTE_PATH') ? CMS_REMOTE_PATH : ($this->dirname($_SERVER['PHP_SELF']) . '/');
-		$this->debug = defined('CMS_DEBUG') ? CMS_DEBUG : 0;
+		//$this->debug = defined('CMS_DEBUG') ? CMS_DEBUG : 0;
+		
+
+		$this->debug_type = defined('CMS_DEBUG_TYPE') ? CMS_DEBUG_TYPE : System::dump_none;
+		$this->debug_level = defined('CMS_DEBUG_LEVEL') ? CMS_DEBUG_LEVEL : System::dump_error; 
+		$this->debug_default_level = defined('CMS_DEBUG_DEFAULT_LEVEL') ? CMS_DEBUG_DEFAULT_LEVEL : $this->debug_level;
+
 		$this->path = defined('CMS_PATH') ? CMS_PATH : isset($_GET['path']) && trim($_GET['path'],'/') != '' ? $_GET['path'] : 'home';
 		$this->local_path = defined('CMS_LOCAL_PATH') ? CMS_LOCAL_PATH : (dirname(__FILE__) . '/');
-		
+
+		$this->request = uniqid(time() . '.', true); // Psuedo uniqid request identifier
+
 	}
 	
 	/**
@@ -269,13 +288,14 @@ class System {
 		throw new System_Load_Resource_Exception($exceptions);
 		
 	}
-	
-	const dump_screen = 0;
-	const dump_file = 1;
-	const dump_log = 2;
-	
-	public function dump($type, $exception){
-		switch($type){
+
+	public function dump($level, $exception){
+
+		if($level > $this->debug_level){
+			return;
+		}
+
+		switch($this->debug_type){
 			case System::dump_screen:
 				if(!headers_sent()){
 					header('Content-type: text/plain');
@@ -284,29 +304,29 @@ class System {
 				break;
 			case System::dump_file:
 				$dump = '<' . '?php $dump[] = \'' . serialize(array('system' => $this, 'request' => $_REQUEST, 'server' => $_SERVER, 'exception' => $exception)) . '\'; ?' . '>';
-				file_put_contents($this->local_path . 'system/logs/dump.' . time() . '.php', $dump, FILE_APPEND);
+				file_put_contents($this->local_path . 'system/logs/dump.' . $this->request . '.php', $dump, FILE_APPEND);
+				break;
+			case System::dump_ilog:
+				file_put_contents($this->local_path . 'system/logs/dump.' . $this->request . '.log', (string) $exception . "\r\n", FILE_APPEND);
 				break;
 			case System::dump_log:
-				file_put_contents($this->local_path . 'system/logs/dump.log', time() . ' : ' . (string) $exception . "\r\n", FILE_APPEND);
+				file_put_contents($this->local_path . 'system/logs/dump.log', $this->request . ' : ' . (string) $exception . "\r\n", FILE_APPEND);
 				break;
 		}
 		
 	}
 	
-	public function error($e, $level = 0){
+	public function error($e, $fatal = false){
 		
-		switch($this->debug | $level){
-			case 2:
-				$this->dump(System::dump_screen, $e);
-				break;
-			case 1:
-				$this->dump(System::dump_file, $e);
-				break;
-			case 0:
-				$this->dump(System::dump_log, $e);
-				break;
+		if($fatal && !headers_sent()){ 
+			 header("HTTP/1.1 500 Internal Server Error");
 		}
-		
+
+		$this->dump(System::dump_error, $e);
+		if($fatal){
+			exit;
+		}
+
 	}
 	
 	public function run(){
