@@ -26,7 +26,6 @@ class News_Page_Main_Category_List extends News_Page_Main {
 		} else {
 			Permission::Check(array('news/category',$category), array('view','edit','add','delete','list'),'list');
 			$this->categories = News_Category::Get_By_Parent($category);
-			$this->articles = 
 			$arg = $this->parent->resource()->get_argument();
 			if((int) $arg != 0){
 				$this->page = ((int) $arg);
