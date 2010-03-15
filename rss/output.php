@@ -17,7 +17,7 @@ class RSS_Output extends Output {
 	}
 	
 	public function render($data){
-//		header('Content-type: application/rss+xml');
+		header('Content-type: application/rss+xml');
 		$template = $this->start(array('main'));
 		$template->main = $data;
 		$template->display();
