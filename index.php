@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Index File
  * 
@@ -29,8 +28,8 @@ define('CMS',true);
  */
 
 define('CMS_DEBUG_TYPE',2);
-define('CMS_DEBUG_DEFAULT_LEVEL',1);
-define('CMS_DEBUG_LEVEL',1);
+define('CMS_DEBUG_DEFAULT_LEVEL',0);
+define('CMS_DEBUG_LEVEL',0);
 
 /**
  * Loads the CMS file.

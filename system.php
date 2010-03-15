@@ -119,7 +119,7 @@ class System {
 		$this->debug_level = defined('CMS_DEBUG_LEVEL') ? CMS_DEBUG_LEVEL : System::dump_error; 
 		$this->debug_default_level = defined('CMS_DEBUG_DEFAULT_LEVEL') ? CMS_DEBUG_DEFAULT_LEVEL : $this->debug_level;
 
-		$this->path = defined('CMS_PATH') ? CMS_PATH : isset($_GET['path']) && trim($_GET['path'],'/') != '' ? $_GET['path'] : 'home';
+		$this->path = defined('CMS_PATH') ? CMS_PATH : isset($_GET['path']) && trim($_GET['path'],'/') != '' ? trim($_GET['path'],'/') : 'home';
 		$this->local_path = defined('CMS_LOCAL_PATH') ? CMS_LOCAL_PATH : (dirname(__FILE__) . '/');
 
 		$this->request = uniqid(time() . '.', true); // Psuedo uniqid request identifier
@@ -239,7 +239,7 @@ class System {
 		// Lets load the base system.
 		
 		$this->files('config','database','site','module');
-		
+	
 		try {
 
 			$this->config = Config::Load();
@@ -249,7 +249,7 @@ class System {
 			throw new System_Install_Exception($e);
 			
 		}
-		
+
 		$this->database = Database::Load();
 		$this->site = Site::Load();
 		/*$this->modules = */ Module::Load_All();
@@ -260,32 +260,50 @@ class System {
 		Module::Get('resource');
 		
 		// Resource(s)
-		
-		$this->resources = Resource::Get_By_Paths(array($this->path,'error'));
-		
+
 		$exceptions = array();
 		
-		foreach($this->resources as $resource){
+		$paths = array($this->path, 'error');
+
+		foreach($paths as $path){
 			try {
-				$this->formats = array();
-				if(defined('CMS_FORMAT'))
-					$this->formats[] = CMS_FORMAT;
-				if(isset($_GET['output']))
-					$this->formats[] = $_GET['output'];
-				$this->formats[] = $resource->get_output();
-				if(defined('CMS_FORMAT_DEFAULT'))
-					$this->formats[] = CMS_FORMAT_DEFAULT;
-					
-				$this->output = Output::Load($this->formats);
-				$this->logic = $this->output->logic($resource);
+				$this->resource($path);
 				return;
-			} catch (Exception $e){
+			} catch(Exception $e){
 				$exceptions[] = $e;
 			}
 		}
 
+		throw new System_Load_Resource_Exception($paths, $exceptions);
+	}
+
+	public function resource($path){
+		$exceptions = array();
+		try {
+			$this->resources = Resource::Get_By_Path($path);
+			foreach($this->resources as $resource){
+				try {
+					$this->formats = array();
+					if(defined('CMS_FORMAT'))
+						$this->formats[] = CMS_FORMAT;
+					if(isset($_GET['output']))
+						$this->formats[] = $_GET['output'];
+					$this->formats[] = $resource->get_output();
+					if(defined('CMS_FORMAT_DEFAULT'))
+						$this->formats[] = CMS_FORMAT_DEFAULT;
+						
+					$this->output = Output::Load($this->formats);
+					$this->logic = $this->output->logic($resource);
+					return;
+				} catch (Exception $e){
+					$exceptions[] = $e;
+				}
+			}
+		} catch (Exception $e){
+			$exceptions[] = $e;
+		}
 		
-		throw new System_Load_Resource_Exception($exceptions);
+		throw new System_Resource_Exception($path,$exceptions);
 		
 	}
 

@@ -33,12 +33,14 @@ class Config {
 		$exceptions = array();
 		
 		$k = array_merge($server, $path);
-		
+
+		$system = System::Get_Instance();
+
 		for(; count($k) > 0; array_shift($k)){
 			$l = $k;
 			for(; count($l) > 0; array_pop($l)){
 				try {
-					return new Config(System::Get_Instance()->file('config/' . join('.', $l)));
+					return new Config($system->file('config/' . join('.', $l), false));
 				} catch(Exception $e){
 					$exceptions[join('.', $k)] = $e;
 				}
@@ -46,7 +48,7 @@ class Config {
 		}
 		
 		try {
-			return new Config(System::Get_Instance()->file('config/default'));
+			return new Config($system->file('config/default', false));
 		} catch(Exception $e){
 			$exceptions[join('.', $k)] = $e;
 		}

@@ -21,7 +21,6 @@ class News_Page_Block_Main_Article_View extends News_Page_Block_Main {
 		$module = Module::Get('news');
 		
 		$df = $language->get($module, array('category','list', 'date'));
-		
 		$furl = join('/', $this->category->parents()) . '/article/' . $this->article->id();
 		$surl = join('/', $this->category->parents()) . '/list/article/' . $this->article->id();
 

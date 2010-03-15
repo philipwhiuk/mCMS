@@ -16,7 +16,7 @@ class Language {
 		$k =& $this->data;
 		foreach($key as $v){
 			if(!isset($k[$v])){
-				throw new Language_Translation_Not_Found_Exception($key);
+				throw new Language_Translation_Not_Found_Exception($key, false);
 			}
 			$k =& $k[$v];
 		}
@@ -77,7 +77,7 @@ class Language {
 				
 			}
 		}
-		throw new Language_Translation_Not_Found_Exception($key);
+		throw new Language_Translation_Not_Found_Exception($key, true);
 	}
 	
 	public static function Retrieve(){
