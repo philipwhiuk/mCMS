@@ -15,7 +15,7 @@ class Template_RSS_News_Feed extends Template {
 foreach($this->articles as $article){ 
 ?>
 	<item>
-		<title><?php echo $article['title']; ?>/title>
+		<title><?php echo $article['title']; ?></title>
 		<link><?php echo $article['slink']; ?></link>
 		<description><?php echo $article['body']; ?></description>
 	</item>
