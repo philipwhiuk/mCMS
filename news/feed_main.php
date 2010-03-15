@@ -59,7 +59,7 @@ class News_Feed_Main extends Feed_Main {
 				'title' => $article->brief()->get_title(),
 				'llink' => $system->url(Resource::Get_By_Argument($module, $url . 'article/' . $article->id())->url()),
 				'slink' => $system->url(Resource::Get_By_Argument($module, $url . 'list/1/article/' . $article->id())->url()),
-				'body' => strip_tags($article->brief()->get_body())
+				'body' => html_entity_decode(strip_tags($article->brief()->get_body()), ENT_COMPAT, 'UTF-8')
 			);
 		}
 		return $template;
