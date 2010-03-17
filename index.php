@@ -31,6 +31,8 @@ define('CMS_DEBUG_TYPE',2);
 define('CMS_DEBUG_DEFAULT_LEVEL',0);
 define('CMS_DEBUG_LEVEL',0);
 
+define('CMS_REMOTE_PATH','http://www.cuer.co.uk/');
+
 /**
  * Loads the CMS file.
  * 
