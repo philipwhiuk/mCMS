@@ -33,11 +33,15 @@ abstract class Content_Page_Main extends Page_Main {
 						break;
 				}
 				
-				$parent->resource()->get_module()->file('page_main/view');
-				return new Content_Page_Main_View($parent, $content);
 			} catch(Exception $e){
-				// Content Invalid / Unavailable
 				$exceptions[] = $e;
+				try {
+					$parent->resource()->get_module()->file('page_main/view');
+					return new Content_Page_Main_View($parent, $content);
+				} catch (Exception $f){
+					$exceptions[] = $f;
+				}
+				// Content Invalid / Unavailable
 			}
 			
 		}

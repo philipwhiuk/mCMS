@@ -17,3 +17,4 @@ class Content_Page_Main_View extends Content_Page_Main {
 		return $template;
 	}
 }
+
