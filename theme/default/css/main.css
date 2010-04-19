@@ -139,6 +139,47 @@ div.page-blocks-right {
 
 /** Content **/
 
+div.content-head {
+	display: block;
+	overflow: hidden;
+}
+
+h1.content-modes {
+	float: left;
+}
+
+ul.content-modes {
+	float: right;
+	margin: 0;
+	margin-top: 0.6em;
+	padding: 0;
+	list-style: none;
+	display: block;
+}
+
+ul.content-modes li {
+	display: inline;
+}
+
+ul.content-modes li a {
+	background: #999999;
+	display: inline;
+	padding: 0.5em 2em;
+	color: white;
+}
+
+ul.content-modes li a:hover, ul.content-modes li.content-mode-selected a {
+	background: #777777;
+}
+
+ul.content-modes li.content-mode-selected a {
+	font-weight: bold;
+}
+
+div.content-text {
+	clear: both;
+}
+
 div.content-text, div.image-text {
 	margin-top: 1em;
 }
@@ -239,9 +280,13 @@ div.form form {
 	padding: 0;
 }
 
-div.form ol {list-style: none;}
+div.form ol {list-style: none; padding: 0;}
 div.form ol li {list-style: none; margin-bottom: 1em; clear: left;}
 
 div.form {}
-div.form label {float: left; width: 8%; text-align: right; margin-right: 1em;}
+div.form label {float: left; width: 8%; text-align: right; margin-right: 1%;}
 div.form div.form-field-submit { display: block; text-align: center; margin: auto; }
+
+/** TinyMCE **/
+
+textarea.form-field-tinymce { width: 85%; }

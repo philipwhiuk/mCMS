@@ -2,7 +2,7 @@
 
 class Content_Page_Main_Edit extends Content_Page_Main {
 	
-	private $content;
+	protected $content;
 	
 	public function __construct($parent, $content){
 		parent::__construct($parent);
@@ -10,7 +10,7 @@ class Content_Page_Main_Edit extends Content_Page_Main {
 		$language = Language::Retrieve();
 		$module = Module::Get('content');
 		
-		Permission::Check(array('content',$content->id()), array('view','edit','add','delete','list'),'edit');
+		$this->check('edit');		
 		
 		$this->form = new Form(array('content',$content->id(), 'edit'), $this->parent->url($this->parent->resource()->url()));
 		
@@ -44,6 +44,7 @@ class Content_Page_Main_Edit extends Content_Page_Main {
 		$template = System::Get_Instance()->output()->start(array('content','page','edit'));
 		$template->title = $this->content->get_title();
 		$template->form = $this->form->display();
+		$template->modes = $this->modes;
 		return $template;
 	}
 }

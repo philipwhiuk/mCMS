@@ -14,5 +14,12 @@ return array(
 		'title' => 'Title:',
 		'body' => 'Body:',
 		'submit' => 'Add' 
+	),
+	'modes' => array(
+		'add' => 'Add',
+		'view' => 'View',
+		'list' => 'List',
+		'edit' => 'Edit',
+		'delete' => 'Delete'
 	)
 );

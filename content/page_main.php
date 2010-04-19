@@ -2,6 +2,37 @@
 
 abstract class Content_Page_Main extends Page_Main {
 	
+	protected $modes;
+	protected $content;
+
+	// Check permissions and setup modes.
+	// Doing this here allows us to change the mode list easily which is cool.
+
+	// NB List may cause problems - rework?
+
+	protected function check($mode){
+		$id = $this->content->id();
+		$perms = Permission::Check(array('content',$id), array('view','edit','add','delete','list'),'view');
+		$system = System::Get_Instance();
+		$language = Language::Retrieve();
+		$module = Module::Get('content');
+
+		$this->modes = array();
+		foreach($perms as $k => $allowed){
+			if($allowed && in_array($k, array('view','edit','delete'))){
+				// Create linkage.
+				// Link to content/id/mode - grab language junk
+				$res = Resource::Get_By_Argument(Module::Get('content'),$id .'/' . $k);
+				$this->modes[$k] = array(
+					'label' => $language->get($module, array('modes',$k)),
+					'url' => $system->url($res->url()),
+					'selected' => ($mode == $k)
+				);
+			}
+		}
+		// can now throw $this->modes at display :-)
+	}
+
 	public static function Load($parent){
 		
 		$exceptions = array();

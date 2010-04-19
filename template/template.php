@@ -29,4 +29,5 @@ abstract class Template {
 	
 	abstract public function display();
 	
-} 
+}
+
