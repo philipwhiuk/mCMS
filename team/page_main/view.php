@@ -48,7 +48,7 @@ class Team_Page_Main_View extends Team_Page_Main {
 				'role_body' => $member->content()->get_body(),
 				'member_title' => $member->member()->content()->get_title(),
 				'member_body' => $member->member()->content()->get_body(),
-				'url' => $system->url(Resource::Get_By_Argument($module, $url . 'team/view/' . $member->id())->url()),
+				'url' => $system->url(Resource::Get_By_Argument($module, $url . 'member/' . $member->id().'/view')->url()),
 			);
 		}
 
