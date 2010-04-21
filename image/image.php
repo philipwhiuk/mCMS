@@ -18,6 +18,35 @@ class Image {
 		}
 		return $this->description;
 	}
+
+
+	// Give me the width of the thumbnail you want.
+	public function width($width){
+		$this->files();
+		if(count($this->files) == 0){
+			throw new Image_No_Files_Found_Exception();
+		}
+		$max = NULL;
+		foreach($this->files as $file){
+			if($file->width() == $width){
+				return $file;
+			}
+			if(!isset($max) || $file->width() > $max->width()){
+				$max = $file;
+			}
+		}
+		if($max->width() < $width){
+			return $max;
+		}
+		$height = ($width * $max->height()) / $max->width();
+		return $max->resize($height, $width);
+	}
+
+	// Give me the height of the thumbnail you want.
+	public function height($height){
+
+	}
+
 	
 	public function files(){
 		if(!isset($this->files)){

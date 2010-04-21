@@ -21,6 +21,8 @@ class Database_MySQLi extends MySQLi implements IDatabase {
 		array_shift($args);
 		return $this->query_array($sql, $args);
 	}
+
+	public function insert_id(){ return $this->insert_id; }
 	
 	public function escape($val){
 		if(is_numeric($val)){
