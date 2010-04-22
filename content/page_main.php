@@ -50,28 +50,27 @@ abstract class Content_Page_Main extends Page_Main {
 			try {
 				$content = Content::Get_By_ID((int) $arg);
 				$parent->resource()->consume_argument();
-				
-				switch($parent->resource()->get_argument()){
-					case "edit":
-						$parent->resource()->get_module()->file('page_main/edit');
-						$parent->resource()->consume_argument();
-						return new Content_Page_Main_Edit($parent, $content);
-						break;
-					case "view":
-						$parent->resource()->get_module()->file('page_main/view');
-						$parent->resource()->consume_argument();
-						return new Content_Page_Main_View($parent, $content);
-						break;
-				}
-				
-			} catch(Exception $e){
-				$exceptions[] = $e;
 				try {
+					switch($parent->resource()->get_argument()){
+						case "edit":
+							$parent->resource()->get_module()->file('page_main/edit');
+							$parent->resource()->consume_argument();
+							return new Content_Page_Main_Edit($parent, $content);
+							break;
+						case "view":
+							$parent->resource()->get_module()->file('page_main/view');
+							$parent->resource()->consume_argument();
+							return new Content_Page_Main_View($parent, $content);
+							break;
+					}
+				}
+				catch(Exception $e) {
+					$exceptions[] = $e;
 					$parent->resource()->get_module()->file('page_main/view');
 					return new Content_Page_Main_View($parent, $content);
-				} catch (Exception $f){
-					$exceptions[] = $f;
-				}
+				}				
+			} catch(Exception $f){
+				$exceptions[] = $f;
 				// Content Invalid / Unavailable
 			}
 			
