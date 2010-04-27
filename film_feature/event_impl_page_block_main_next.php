@@ -5,7 +5,7 @@ class Film_Feature_Event_Impl_Page_Block_Main_Next extends Event_Impl_Page_Block
 		$this->item = $item;
 		$this->feature = $this->item->feature();
 		$this->feature->get_showings();
-		Module::Get('film_feature')->file('film_feature_impl/event_impl/page_block_Main/next');
+		Module::Get('film_feature')->file('film_feature_impl/event_impl/page_block_main/next');
 		$this->films = $this->feature->get_films();
 		$this->implViews = array();
 		$class = $this->feature->get_module()->load_section('Film_Feature_Impl_Event_Impl_Page_Block_Main_next');
