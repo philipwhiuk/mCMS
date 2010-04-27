@@ -30,10 +30,10 @@ class Film_Page_Main_Edit extends Film_Page_Main {
 		$synopsis->set_label($language->get($module, array('edit','synopsis')));
 		$synopsis->set_value($this->film->get_synopsis()->get_body());
 
-		if($this->film->get_largeImage() != 0) {
+		try {
 			$largeImageID = $this->film->get_largeImage()->id();
 		}
-		else {
+		catch(Exception $e) {
 			$largeImageID = 0;
 		}
 		
