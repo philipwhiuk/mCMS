@@ -107,19 +107,24 @@ class System {
 	private function __construct(){
 		
 		// Okay, we need to create a new System
-		
-		// Debug configuration
-		
-		
-		$this->remote_path = defined('CMS_REMOTE_PATH') ? CMS_REMOTE_PATH : ($this->dirname($_SERVER['PHP_SELF']) . '/');
-		//$this->debug = defined('CMS_DEBUG') ? CMS_DEBUG : 0;
-		
+	
+		// Use a full url as a default (probably Apache specific)
+
+		$url = rtrim((isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']),'/') . '/';
+		$this->remote_path = defined('CMS_REMOTE_PATH') ? CMS_REMOTE_PATH : $url;
+
+		// Debug settings
 
 		$this->debug_type = defined('CMS_DEBUG_TYPE') ? CMS_DEBUG_TYPE : System::dump_none;
 		$this->debug_level = defined('CMS_DEBUG_LEVEL') ? CMS_DEBUG_LEVEL : System::dump_error; 
 		$this->debug_default_level = defined('CMS_DEBUG_DEFAULT_LEVEL') ? CMS_DEBUG_DEFAULT_LEVEL : $this->debug_level;
 
+		// Work out the path to resolve
+
 		$this->path = defined('CMS_PATH') ? CMS_PATH : isset($_GET['path']) && trim($_GET['path'],'/') != '' ? trim($_GET['path'],'/') : 'home';
+		
+		// And the local system path
+
 		$this->local_path = defined('CMS_LOCAL_PATH') ? CMS_LOCAL_PATH : (dirname(__FILE__) . '/');
 
 		$this->request = uniqid(time() . '.', true); // Psuedo uniqid request identifier

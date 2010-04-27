@@ -20,9 +20,11 @@ class HTML_Output extends Output {
 	}
 	
 	public function render($data){
-		$template = System::Get_Instance()->output()->start(array('main'));
+		$system = System::Get_Instance();
+		$template = $system->output()->start(array('main'));
 		$template->head = $this->head;
 		$template->main = $data;
+		$template->url = $system->get_remote_path();
 		$template->display();
 	}
 	

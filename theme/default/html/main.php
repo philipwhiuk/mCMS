@@ -10,6 +10,7 @@ class Template_Theme_Default_HTML_Main extends Template {
 <!DOCTYPE html>
 <html>
 	<head>
+		<base href="<?php echo $this->url; ?>">
 		<meta http-equiv="content-type" content="text/html;charset=UTF-8">
 		<link rel="stylesheet" href="<?php echo $this->theme->url('css/main.css'); ?>" type="text/css">
 <?php 
