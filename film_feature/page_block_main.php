@@ -21,7 +21,6 @@ abstract class Film_Feature_Page_Block_Main extends Page_Block_Main {
 					}
 				} catch(Exception $e){
 					$exceptions[] = $e;
-					var_dump($exceptions);
 				}
 				break;
 			case 'cat_coming_soon':
@@ -41,7 +40,6 @@ abstract class Film_Feature_Page_Block_Main extends Page_Block_Main {
 					}
 				} catch(Exception $e){
 					$exceptions[] = $e;
-					var_dump($exceptions);
 				}
 				break;
 		}

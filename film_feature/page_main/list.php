@@ -41,9 +41,6 @@ class Film_Feature_Page_Main_List extends Film_Feature_Page_Main {
 			}
 			catch(Image_Not_Found_Exception $e) {
 			}
-			catch(Exception $e) {
-				var_dump($e);	
-			}
 			try {
 				$certificate_files = $feature->get_certificate()->get_image()->files();
 				$f['certificate_url'] = $certificate_files[0]->file()->url();

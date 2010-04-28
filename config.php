@@ -24,17 +24,23 @@ class Config {
 	
 	public static function Load(){
 		
-		$server = explode('.',$_SERVER['SERVER_NAME']);
-		
-		array_unshift($server, $_SERVER['SERVER_PORT']);
-		
-		$path = explode('/', trim(System::Get_Instance()->get_remote_path(),'/'));
-		
+		$system = System::Get_Instance();
+
+		$parse = parse_url($system->get_remote_path());
+
+		if(!isset($parse['port']) && isset($_SERVER['SERVER_PORT'])){ 
+			$parse['port'] = $_SERVER['SERVER_PORT']; 
+		}
+
+		$server = explode('.', $parse['host']);
+
+		array_unshift($server, $parse['port'], $parse['scheme']);
+
+		$path = explode('/', trim($parse['path'], '/'));
+
 		$exceptions = array();
 		
 		$k = array_merge($server, $path);
-
-		$system = System::Get_Instance();
 
 		for(; count($k) > 0; array_shift($k)){
 			$l = $k;
