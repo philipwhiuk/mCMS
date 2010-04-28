@@ -10,8 +10,9 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		}
 		catch(Image_Not_Found_Exception $e) {
 		}
+
 		$this->leads = $this->film->get_lead_actors();
-		$this->screenplay = $this->film->get_screenplay_writers();
+		$this->screenplays = $this->film->get_screenplay_writers();
 	}
 	function display() {
 		$this->system = System::Get_Instance();
@@ -45,7 +46,19 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		}
 		$template->leads = array();
 		foreach($this->leads as $lead) {
-			$template->leads[] = $lead->get_actor()->get_description()->get_title();
+			try {
+				$template->leads[] = $lead->get_actor()->get_description()->get_title();
+			}
+			catch(Actor_Not_Found_Exception $e) {
+			}
+		}
+		$template->screenplays = array();
+		foreach($this->screenplays as $screenplay) {
+			try {
+				$template->screenplays[] = $screenplay->get_actor()->get_description()->get_title();
+			}
+			catch(Actor_Not_Found_Exception $e) {
+			}
 		}
 		return $template;
 	}

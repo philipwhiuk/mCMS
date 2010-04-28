@@ -25,7 +25,7 @@ class Film_Screenplay {
 		$query = System::Get_Instance()	->database()
 			->Select()
 			->table('film_screenplay')
-			->where('=', array(array('col','film'), array('u', $feature)));
+			->where('=', array(array('col','film'), array('u', $film)));
 		$result = $query->execute();
 		$return = array();
 		while($row = $result->fetch_object('Film_Screenplay')){
