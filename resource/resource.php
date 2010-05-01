@@ -7,9 +7,23 @@ class Resource {
 	private $module;
 	private $base;
 	private $additional;
-	private $changed;
+	private $changed = false;
 	private $pointer = 0;
 	private $output;
+
+	public function base(){
+		if(!is_array($this->base)){
+			$this->base = ($this->base == "") ? array() : explode('/', trim($this->base,'/'));
+		}
+		return $this->base;
+	}
+
+	public function additional(){
+		if(!is_array($this->additional)){
+			$this->additional = ($this->additional == "") ? array() : explode('/', trim($this->additional,'/'));
+		}
+		return $this->additional;
+	}
 	
 	public function get_output(){
 		if(!($this->output instanceof Module)){
@@ -33,8 +47,8 @@ class Resource {
 
 		if($aid == $bid){
 			$eq = 1;
-			$a_args = array_merge($this->base, $this->additional);
-			$b_args = array_merge($that->base, $that->additional);
+			$a_args = $this->get_arguments();
+			$b_args = $that->get_arguments();
 			foreach($a_args as $k => $arg){
 				if(!isset($b_args[$k])){
 					return $eq;
@@ -74,12 +88,12 @@ class Resource {
 	}
 	
 	public function get_arguments(){
-		return array_merge($this->base, $this->additional);
+		return array_merge($this->base(), $this->additional());
 	}
 	
 	public function set_additional($argument){
 		$argument = trim((string) $argument,'/');
-		if($argument != '' && $argument != join('/', $this->additional)){
+		if($argument != '' && $argument != join('/', $this->additional())){
 			$this->additional = explode('/', $argument);
 			$this->changed = true;
 		}
@@ -87,17 +101,10 @@ class Resource {
 	
 	public function url(){
 		if($this->changed){
-			return implode('/', array_merge(explode('/', trim($this->path, '/')), $this->additional));
+			return implode('/', array_merge(explode('/', trim($this->path, '/')), $this->additional()));
 		}
 		return $this->path;
 	}
-	
-	public function __construct(){
-		$this->base = ($this->base == "") ? array() : explode('/', trim($this->base,'/'));
-		$this->additional = ($this->additional == "") ? array() : explode('/', trim($this->additional,'/'));
-	}
-
-	
 	
 	public static function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
