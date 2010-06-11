@@ -72,6 +72,17 @@ abstract class Database_MySQLi_Query implements IDatabase_Query {
 				}
 				$clause = join(',', $sqls);
 				break;
+			case "in":
+				if(count($operand) < 2){
+					throw new Database_MySQLi_Query_Clause_Invalid_Exception($operator, $operand);
+				}
+				$sqls = array();
+				foreach($operand as $op){
+					$sqls[] = $this->generate_clause($op[0], $op[1]);
+				}
+				$col = array_unshift($sqls);
+				$clause = $col . ' IN (' . join(',', $sqls) . ')';
+				break;
 			case ">":
 			case "<":
 			case "=":
