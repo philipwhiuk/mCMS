@@ -37,7 +37,7 @@ class Image_File {
 			$extension = '.jpg';
 			$this_image = @imagecreatefromjpeg($this->file->location());
 			if(!$this_image){
-				image_destroy($new_image);
+				imagedestroy($new_image);
 				throw new Image_Resize_Open_Exception();
 			}
 		} else {
