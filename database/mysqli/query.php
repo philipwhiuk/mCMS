@@ -78,7 +78,7 @@ abstract class Database_MySQLi_Query implements IDatabase_Query {
 				}
 				$sqls = array();
 				foreach($operand as $op){
-					$sqls[] = $this->generate_clause($op[0], $op[1]);
+					$sqls[] = $this->generate_param_clause($op[0], $op[1]);
 				}
 				$col = array_unshift($sqls);
 				$clause = $col . ' IN (' . join(',', $sqls) . ')';
