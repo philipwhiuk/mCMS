@@ -80,7 +80,7 @@ abstract class Database_MySQLi_Query implements IDatabase_Query {
 				foreach($operand as $op){
 					$sqls[] = $this->generate_param_clause($op[0], $op[1]);
 				}
-				$col = array_unshift($sqls);
+				$col = array_shift($sqls);
 				$clause = $col . ' IN (' . join(',', $sqls) . ')';
 				break;
 			case ">":
