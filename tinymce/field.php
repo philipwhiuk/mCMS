@@ -6,6 +6,11 @@ class TinyMCE_Field extends Form_Field {
 	private $error = false;
 	private $value = '';
 	
+	public function __construct(){
+		$module = Module::Get('tinymce');
+		$this->filemanager = Resource::Get_By_Argument($module, 'files')->url();
+	}
+
 	public function set_label($label){
 		$this->label = $label;
 	}
@@ -24,15 +29,11 @@ class TinyMCE_Field extends Form_Field {
 		return (string) $data;
 	}
 	
-	public function display($parent){
-		
-		$module = Module::Get('tinymce');
-		
+	public function display($parent){	
+	
 		$system = System::Get_Instance();
 		
-		$url = $system->url(Resource::Get_By_Argument($module, 'files')->url());
-		
-		$template = $system->output()->start(array('tinymce','field'), array('filebrowser' => $url));
+		$template = $system->output()->start(array('tinymce','field'), array('filebrowser' => $system->url($this->filemanager)));
 		
 		$id = $parent->get_id();
 		$id[] = $this->name;

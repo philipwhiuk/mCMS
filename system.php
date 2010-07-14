@@ -91,8 +91,10 @@ class System {
 	    
         const dump_screen = 0;
         const dump_file = 1;
-	const dump_log = 2;
-	const dump_none = 3;
+	const dump_file_log = 2;
+	const dump_log = 3;
+	const dump_syslog = 4;
+	const dump_none = 5;
 	
 	/**
 	 * Constructor
@@ -122,7 +124,7 @@ class System {
 		// Work out the path to resolve
 
 		$this->path = defined('CMS_PATH') ? CMS_PATH : isset($_GET['path']) && trim($_GET['path'],'/') != '' ? trim($_GET['path'],'/') : 'home';
-		
+
 		// And the local system path
 
 		$this->local_path = defined('CMS_LOCAL_PATH') ? CMS_LOCAL_PATH : (dirname(__FILE__) . '/');
@@ -329,10 +331,10 @@ class System {
 				file_put_contents($this->local_path . 'system/logs/dump.' . $this->request . '.log', $exception->dump() . "\r\n", FILE_APPEND);
 				break;
 			case System::dump_file_log:
-				file_put_contents($this->local_path . 'system/logs/dump.log', $this->request . '\r\n' . $exception->dump() . "\r\n", FILE_APPEND);
+				file_put_contents($this->local_path . 'system/logs/dump.log', $this->request . "\r\n" . $exception->dump() . "\r\n", FILE_APPEND);
 				break;
 			case System::dump_log:
-				file_put_contents($this->log, date('M j H:i:s') . ' fusion [' . $this->request . '] ' . $exception->message(), FILE_APPEND);
+				file_put_contents($this->log, date('M j H:i:s') . ' fusion [' . $this->request . '] ' . $exception->message() . "\r\n", FILE_APPEND);
 				break;
 			case System::dump_syslog:
 				openlog("fusion-web", LOG_PID, LOG_USER);
