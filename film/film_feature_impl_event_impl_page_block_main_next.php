@@ -25,6 +25,8 @@ class Film_Film_Feature_Impl_Event_Impl_Page_Block_Main_Next extends Film_Featur
 		$template->runtime = $this->film->get_runtime();
 		$template->imdbID = $this->film->get_imdb();
 		$template->video = $this->videoContent;
+		$template->name = $this->film->get_description()->get_title();
+		$template->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
 		return $template;
 	}
 

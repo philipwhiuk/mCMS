@@ -13,6 +13,18 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 
 		$this->leads = $this->film->get_lead_actors();
 		$this->screenplays = $this->film->get_screenplay_writers();
+		try {
+			$this->synopis = $this->film->get_synopsis()->get_body();
+		}
+		catch(Exception $e) {
+			$this->synopis = "";
+		}
+		try {
+			$this->description = $this->film->get_description()->get_body();
+		}
+		catch(Exception $e) {
+			$this->description = "";
+		}
 	}
 	function display() {
 		$this->system = System::Get_Instance();
@@ -29,13 +41,18 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		}
 		catch(Actor_Not_Found_Exception $e) {
 		}
-		$template->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
+		try {
+			$template->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
+		}
+		catch(Film_Certificate_Not_Found_Exception $e) {
+		}
 		try {
 				$template->trailer = $this->film->get_random_trailer()->get_video()->content()->get_body();
 		}
 		catch (Film_Trailer_Not_Found_Exception $e) {
 		}
-		$template->description = $this->film->get_description()->get_body();
+		$template->description = $this->description;
+		$template->synopsis = $this->synopis;
 		try {
 			$template->tagline = $this->film->get_random_tagline()->text;
 		}

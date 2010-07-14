@@ -1,6 +1,7 @@
 <?php
-class Film_Film_Feature_Impl_Page_Block_Main_Category_Next extends Film_Feature_Impl_Page_Block_Main_Category_Next {
-	public function __construct($item) {
+
+class Film_Film_Feature_Impl_Film_Festival_Impl_Event_Impl_Page_Main_View extends Film_Feature_Impl_Film_Festival_Impl_Event_Impl_Page_Main_View  {
+	function __construct($item) {
 		$this->item = $item;
 		$this->feature = $this->item->get_feature();
 		$this->film = $this->item->get_film();
@@ -13,25 +14,27 @@ class Film_Film_Feature_Impl_Page_Block_Main_Category_Next extends Film_Feature_
 			$this->videoContent = "";
 		}
 		try {
-			$this->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
+			$largeImageFile = $this->film->get_largeImage()->files();
+			$this->largeImageURL = $largeImageFile[0]->file()->url();
 		}
-		catch (Film_Certificate_Not_Found_Exception $e){ 
-			$this->certificate = "";
+		catch (Exception $e) {
+			$this->largeImageURL = "";
 		}
 	}
-	public function display() {
+	function display() {
 		$this->system = System::Get_Instance();
 		$module = Module::Get('film');
 		$language = Language::Retrieve();
-		$template = $this->system->output()->start(array('film', 'film_feature','page','block','category','next'));
+		$template = $this->system->output()->start(array('film', 'film_feature','film_festival','event','page','main','view'));
+		$template->title = $this->film->get_description()->get_title();
 		$template->release_year_title = $language->get($module, array('view','release_year'));
 		$template->runtime_title = $language->get($module, array('view','runtime'));
 		$template->release_year = $this->film->get_release_year();
 		$template->runtime = $this->film->get_runtime();
 		$template->imdbID = $this->film->get_imdb();
 		$template->video = $this->videoContent;
-		$template->name = $this->film->get_description()->get_title();
-		$template->certificate = $this->certificate;
+		$template->largeImageURL = $this->largeImageURL;
 		return $template;
 	}
+
 }

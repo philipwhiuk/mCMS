@@ -109,8 +109,13 @@ class Film {
 	
 	public function get_random_trailer() {
 		$key = array_rand($this->get_trailers());
-		$row = $this->trailers[$key];
-		if(!$row instanceof Film_Trailer) {
+		if(is_int($key)) {
+			$row = $this->trailers[$key];
+			if(!$row instanceof Film_Trailer) {
+				throw new Film_Trailer_Not_Found_Exception();
+			}
+		}
+		else {
 			throw new Film_Trailer_Not_Found_Exception();
 		}
 		return $row;
