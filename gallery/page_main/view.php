@@ -98,7 +98,6 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 			$furl .= $g->id() . '/';
 			$surl .= $g->id() . '/';
 		}
-		$ret = false;
 		$rf = Resource::Get_By_Argument($this->module, $furl);
 		$rs = Resource::Get_By_Argument($this->module, $surl);
 		$t = array(
@@ -115,10 +114,9 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 		if(isset($g->selected) && $g->selected){
 			foreach($g->children() as $sg){
 				$st = &$t['children'][];
-				$ret = true;
 				$this->display_sub($sg, $st, $furl, $surl, false);
 			} 
-			if(!$ret && isset($g->items) && count($g->items) > 0){
+			if(isset($g->items) && count($g->items) > 0){
 				foreach($g->items as $i => $item){
 					$item->gallery_furl = $furl;
 					$item->gallery_surl = $surl;

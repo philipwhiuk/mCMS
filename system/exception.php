@@ -25,7 +25,14 @@ class CMS_Exception extends Exception {
 }
 
 class System_Exception extends CMS_Exception {}
-class System_Load_Exception extends System_Exception {}
+class System_Load_Exception extends System_Exception {
+
+	public function message(){
+		print_r($this->data[0]);
+		return "System Failed To Load: " . $this->data[0]->message();
+	}
+
+}
 class System_Not_Installed_Exception extends System_Exception {
 
 	protected $level = System::dump_warning;

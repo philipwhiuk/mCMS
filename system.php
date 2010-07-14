@@ -60,6 +60,7 @@ class System {
 	
 	// Configuration
 	
+	private $log;
 	private $debug_type;
 	public $debug_default_level;
 	private $debug_level;
@@ -115,6 +116,8 @@ class System {
 		$this->remote_path = defined('CMS_REMOTE_PATH') ? CMS_REMOTE_PATH : $url;
 
 		// Debug settings
+
+		$this->log = defined('CMS_LOG') ? CMS_LOG : $this->local_path . 'system/logs/log.log';
 
 		$this->debugging = defined('CMS_DEBUG') ? CMS_DEBUG : false;
 		$this->debug_type = defined('CMS_DEBUG_TYPE') ? CMS_DEBUG_TYPE : System::dump_none;
