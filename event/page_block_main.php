@@ -14,6 +14,7 @@ abstract class Event_Page_Block_Main extends Page_Block_Main {
 			}
 			catch(Exception $e){
 				$exceptions[] = $e;
+				var_dump($e);
 			}
 		}
 		if(is_numeric($arg)){

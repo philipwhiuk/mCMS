@@ -61,7 +61,7 @@ class Event {
 		$operand = array(array('col','finishtime'), array('u', time()));
 		$ordering = array('starttime' => true);
 		$query = System::Get_Instance()->database()->Select()->table('event')->where($operator, $operand)->order($ordering)->limit(1);
-		$result = $query->execute();
+		$result = $query->execute();		
 		if($result->num_rows == 0){
 			throw new Event_Not_Found_Exception();
 		}
