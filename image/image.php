@@ -57,7 +57,7 @@ class Image {
 	
 	public static function Get_All(){
 		
-		$query = System::Get_Instance()->database()->Select()->table('images');
+		$query = System::Get_Instance()->database()->Select()->table('image');
 		
 		$result = $query->execute();
 		
@@ -76,7 +76,7 @@ class Image {
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('images')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('image')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		

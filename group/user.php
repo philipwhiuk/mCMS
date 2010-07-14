@@ -6,7 +6,7 @@ class Group_User {
 	
 	public static function Get_All($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('group_users')->where($operator, $operand);
+		$query = System::Get_Instance()->database()->Select()->table('group_user')->where($operator, $operand);
 		
 		$result = $query->execute();
 		

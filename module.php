@@ -46,9 +46,9 @@ abstract class Module {
 	public static function Get_All($operator = null, $operand = null){
 		
 		if(isset($operator) && isset($operand)){
-			$query = System::Get_Instance()->database()->Select()->table('modules')->where($operator, $operand);
+			$query = System::Get_Instance()->database()->Select()->table('module')->where($operator, $operand);
 		} else {
-			$query = System::Get_Instance()->database()->Select()->table('modules');
+			$query = System::Get_Instance()->database()->Select()->table('module');
 		}
 		
 		$result = $query->execute();

@@ -6,7 +6,7 @@ class Permission_Group extends Permission {
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('permission_groups')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('permission_group')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		

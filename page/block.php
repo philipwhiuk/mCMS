@@ -46,7 +46,7 @@ class Page_Block {
 	
 	private static function Get_Raw($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('page_blocks')->where($operator, $operand);
+		$query = System::Get_Instance()->database()->Select()->table('page_block')->where($operator, $operand);
 		
 		$result = $query->execute();
 		

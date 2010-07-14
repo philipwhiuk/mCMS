@@ -15,7 +15,7 @@ class Group {
 	}
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('groups')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('group')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		if($result->num_rows == 0){

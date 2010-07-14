@@ -40,7 +40,7 @@ class News_Article {
 		$query = System::Get_Instance()
 						->database()
 						->Select()
-						->table('news_articles')
+						->table('news_article')
 						->where('=', array(array('col','category'), array('u', $category)))
 						->order(array('time' => false));
 
@@ -69,7 +69,7 @@ class News_Article {
 		}
 		//array('=', array(array('col','category'), array('u', $category))),
 
-		$query = System::Get_Instance()->database()->Select()->table('news_articles')->where('=', array(array('col','category'), array('u', $category)))->order(array('time' => false))->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('news_article')->where('=', array(array('col','category'), array('u', $category)))->order(array('time' => false))->limit(1);
 		
 		$result = $query->execute();
 		
@@ -92,7 +92,7 @@ class News_Article {
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('news_articles')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('news_article')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		

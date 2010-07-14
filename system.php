@@ -91,9 +91,8 @@ class System {
 	    
         const dump_screen = 0;
         const dump_file = 1;
-        const dump_ilog = 2;
-	const dump_log = 3;
-	const dump_none = 4;
+	const dump_log = 2;
+	const dump_none = 3;
 	
 	/**
 	 * Constructor
@@ -115,6 +114,7 @@ class System {
 
 		// Debug settings
 
+		$this->debugging = defined('CMS_DEBUG') ? CMS_DEBUG : false;
 		$this->debug_type = defined('CMS_DEBUG_TYPE') ? CMS_DEBUG_TYPE : System::dump_none;
 		$this->debug_level = defined('CMS_DEBUG_LEVEL') ? CMS_DEBUG_LEVEL : System::dump_error; 
 		$this->debug_default_level = defined('CMS_DEBUG_DEFAULT_LEVEL') ? CMS_DEBUG_DEFAULT_LEVEL : $this->debug_level;
@@ -251,7 +251,7 @@ class System {
 			
 		} catch (Config_Not_Found_Exception $e){
 
-			throw new System_Install_Exception($e);
+			throw new System_Not_Installed_Exception($e);
 			
 		}
 
@@ -312,9 +312,9 @@ class System {
 		
 	}
 
-	public function dump($level, $exception){
+	public function dump($level, $exception, $debug){
 
-		if($level > $this->debug_level){
+		if($debug && ($level > $this->debug_level || !$this->debugging)){
 			return;
 		}
 
@@ -323,17 +323,34 @@ class System {
 				if(!headers_sent()){
 					header('Content-type: text/plain');
 				}
-				print_r(array('exception' => $exception, 'request' => $_REQUEST, 'server' => $_SERVER, 'system' => $this));
+				echo $exception;
 				break;
 			case System::dump_file:
-				$dump = '<' . '?php $dump[] = \'' . serialize(array('system' => $this, 'request' => $_REQUEST, 'server' => $_SERVER, 'exception' => $exception)) . '\'; ?' . '>';
-				file_put_contents($this->local_path . 'system/logs/dump.' . $this->request . '.php', $dump, FILE_APPEND);
+				file_put_contents($this->local_path . 'system/logs/dump.' . $this->request . '.log', $exception->dump() . "\r\n", FILE_APPEND);
 				break;
-			case System::dump_ilog:
-				file_put_contents($this->local_path . 'system/logs/dump.' . $this->request . '.log', (string) $exception . "\r\n", FILE_APPEND);
+			case System::dump_file_log:
+				file_put_contents($this->local_path . 'system/logs/dump.log', $this->request . '\r\n' . $exception->dump() . "\r\n", FILE_APPEND);
 				break;
 			case System::dump_log:
-				file_put_contents($this->local_path . 'system/logs/dump.log', $this->request . ' : ' . (string) $exception . "\r\n", FILE_APPEND);
+				file_put_contents($this->log, date('M j H:i:s') . ' fusion [' . $this->request . '] ' . $exception->message(), FILE_APPEND);
+				break;
+			case System::dump_syslog:
+				openlog("fusion-web", LOG_PID, LOG_USER);
+				switch($this->level){
+					case System::dump_notice:
+						$level = LOG_NOTICE;
+						break;
+					case System::dump_warning:
+						$level = LOG_WARNING;
+						break;
+					case System::dump_error:
+						$level = LOG_ERR;
+						break;
+					default:
+						$level = LOG_INFO;
+				}
+				file_put_contents($this->log, syslog($level, $exception->message));
+				closelog();
 				break;
 		}
 		
@@ -345,7 +362,7 @@ class System {
 			 header("HTTP/1.1 500 Internal Server Error");
 		}
 
-		$this->dump(System::dump_error, $e);
+		$this->dump(System::dump_error, $e, false);
 		if($fatal){
 			exit;
 		}
@@ -360,8 +377,8 @@ class System {
 			} catch(System_Not_Installed_Exception $e){
 				try {
 					$this->install();
-				} catch (Exception $e){
-					throw new System_Install_Exception($e);
+				} catch (Exception $f){
+					throw new System_Install_Exception(array($e, $f));
 				}
 			} catch(Exception $e){
 				throw new System_Load_Exception($e);
@@ -371,7 +388,7 @@ class System {
 			
 			
 		} catch (Exception $e) {
-			$this->error($e);	 
+			$this->error($e,true);	 
 		}
 		
 	}

@@ -36,7 +36,13 @@ class Config {
 
 		array_unshift($server, $parse['port'], $parse['scheme']);
 
-		$path = explode('/', trim($parse['path'], '/'));
+		$parse['path'] = trim($parse['path'], '/');
+		
+		if(strlen($parse['path']) != 0){
+			$path = explode('/', $parse['path']);
+		} else {
+			$path = array();
+		}
 
 		$exceptions = array();
 		
@@ -48,7 +54,7 @@ class Config {
 				try {
 					return new Config($system->file('config/' . join('.', $l), false));
 				} catch(Exception $e){
-					$exceptions[join('.', $k)] = $e;
+					$exceptions[join('.', $l)] = $e;
 				}
 			}
 		}

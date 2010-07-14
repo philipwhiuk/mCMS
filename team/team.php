@@ -54,7 +54,7 @@ class Team {
 		
 		$query = System::Get_Instance()	->database()
 						->Select()
-						->table('teams')
+						->table('team')
 						->where('=', array(array('col','parent'), array('u', $parent)))
 						->order(array('sort' => true));
 		
@@ -69,7 +69,7 @@ class Team {
 	}
 
 	public static function Get_One($operator, $operand){
-		$query = System::Get_Instance()->database()->Select()->table('teams')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('team')->where($operator, $operand)->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
 			throw new Team_Not_Found_Exception($operator, $operand);

@@ -22,7 +22,7 @@ class Video {
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('videos')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('video')->where($operator, $operand)->limit(1);
 		$result = $query->execute();
 		
 		if($result->num_rows == 0){

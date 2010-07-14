@@ -43,7 +43,7 @@ class Menu_Item {
 			$menu = $menu->id();
 		}
 		
-		$query = System::Get_Instance()->database()->Select()->table('menu_items')->where('=', array(
+		$query = System::Get_Instance()->database()->Select()->table('menu_item')->where('=', array(
 			array('col', 'menu'),
 			array('u', $menu)
 		))->order(array('sort' => true));

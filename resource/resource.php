@@ -112,7 +112,7 @@ class Resource {
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('resources')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('resource')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		
@@ -125,7 +125,7 @@ class Resource {
 	
 	private static function Get_Resources($path, $argument){
 		
-		$query = System::Get_Instance()->database()->Select()->table('resources')->where('=', 
+		$query = System::Get_Instance()->database()->Select()->table('resource')->where('=', 
 			array(
 				array('col', 'path'),
 				array('s', $path)
@@ -176,7 +176,7 @@ class Resource {
 		
 		foreach($args as $base => $additional){
 			
-			$query = System::Get_Instance()->database()->Select()->table('resources')->where('and', 
+			$query = System::Get_Instance()->database()->Select()->table('resource')->where('and', 
 				array(
 					array('=',array(
 						array('col', 'module'),

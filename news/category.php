@@ -57,7 +57,7 @@ class News_Category {
 		
 		$query = System::Get_Instance()	->database()
 						->Select()
-						->table('news_categories')
+						->table('news_category')
 						->where('=', array(array('col','parent'), array('u', $parent)));
 		
 		$result = $query->execute();
@@ -82,7 +82,7 @@ class News_Category {
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('news_categories')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('news_category')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		

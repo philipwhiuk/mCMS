@@ -65,7 +65,7 @@ class File {
 	
 		$db = $system->database();
 
-		$query = $db->Insert()->table('files')
+		$query = $db->Insert()->table('file')
 			->set(array(
 						'name' => array('s', $data['name']),
 						'path' => array('s', $data['path']),
@@ -95,7 +95,7 @@ class File {
 		$data['size'] = isset($data['size']) ? $data['size'] : $this->size;
 		$data['time'] = isset($data['type']) ? $data['time'] : $this->time;
 
-		$query = System::Get_Instance()->database()->Update()->table('files')
+		$query = System::Get_Instance()->database()->Update()->table('file')
 			->set(array(
 					'name' => array('s', $data['name']),
 					'path' => array('s', $data['path']),
@@ -145,7 +145,7 @@ class File {
 	}
 
 	public static function Get_All(){
-		$query = System::Get_Instance()->database()->Select()->table('files')->order(array('name' => true));
+		$query = System::Get_Instance()->database()->Select()->table('file')->order(array('name' => true));
 
 		$result = $query->execute();
 
@@ -160,7 +160,7 @@ class File {
 
 	public static function Get_One($operator, $operand){
 
-		$query = System::Get_Instance()->database()->Select()->table('files')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('file')->where($operator, $operand)->limit(1);
 
 		$result = $query->execute();
 

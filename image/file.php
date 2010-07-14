@@ -68,7 +68,7 @@ class Image_File {
 
 		$db = System::Get_Instance()->database();
 
-		$query = $db->Insert()->table('image_files')
+		$query = $db->Insert()->table('image_file')
 			->set(array(
 				'image' => array('u', $image),
 				'file' => array('u', $file->id()),
@@ -94,7 +94,7 @@ class Image_File {
 			$image = $image->id();
 		}
 		
-		$query = System::Get_Instance()->database()->Select()->table('image_files')->where('=',array( 
+		$query = System::Get_Instance()->database()->Select()->table('image_file')->where('=',array( 
 			array('col', 'image'),
 			array('u', $image)
 		));
@@ -130,7 +130,7 @@ class Image_File {
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('image_files')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('image_file')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		

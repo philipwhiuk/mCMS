@@ -29,7 +29,7 @@ class Image_Gallery_Item extends Gallery_Item {
 	}
 
 	public function previous(){
-		$query = System::Get_Instance()->database()->Select()->table('gallery_images')->where('AND', array(
+		$query = System::Get_Instance()->database()->Select()->table('gallery_image')->where('AND', array(
 					array('=', array(array('col','gallery'), array('u', $this->gallery))),
 					array('<', array(array('col','sort'), array('u', $this->sort)))
 					))->order(array('sort' => false))->limit(1);
@@ -42,7 +42,7 @@ class Image_Gallery_Item extends Gallery_Item {
 	}
 
 	public function next(){
-		$query = System::Get_Instance()->database()->Select()->table('gallery_images')->where('AND', array(
+		$query = System::Get_Instance()->database()->Select()->table('gallery_image')->where('AND', array(
 					array('=', array(array('col','gallery'), array('u', $this->gallery))),
 					array('>', array(array('col','sort'), array('u', $this->sort)))
 					))->order(array('sort' => true))->limit(1);
@@ -56,7 +56,7 @@ class Image_Gallery_Item extends Gallery_Item {
 
 	public static function Get_One($operator, $operand){
 
-		$query = System::Get_Instance()->database()->Select()->table('gallery_images')->where($operator, $operand)->limit(1);	
+		$query = System::Get_Instance()->database()->Select()->table('gallery_image')->where($operator, $operand)->limit(1);	
 		$result = $query->execute();
 
 		if($result->num_rows == 0){
@@ -76,7 +76,7 @@ class Image_Gallery_Item extends Gallery_Item {
 
 		$query = System::Get_Instance()	->database()
 			->Select()
-			->table('gallery_images')
+			->table('gallery_image')
 			->where('=', array(array('col','gallery'), array('u', $gallery)))
 			->order(array('sort' => true))
 			->limit($limit)
@@ -100,7 +100,7 @@ class Image_Gallery_Item extends Gallery_Item {
 
 		$query = System::Get_Instance() ->database()
 			->Count()
-			->table('gallery_images')
+			->table('gallery_image')
 			->where('=', array(array('col','gallery'), array('u', $gallery)));
 
 		return $query->execute();

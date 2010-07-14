@@ -75,7 +75,7 @@ class Gallery {
 
 		$query = System::Get_Instance()	->database()
 			->Select()
-			->table('galleries')
+			->table('gallery')
 			->where('=', array(array('col','parent'), array('u', $parent)))
 			->order(array('sort' => true));
 
@@ -90,7 +90,7 @@ class Gallery {
 	}
 
 	public static function Get_One($operator, $operand){
-		$query = System::Get_Instance()->database()->Select()->table('galleries')->where($operator, $operand)->limit(1);
+		$query = System::Get_Instance()->database()->Select()->table('gallery')->where($operator, $operand)->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
 			throw new Gallery_Not_Found_Exception($operator, $operand);
