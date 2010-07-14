@@ -3,9 +3,10 @@ class Film_Festival {
 	private $id;
 	private $content;
 	private $features;
+	private $module;
 	public function get_module() {
 		if(!$this->module instanceof Module) {
-			$this->module = Module::Get_Name('Film_Feature');
+			$this->module = Module::Get('film_feature');
 		}
 		return $this->module;
 	}
