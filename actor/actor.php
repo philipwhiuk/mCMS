@@ -8,6 +8,9 @@ class Actor {
 	private function __construct($data = array()){
 		foreach($data as $k => $v){ $this->$k = $v; }
 	}
+	public function get_id(){
+		return $this->id;
+	}
 	public function get_description(){
 		if(!($this->description instanceof Content)){
 			$this->description = Content::Get_By_ID($this->description);
@@ -29,5 +32,14 @@ class Actor {
 		
 		return $result->fetch_object('Actor');
 		
+	}
+	public static function Get_All(){
+		$query = System::Get_Instance()->database()->Select()->table('actor');
+		$result = $query->execute();
+		$return = array();
+		while($row = $result->fetch_object('Actor')){
+			$return[] = $row;
+		}
+		return $return;
 	}
 }
