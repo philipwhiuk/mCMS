@@ -19,6 +19,19 @@ class Image {
 		return $this->description;
 	}
 
+	public function largest(){
+		$this->files();
+		if(count($this->files) == 0){
+			throw new Image_No_Files_Found_Exception();
+		}
+		$max = NULL;
+		foreach($this->files as $file){
+			if(!isset($max) || $file->width() > $max->width()){
+				$max = $file;
+			}
+		}
+		return $max;
+	}
 
 	// Give me the width of the thumbnail you want.
 	public function width($width){
@@ -44,7 +57,24 @@ class Image {
 
 	// Give me the height of the thumbnail you want.
 	public function height($height){
-
+		$this->files();
+		if(count($this->files) == 0){
+			throw new Image_No_Files_Found_Exception();
+		}
+		$max = NULL;
+		foreach($this->files as $file){
+			if($file->height() == $height){
+				return $file;
+			}
+			if(!isset($max) || $file->width() > $max->width()){
+				$max = $file;
+			}
+		}
+		if($max->height() < $height){
+			return $max;
+		}
+		$width = ($height * $max->width()) / $max->height();
+		return $max->resize($height, $width);
 	}
 
 	
