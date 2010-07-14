@@ -20,6 +20,23 @@ class Film_Feature_Event_Impl_Page_Block_Main_Next extends Event_Impl_Page_Block
 		foreach($this->implViews as $implView) {
 			$template->films[] = $implView->display();
 		}
+		$date = 0;
+		$showingsCount = 0;
+		foreach($this->feature->get_showings() as $showing) {
+			$newdate = getdate($showing->get_datetime());
+			if($newdate['mday'] != $date['mday'] | $newdate['month'] != $date['month'] | $newdate['year'] != $date['year']) {
+				$date = $newdate;
+				$showingsCount++;
+				$template->showings[$showingsCount] = array();
+				$template->showings[$showingsCount][] = $showing->get_datetime();
+			}
+			else { 
+				$template->showings[$showingsCount][] = $showing->get_datetime();
+			}
+		}
+		$this->ffmod = Module::Get('film_feature');
+		$res = Resource::Get_By_Argument($this->ffmod, $this->feature->get_id());
+		$template->url = $this->system->url($res->url());
 		return $template;
 	}
 

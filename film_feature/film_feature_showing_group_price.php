@@ -3,6 +3,18 @@ class Film_Feature_Showing_Group_Price {
 	private $group;
 	private $price;
 	private $showing;
+	public function get_showing_id()  {
+		if($this->showing instanceof Film_Feature_Showing) {
+			return $this->showing->get_id();
+		}
+		return $this->showing;
+	}
+	public function get_group_id()  {
+		if($this->group instanceof Group) {
+			return $this->group->get_id();
+		}
+		return $this->group;
+	}
 	public function get_group() {
 		if(!$this->group instanceof Group) {
 			$this->group = Group::Get_By_ID($this->group);
@@ -12,19 +24,37 @@ class Film_Feature_Showing_Group_Price {
 	public function get_price() {
 		return $this->price;
 	}
-	public static function Get_By_Showing($showing) { 
-		if($showing instanceof Film_Feature_Showing) {
-			$showing = $showing->get_id();
+	public static function Get_By_Showing($arg) {
+		if(is_array($arg)) {
+			$operand = array(array('col','showing'));
+			foreach($arg as $row) {
+				$operand[] = array('u',$row);
+			}
+			$query = System::Get_Instance()->database()->Select()->table('film_feature_showing_group_price')
+			->where('in',$operand);
+			$result = $query->execute();
+			$return = array();
+			while($row = $result->fetch_object('Film_Feature_Showing_Group_Price')){
+				$return[$row->get_showing_id()][$row->get_group_id()] = $row;
+			}
+			return $return;
 		}
-		$query = System::Get_Instance()	->database()
-			->Select()
-			->table('film_feature_showing_group_price')
-			->where('=', array(array('col','showing'), array('u', $showing)));
-		$result = $query->execute();
-		while($row = $result->fetch_object('Film_Feature_Showing_Group_Price')){
-			$return[] = $row;
+		else {
+			$showing = $arg;
+			if($showing instanceof Film_Feature_Showing) {
+				$showing = $showing->get_id();
+			}
+			$query = System::Get_Instance()	->database()
+				->Select()
+				->table('film_feature_showing_group_price')
+				->where('=', array(array('col','showing'), array('u', $showing)));
+			$result = $query->execute();
+			$return = array();
+			while($row = $result->fetch_object('Film_Feature_Showing_Group_Price')){
+				$return[] = $row;
+			}
+			return $return;
 		}
-		return $return;
 	}
 	public static function Get_By_Showing_Group($showing,$group) {
 		if($showing instanceof Film_Feature_Showing) {

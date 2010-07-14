@@ -21,6 +21,7 @@ abstract class Film_Feature_Page_Block_Main extends Page_Block_Main {
 					}
 				} catch(Exception $e){
 					$exceptions[] = $e;
+					var_dump($exceptions);
 				}
 				break;
 			case 'cat_coming_soon':
@@ -35,7 +36,7 @@ abstract class Film_Feature_Page_Block_Main extends Page_Block_Main {
 						case "view":
 							$parent->resource()->consume_argument();
 							$parent->resource()->get_module()->file('page_block_main/category_next');
-							return new Film_Feature_Page_Block_Main_Category_Next($parent, $feature);
+							return new Film_Feature_Page_Block_Main_Category_Next($parent, $feature, $cat);
 							break;
 					}
 				} catch(Exception $e){
@@ -43,7 +44,7 @@ abstract class Film_Feature_Page_Block_Main extends Page_Block_Main {
 				}
 				break;
 		}
-		throw new Film_Feature_Page_Unavailable_Exception($exceptions);
+		throw new Film_Feature_Page_Block_Unavailable_Exception($exceptions);
 	}
 	
 }

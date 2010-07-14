@@ -5,6 +5,7 @@ class Film_Feature {
 	private $id;
 	private $content;
 	private $films;
+	private $module;
 	
 	private function __construct($data = array()){
 		foreach($data as $k => $v){ $this->$k = $v; }
@@ -98,8 +99,22 @@ class Film_Feature {
 		
 		return $return;
 	}
-	public static function Get_By_ID($id){
-		return self::Get_One('=', array(array('col','id'), array('u', $id)));
+	public static function Get_By_ID($arg){
+		if(is_array($arg)) {
+			$operand = array(array('col','id'));
+			foreach($arg as $row) {
+				$operand[] = array('u',$row);
+			}
+			$query = System::Get_Instance()->database()->Select()->table('film_feature')
+			->where('in',$operand);
+			$result = $query->execute();
+			$return = array();
+			while($row = $result->fetch_object('Film_Feature')){
+				$return[$row->get_id()] = $row;
+			}
+			return $return;
+		}
+		return self::Get_One('=', array(array('col','id'), array('u', $arg)));
 	}
 	
 	public static function Get_One($operator, $operand){
@@ -130,7 +145,7 @@ class Film_Feature {
 				return $result->fetch_object('Film_Feature');
 			}
 		}
-		throw Film_Feature_Not_Found_Exception();
+		throw new Film_Feature_Not_Found_Exception();
 	}
 	public static function Get_ComingSoon($number) {
 		$coming_soon = Film_Feature_Showing::Get_ComingSoon($number);
@@ -143,7 +158,7 @@ class Film_Feature {
 			$features[] = $result->fetch_object('Film_Feature');
 		}
 		$previousID = 0;
-		$count = 0;
+		$previousCount = 0;
 		$return = array();
 		foreach($features as $feature) {
 			if($feature->id != $previousID) {

@@ -2,13 +2,19 @@
 class Film_Feature_Showing {
 	private $id;
 	private $datetime;
-	private $feature;
+	public $feature;
 	
 	function get_id() {
 		return $this->id;
 	}
 	function get_datetime() {
 		return $this->datetime;
+	}
+	function feature_id() {
+		if($this->feature instanceof Film_Feature) {
+			return $this->feature->get_id();
+		}
+		return $this->feature;
 	}
 	function get_feature() {
 		if(!$this->feature instanceof Film_Feature) {
@@ -39,7 +45,7 @@ class Film_Feature_Showing {
 		return $return;
 	}
 	static function Get_By_ID($id) {
-		$query = System::Get_Instance()	->database()
+		$query = System::Get_Instance()->database()
 			->Select()
 			->table('film_feature_showing')
 			->where('=', array(array('col','id'), array('u', $id)))
@@ -61,5 +67,48 @@ class Film_Feature_Showing {
 			$return[] = $row;
 		}
 		return $return;	
+	}
+	static function Get_Period($first,$last) {
+		$query = System::Get_Instance()->database()
+			->Select()
+			->table('film_feature_showing')
+->where(
+	'AND',
+	array(
+		array(
+			'>',
+			array(
+				array(
+					'col',
+					'datetime'
+				),
+				array(
+					'u',
+					$first
+				)
+			)
+		),
+		array(
+			'<',
+			array(
+				array(
+					'col',
+					'datetime'
+				),
+				array(
+					'u',
+					$last
+				)
+			)
+		)
+	)
+)
+			->order(array('datetime' => true));
+		$result = $query->execute();
+		$return = array();
+		while($row = $result->fetch_object('Film_Feature_Showing')){
+			$return[] = $row;
+		}
+		return $return;
 	}
 }
