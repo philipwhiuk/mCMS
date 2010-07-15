@@ -6,13 +6,35 @@ class Film_Page_Main_View extends Film_Page_Main {
 	
 	public function __construct($parent, $film){
 		parent::__construct($parent);
+		$film_module = Module::Get('film');
 		$this->film = $film;
 		Permission::Check(array('film',$film->get_id()), array('view','edit','add','delete','list'),'view');
-		$this->leads = $this->film->get_lead_actors();
 		try {
 			$this->smallImageFiles = $this->film->get_smallImage()->files();
 		}
 		catch (Image_Not_Found_Exception $e) {
+		}
+		$actors = $this->film->get_role_actors();
+		$this->role_actors = array();
+		$system = System::Get_Instance();
+		$actor_module = Module::Get('actor');
+		foreach($actors as $actor) {
+			$this->role_actors[$actor->get_film_role()->get_content()->get_title()][] = array(
+				'name' => $actor->get_actor()->get_description()->get_title(), 
+				'url' => $system->url(Resource::Get_By_Argument($actor_module, $actor->get_actor()->get_id())->url())
+			);
+		}
+		$genres = $this->film->get_genres();
+		$this->genres = array();
+		foreach($genres as $genre) {
+			$this->genres[] = array(
+				'name' => $genre->get_genre()->get_content()->get_title(),
+				'url'=> $system->url(
+					Resource::Get_By_Argument(
+						$film_module,
+						'genre/'.
+						$genre->get_genre()->get_id())->url())
+			);
 		}
 	}
 	
@@ -34,11 +56,6 @@ class Film_Page_Main_View extends Film_Page_Main {
 		$template->imdbID = $this->film->get_imdb();
 		$template->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
 		try {
-			$template->director = $this->film->get_director()->get_description()->get_title();
-		}
-		catch(Actor_Not_Found_Exception $e) {
-		}
-		try {
 			$template->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
 		}
 		catch(Film_Certificate_Not_Found_Exception $e) {
@@ -58,22 +75,7 @@ class Film_Page_Main_View extends Film_Page_Main {
 		if(isset($this->smallImageFiles)) {
 			$template->smallImage = $this->smallImageFiles[0]->file()->id();
 		}
-		$template->leads = array();
-		foreach($this->leads as $lead) {
-			try {
-				$template->leads[] = $lead->get_actor()->get_description()->get_title();
-			}
-			catch(Actor_Not_Found_Exception $e) {
-			}
-		}
-		$template->screenplays = array();
-		foreach($this->screenplays as $screenplay) {
-			try {
-				$template->screenplays[] = $screenplay->get_actor()->get_description()->get_title();
-			}
-			catch(Actor_Not_Found_Exception $e) {
-			}
-		}
+		$template->role_actors = $this->role_actors;
 		return $template;
 	}
 }

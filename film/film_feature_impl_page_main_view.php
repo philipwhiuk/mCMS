@@ -2,6 +2,7 @@
 
 class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_View  {
 	function __construct($item) {
+		$film_module = Module::Get('film');
 		$this->item = $item;
 		$this->feature = $this->item->get_feature();
 		$this->film = $this->item->get_film();
@@ -10,12 +11,12 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		}
 		catch(Image_Not_Found_Exception $e) {
 		}
-
+		$cdate = 0;
 		$actors = $this->film->get_role_actors();
 		$this->role_actors = array();
 		$system = System::Get_Instance();
 		$actor_module = Module::Get('actor');
-		$cdate = 0;
+
 
 		foreach($actors as $actor) {
 			$this->role_actors[$actor->get_film_role()->get_content()->get_title()][] = array(
@@ -23,6 +24,19 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 				'url' => $system->url(Resource::Get_By_Argument($actor_module, $actor->get_actor()->get_id())->url())
 			);
 		}
+		$genres = $this->film->get_genres();
+		$this->genres = array();
+		foreach($genres as $genre) {
+			$this->genres[] = array(
+				'name' => $genre->get_genre()->get_content()->get_title(),
+				'url'=> $system->url(
+					Resource::Get_By_Argument(
+						$film_module,
+						'genre/'.
+						$genre->get_genre()->get_id())->url())
+			);
+		}
+		
 		try {
 			$this->synopis = $this->film->get_synopsis()->get_body();
 		}
@@ -67,6 +81,7 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 			$template->smallImage = $this->smallImageFiles[0]->file()->id();
 		}
 		$template->role_actors = $this->role_actors;
+		$template->genres = $this->genres;
 		return $template;
 	}
 

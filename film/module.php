@@ -12,7 +12,7 @@ class Film_Module extends Module {
 		Module::Get('film_certificate');
 		Module::Get('actor');
 		
-		$this->files('film','film_trailer','film_tagline','film_role','film_role_film_actor','exception');
+		$this->files('film','film_trailer','film_tagline','film_role','film_role_film_actor','film_genre','film_genre_film','exception');
 	}
 	
 }

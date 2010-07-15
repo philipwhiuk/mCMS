@@ -1,16 +1,20 @@
 <?php
 class Film_Feature_Film_Festival_Impl_Event_Impl_Page_Block_Main_Next extends Film_Festival_Impl_Event_Impl_Page_Block_Main_next {
 	function __construct($item) {
+		$ffmodule = Module::Get('film_feature');
 		$this->item = $item;
 		$this->film_feature = $this->item->get_feature();
+		$this->id = $this->film_feature->get_id();
 		$this->film_feature->get_showings();
-		Module::Get('film_feature')->file('film_feature_impl/film_festival_impl/event_impl/page_block_main/next');
+		$ffmodule->file('film_feature_impl/film_festival_impl/event_impl/page_block_main/next');
 		$this->films = $this->film_feature->get_films();
 		$this->implViews = array();
 		$class = $this->film_feature->get_module()->load_section('Film_Feature_Impl_Film_Festival_Impl_Event_Impl_Page_Block_Main_next');
 		foreach($this->films as $film) {			
 			$this->implViews[] = new $class($film);
 		}
+		$system = System::Get_Instance();
+		$this->url = $system->url(Resource::Get_By_Argument($ffmodule, $this->film_feature->get_id())->url());
 	}
 	function display() {
 		$this->system = System::Get_Instance();
@@ -33,6 +37,8 @@ class Film_Feature_Film_Festival_Impl_Event_Impl_Page_Block_Main_Next extends Fi
 		foreach($this->implViews as $implView) {
 			$template->films[] = $implView->display();
 		}
+		$template->id = $this->id;
+		$template->url = $this->url;
 		return $template;
 	}
 }

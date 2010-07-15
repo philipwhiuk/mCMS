@@ -15,3 +15,7 @@ class Film_Not_Found_Exception extends Film_Exception {}
 class Film_Page_Exception extends Film_Exception {}
 
 class Film_Page_Unavailable_Exception extends Film_Page_Exception {}
+
+class Film_Genre_Page_Exception extends Film_Page_Exception {}
+
+class Film_Genre_Page_Unavailable_Exception extends Film_Page_Exception {}

@@ -30,6 +30,12 @@ class Film {
 		}
 		return $this->trailers;
 	}
+	public function get_genres() {
+		if(!isset($this->genres)) {
+			$this->genres = Film_Genre_Film::Get_By_Film($this);		
+		}
+		return $this->genres;
+	}
 	public function get_role_actors() {
 		if(!isset($this->role_actors)) {
 			$this->role_actors = Film_Role_Film_Actor::Get_By_Film($this);		
