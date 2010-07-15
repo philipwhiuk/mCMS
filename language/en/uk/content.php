@@ -25,6 +25,14 @@ return array(
 	'admin' => array(
 		'menu' => array(
 			'name' => 'Content'
+		),
+		'list' => array(
+			'edit' => 'Edit'
+		),
+		'edit' => array(
+			'title' => 'Title:',
+			'body' => 'Body:',
+			'submit' => 'Update' 
 		)
 	)
 );

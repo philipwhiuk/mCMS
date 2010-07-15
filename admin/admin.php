@@ -2,11 +2,11 @@
 
 abstract class Admin {
 
-	abstract public function execute();
+	abstract public function execute($parent);
 	abstract public function display();
 	abstract public function display_menu();
 
-	protected $name;
+	protected $id;
 	protected $class;
 	protected $file;
 	protected $module;
@@ -21,12 +21,12 @@ abstract class Admin {
 	}
 
 	public function url($param = ''){
-		return $this->parent->url(trim($this->name . '/' . $param,'/'));
+		return $this->parent->url(trim($this->id . '/' . $param,'/'));
 	}
 
 	public static function Register($id, $class, $file, $module, $priority = 50){
 		// Register Panel
-		System::Get_Instance()->admin['panels'][$priority][$id] = array('class' => $class, 'file' => $file, 'module' => $module, 'priority' => $priority, 'name' => $id);
+		System::Get_Instance()->admin['panels'][$priority][$id] = array('class' => $class, 'file' => $file, 'module' => $module, 'priority' => $priority, 'id' => $id);
 	}
 
 	public static function Create_All($parent){

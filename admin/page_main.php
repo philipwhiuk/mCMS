@@ -21,6 +21,10 @@ class Admin_Page_Main extends Page_Main {
 		$this->panel->execute($this);
 	}
 
+	public function resource(){
+		return $this->parent->resource();
+	}
+
 	public function url($param = ''){
 		return System::Get_Instance()->url(
 			Resource::Get_By_Argument(

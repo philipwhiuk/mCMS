@@ -8,7 +8,7 @@ class Admin_Dashboard extends Admin {
 		$this->name = Language::Retrieve()->get($this->module, array('dashboard','menu','name'));
 	}
 
-	public function execute(){
+	public function execute($parent){
 
 	}
 
