@@ -12,7 +12,6 @@ abstract class Menu_Page_Block_Main_View extends Menu_Page_Block_Main {
 		Permission::Check(array('menu',$menu->id()), array('view','edit','add','delete'),'view');
 		$this->menu = $menu;
 		$this->impl = $menu->impl();
-	
 		$this->parents = $parents;
 		$this->level = $level;
 	}
@@ -136,7 +135,7 @@ class Menu_Menu_Page_Block_Main_View extends Menu_Page_Block_Main_View {
 		$system = System::Get_Instance();
 		$template = $system->output()->start(array('menu','page','block','view'));
 		$template->level = $this->level;
-
+		$template->id = $this->menu->id();
 		$template->items = array();
 
 		foreach($this->items as $item){
