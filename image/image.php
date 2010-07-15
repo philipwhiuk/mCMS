@@ -96,6 +96,16 @@ class Image {
 			return $this->width($width);
 		}
 	}
+
+	public function raw_url($param = ''){
+		return System::Get_Instance()->url(
+			Resource::Get_By_Argument(
+				Module::Get('image'),
+				$this->id() . '/' . $param
+			), 
+			array('output' => 'raw')
+		);
+	}
 	
 	public function files(){
 		if(!isset($this->files)){
