@@ -15,6 +15,9 @@ class Content_Admin extends Admin {
 	public function execute_list(){
 		$this->mode = 'list';  
 		$this->content = Content::Get_All();
+		$language = Language::Retrieve();
+		$this->edit = $language->get($this->module, array('admin','list','edit'));
+		$this->title = $language->get($this->module, array('admin','list','title'));
 	}
 
 	public function execute_edit(){
@@ -80,7 +83,8 @@ class Content_Admin extends Admin {
 	public function display_list(){
 		$template = System::Get_Instance()->output()->start(array('content','admin','list'));
 		$template->content = array();
-		$template->edit = Language::Retrieve()->get($this->module, array('admin','list','edit'));
+		$template->edit = $this->edit;
+		$template->title = $this->title;
 		foreach($this->content as $content){
 			$template->content[] = array(
 				'title' => $content->get_title(),

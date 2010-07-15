@@ -27,7 +27,8 @@ return array(
 			'name' => 'Content'
 		),
 		'list' => array(
-			'edit' => 'Edit'
+			'edit' => 'Edit',
+			'title' => 'Content List'
 		),
 		'edit' => array(
 			'title' => 'Title:',
