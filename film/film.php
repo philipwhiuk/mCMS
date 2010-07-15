@@ -30,17 +30,11 @@ class Film {
 		}
 		return $this->trailers;
 	}
-	public function get_lead_actors() {
-		if(!isset($this->lead_actors)) {
-			$this->lead_actors = Film_Lead::Get_By_Film($this);		
+	public function get_role_actors() {
+		if(!isset($this->role_actors)) {
+			$this->role_actors = Film_Role_Film_Actor::Get_By_Film($this);		
 		}
-		return $this->lead_actors;
-	}
-	public function get_screenplay_writers() {
-		if(!isset($this->screenplay_writers)) {
-			$this->screenplay_writers = Film_Screenplay::Get_By_Film($this);		
-		}
-		return $this->screenplay_writers;
+		return $this->role_actors;
 	}
 	public function get_taglines() {
 		if(!isset($this->taglines)) {

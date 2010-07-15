@@ -38,4 +38,19 @@ class Film_Role_Film_Actor {
 		}
 		return $return;
 	}
+	public static function Get_By_Actor($film) {
+		if($film instanceof Film) {
+			$film = $film->get_id();
+		}
+		$query = System::Get_Instance()	->database()
+			->Select()
+			->table('film_role_film_actor')
+			->where('=', array(array('col','film'), array('u', $film)));
+		$result = $query->execute();
+		$return = array();
+		while($row = $result->fetch_object('Film_Role_Film_Actor')){
+			$return[] = $row;
+		}
+		return $return;
+	}
 }
