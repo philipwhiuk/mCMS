@@ -24,19 +24,11 @@ class Image_Gallery_Item_Page_Main_View extends Gallery_Item_Page_Main_View  {
 		$template = $this->system->output()->start(array('image', 'gallery','page','view'));
 		$template->title = $this->image->description()->get_title();
 		$template->body = $this->image->description()->get_body();
-		$template->files = array();
+		$template->id = $this->image->id();
 		$furl = $this->gallery_furl . 'object/' . $this->item->id() . '/';
 		$surl = $this->gallery_surl . 'object/' . $this->item->id() . '/';
 		$template->furl = $this->system->url(Resource::Get_By_Argument($this->module, $furl)->url());
 		$template->surl = $this->system->url(Resource::Get_By_Argument($this->module, $surl)->url());
-
-		foreach($this->files as $file){
-			$template->files[ $file->width()] = array(
-				'url' => $file->file()->url(),
-				'width' => $file->width(),
-				'height' => $file->height()
-			);
-		}
 		return $template;
 	}	
 
