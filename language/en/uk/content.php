@@ -21,5 +21,10 @@ return array(
 		'list' => 'List',
 		'edit' => 'Edit',
 		'delete' => 'Delete'
+	),
+	'admin' => array(
+		'menu' => array(
+			'name' => 'Content'
+		)
 	)
 );

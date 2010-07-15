@@ -9,6 +9,11 @@ class Content_Module extends Module {
 		Module::Get('language');
 		
 		$this->files('content','exception');
+
+		Module::Get('admin');
+
+		Admin::Register('content','Content_Admin','admin',$this, 0);
+
 	}
 	
 }
