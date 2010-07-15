@@ -42,7 +42,7 @@ class Admin_Page_Main extends Page_Main {
 		$template = System::Get_Instance()->output()->start(array('admin','page'));
 		$template->menu = array();
 		foreach($this->panels as $i => $panel){
-			$template->menu[$i] = $panel->display_menu();
+			$template->menu[$i] = array('selected' => ($panel == $this->panel), 'value' => $panel->display_menu());
 		}
 		$template->panel = $this->panel->display();
 		return $template;

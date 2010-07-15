@@ -7,7 +7,7 @@ class Template_Theme_Default_HTML_Admin_Page extends Template {
 	<div class="admin-menu">
 		<ul>
 		<?php foreach($this->menu as $item){ ?>
-			<li><?php $item->display(); ?></li>
+			<li <?php if($item['selected']){ ?>class="selected"<?php } ?>><?php $item['value']->display(); ?></li>
 		<?php } ?>
 		</ul>
 	</div>
