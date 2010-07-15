@@ -77,6 +77,25 @@ class Image {
 		return $max->resize($height, $width);
 	}
 
+	public function min($width, $height){
+		$max = $this->largest();
+		$mwidth = ($height * $max->width()) / $max->height();
+		if($mwidth > $width){ 
+			return $this->height($height);
+		} else {
+			return $this->width($width);
+		}
+	}
+	
+	public function max($width, $height){
+		$max = $this->largest();
+		$mwidth = ($height * $max->width()) / $max->height();
+		if($mwidth < $width){ 
+			return $this->height($height);
+		} else {
+			return $this->width($width);
+		}
+	}
 	
 	public function files(){
 		if(!isset($this->files)){

@@ -35,6 +35,28 @@ class Image_Raw extends Raw {
 				$this->ifile = $image->height($arg);
 				$this->file = $this->ifile->file();
 			}
+		} elseif(isset($arg) && $arg == 'min'){
+			$resource->consume_argument();
+			$w = $resource->get_argument();
+			if(is_numeric($w)){			
+				$resource->consume_argument();
+				$h = $resource->get_argument();
+				if(is_numeric($h)){
+					$this->ifile = $image->min($w, $h);
+					$this->file = $this->ifile->file();
+				}
+			}
+		} elseif(isset($arg) && $arg == 'max'){
+			$resource->consume_argument();
+			$w = $resource->get_argument();
+			if(is_numeric($w)){			
+				$resource->consume_argument();
+				$h = $resource->get_argument();
+				if(is_numeric($h)){
+					$this->ifile = $image->max($w, $h);
+					$this->file = $this->ifile->file();
+				}
+			}
 		} else {
 			$this->ifile = $image->largest();
 			$this->file = $this->ifile->file();
