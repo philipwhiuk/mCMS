@@ -7,7 +7,14 @@ return array(
 		'submit' => 'Update' 
 	),
 	'list' => array(
-		'title' => 'Upcoming Films at Flix'
+		'title' => array(
+			'year' => 'Films: %1$s',
+			'archive' => 'Previous Films at Flix',
+			'current' => 'Upcoming Films at Flix'
+		)
+	),
+	'listarchive' => array(
+		'title' => 'Previous Films at Flix'
 	),
 	'add' => array(
 		'title_main' => 'Add New Feature',

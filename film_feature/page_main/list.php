@@ -107,7 +107,7 @@ class Film_Feature_Page_Main_List extends Film_Feature_Page_Main {
 		$module = Module::Get('film_feature');
 		try {
 		if(is_numeric($this->title)) {
-			$template->title = $language->get($module, array('list','title','year'))." ".$this->title;
+			$template->title = sprintf($language->get($module, array('list','title','year')), $this->title);
 		}
 		else {
 			$template->title = $language->get($module, array('list','title',$this->title));
