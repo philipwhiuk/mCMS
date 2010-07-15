@@ -102,7 +102,7 @@ class Image {
 			Resource::Get_By_Argument(
 				Module::Get('image'),
 				$this->id() . '/' . $param
-			), 
+			)->url(), 
 			array('output' => 'raw')
 		);
 	}
