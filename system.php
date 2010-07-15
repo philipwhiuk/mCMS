@@ -284,7 +284,7 @@ class System {
 			}
 		}
 
-		throw new System_Load_Resource_Exception($paths, $exceptions);
+		throw new System_Load_Resource_Exception($path, $exceptions);
 	}
 
 	public function resource($path){
