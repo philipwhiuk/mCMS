@@ -38,7 +38,7 @@ class Film_Role_Film_Actor {
 		}
 		return $return;
 	}
-	public static function Get_By_Actor($film) {
+	public static function Get_By_Film($film) {
 		if($film instanceof Film) {
 			$film = $film->get_id();
 		}

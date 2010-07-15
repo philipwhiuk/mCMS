@@ -11,8 +11,18 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		catch(Image_Not_Found_Exception $e) {
 		}
 
-		$this->leads = $this->film->get_lead_actors();
-		$this->screenplays = $this->film->get_screenplay_writers();
+		$actors = $this->film->get_role_actors();
+		$this->role_actors = array();
+		$system = System::Get_Instance();
+		$actor_module = Module::Get('actor');
+		$cdate = 0;
+
+		foreach($actors as $actor) {
+			$this->role_actors[$actor->get_film_role()->get_content()->get_title()][] = array(
+				'name' => $actor->get_actor()->get_description()->get_title(), 
+				'url' => $system->url(Resource::Get_By_Argument($actor_module, $actor->get_actor()->get_id())->url())
+			);
+		}
 		try {
 			$this->synopis = $this->film->get_synopsis()->get_body();
 		}
@@ -37,11 +47,6 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		$template->runtime = $this->film->get_runtime();
 		$template->imdbID = $this->film->get_imdb();
 		try {
-			$template->director = $this->film->get_director()->get_description()->get_title();
-		}
-		catch(Actor_Not_Found_Exception $e) {
-		}
-		try {
 			$template->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
 		}
 		catch(Film_Certificate_Not_Found_Exception $e) {
@@ -61,22 +66,7 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		if(isset($this->smallImageFiles)) {
 			$template->smallImage = $this->smallImageFiles[0]->file()->id();
 		}
-		$template->leads = array();
-		foreach($this->leads as $lead) {
-			try {
-				$template->leads[] = $lead->get_actor()->get_description()->get_title();
-			}
-			catch(Actor_Not_Found_Exception $e) {
-			}
-		}
-		$template->screenplays = array();
-		foreach($this->screenplays as $screenplay) {
-			try {
-				$template->screenplays[] = $screenplay->get_actor()->get_description()->get_title();
-			}
-			catch(Actor_Not_Found_Exception $e) {
-			}
-		}
+		$template->role_actors = $this->role_actors;
 		return $template;
 	}
 
