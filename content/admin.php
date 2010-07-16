@@ -14,7 +14,19 @@ class Content_Admin extends Admin {
 
 	public function execute_list(){
 		$this->mode = 'list';  
-		$this->content = Content::Get_All();
+		$arg = $this->parent->resource()->get_argument();
+		if(is_numeric($arg) && ((int) $arg) > 0){
+			$arg = (int) $arg;
+			$this->content = Content::Get_All(20, ($arg - 1) * 20);
+			$this->parent->resource()->consume_argument();
+			$this->page = $arg;
+		} else {
+			$this->page = 1;
+			$this->content = Content::Get_All(20);
+		}
+
+		$count = Content::Count_All();
+		$this->pages = ((int) ($count / 20)) + ((($count % 20) == 0) ? 0 : 1);
 		$language = Language::Retrieve();
 		$this->edit = $language->get($this->module, array('admin','list','edit'));
 		$this->title = $language->get($this->module, array('admin','list','title'));
@@ -85,6 +97,8 @@ class Content_Admin extends Admin {
 		$template->content = array();
 		$template->edit = $this->edit;
 		$template->title = $this->title;
+		$template->pages = $this->pages;
+		$template->page = $this->page;
 		foreach($this->content as $content){
 			$template->content[] = array(
 				'title' => $content->get_title(),
