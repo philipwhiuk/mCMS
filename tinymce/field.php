@@ -6,7 +6,8 @@ class TinyMCE_Field extends Form_Field {
 	private $error = false;
 	private $value = '';
 	
-	public function __construct(){
+	public function __construct($name, $info){
+		parent::__construct($name, $info);
 		$module = Module::Get('tinymce');
 		$this->filemanager = Resource::Get_By_Argument($module, 'files')->url();
 	}
