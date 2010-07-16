@@ -22,7 +22,7 @@ class TinyMCE_Field extends Form_Field {
 	public function execute($parent, $data){
 		if(!isset($data)){
 			$this->error = true;
-			throw new Form_Field_Textbox_Invalid_Exception($this, null);
+			throw new TinyMCE_Field_Invalid_Exception($this, null);
 		}
 		
 		$this->value = (string) $data;
