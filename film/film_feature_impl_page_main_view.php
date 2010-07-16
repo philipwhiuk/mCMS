@@ -1,6 +1,8 @@
 <?php
 
 class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_View  {
+	private $language;
+	
 	function __construct($item) {
 		$film_module = Module::Get('film');
 		$this->item = $item;
@@ -16,8 +18,6 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		$this->role_actors = array();
 		$system = System::Get_Instance();
 		$actor_module = Module::Get('actor');
-
-
 		foreach($actors as $actor) {
 			$this->role_actors[$actor->get_film_role()->get_content()->get_title()][] = array(
 				'name' => $actor->get_actor()->get_description()->get_title(), 
@@ -36,7 +36,11 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 						$genre->get_genre()->get_id())->url())
 			);
 		}
-		
+		try {
+			$this->language = $this->film->get_language()->get_content()->get_title();
+		}
+		catch(Film_Language_Not_Found_Exception $e) {
+		}
 		try {
 			$this->synopis = $this->film->get_synopsis()->get_body();
 		}
@@ -60,6 +64,9 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		$template->release_year = $this->film->get_release_year();
 		$template->runtime = $this->film->get_runtime();
 		$template->imdbID = $this->film->get_imdb();
+		$template->role_actors = $this->role_actors;
+		$template->genres = $this->genres;
+		$template->language = $this->language;
 		try {
 			$template->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
 		}
@@ -80,8 +87,6 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		if(isset($this->smallImageFiles)) {
 			$template->smallImage = $this->smallImageFiles[0]->file()->id();
 		}
-		$template->role_actors = $this->role_actors;
-		$template->genres = $this->genres;
 		return $template;
 	}
 

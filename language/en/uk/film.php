@@ -16,6 +16,12 @@ return array(
 	'list' => array(
 		'title' => 'Film List'
 	),
+	'genre' => array(
+		'title' => 'Film Genre :: %1s'
+	),
+	'language' => array(
+		'title' => 'Film Language :: %1s'
+	),
 	'add' => array(
 		'title_main' => 'Add New Film',
 		'title' => 'Title:',

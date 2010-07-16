@@ -38,6 +38,11 @@ abstract class Film_Page_Main extends Page_Main {
 			$parent->resource()->consume_argument();
 			return new Film_Page_Main_Genre($parent);
 			exit();
+		} elseif($arg == 'language') {
+			$parent->resource()->get_module()->file('page_main/language');
+			$parent->resource()->consume_argument();
+			return new Film_Page_Main_Language($parent);
+			exit();
 		}
 		 else { // list or N/A
 			$parent->resource()->get_module()->file('page_main/list');

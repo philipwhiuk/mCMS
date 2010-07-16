@@ -134,6 +134,13 @@ class Film {
 		}
 	}
 	
+	public function get_language() {
+		if(!$this->language instanceof Film_Language) {
+			$this->language = Film_Language::Get_By_ID($this->language);
+		}
+		return $this->language;
+	}
+	
 	public function Add($data){
 		$database = System::Get_Instance()->database();
 		$query = $database->insert()->table('film')
@@ -194,7 +201,6 @@ class Film {
 		
 		return $return;
 	}
-	
 	public static function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
@@ -234,5 +240,16 @@ class Film {
 		
 		return $result->fetch_object('Film');
 		
+	}
+	public static function Get_By_Language($language){
+		$operator = '=';
+		$operand = array(array('col','language'), array('u', $language));
+		$query = System::Get_Instance()->database()->Select()->table('film')->where($operator, $operand);
+		$result = $query->execute();
+		$return = array();
+		while($row = $result->fetch_object('Film')){
+			$return[] = $row;
+		}
+		return $return;
 	}
 }
