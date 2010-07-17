@@ -23,8 +23,8 @@ define('CMS',true);
  * Include Local Edits
  **/
 
-if(file_exists(__FILE__ . '.local')){
-  require_once(__FILE__ . '.local');
+if(file_exists(dirname(__FILE__) . '/index.local.php')){
+  require_once(dirname(__FILE__) . '/index.local.php');
 }
 
 /**

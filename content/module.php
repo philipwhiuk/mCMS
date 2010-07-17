@@ -12,7 +12,7 @@ class Content_Module extends Module {
 
 		Module::Get('admin');
 
-		Admin::Register('content','Content_Admin','admin',$this, 0);
+		Admin::Register('content','Content_Admin','admin',$this);
 
 	}
 	
