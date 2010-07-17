@@ -23,9 +23,12 @@ class Template_Theme_Default_HTML_Gallery_Page_View extends Template {
 ?>
 		<ul> 
 <?php
+			$percent = 100; $pages = count($g['children']); 
 			foreach($g['children'] as $child){
+				$width = round($percent / $pages, 2);
+				$percent -= $width; $pages --;
 ?>
-			<li <?php if($child['selected']){ ?> class="selected" <?php } ?> style="width: <?php echo 100 / count($g['children']); ?>%;"><a href="<?php echo $child['surl']; ?>"><?php echo $child['title']; ?></a></li> 
+			<li <?php if($child['selected']){ ?> class="selected" <?php } ?> style="width: <?php echo $width; ?>%;"><a href="<?php echo $child['surl']; ?>"><?php echo $child['title']; ?></a></li> 
 <?php
 				if($child['selected']){
 					$next = $child;
@@ -59,6 +62,25 @@ class Template_Theme_Default_HTML_Gallery_Page_View extends Template {
 	</div>
 <?php
 	} 
+
+	if(isset($g['pages']) && count($g['pages']) > 0){
+?>
+	<div class="gallery-pages">
+		<ul>
+		<?php
+			$pages = count($g['pages']); $percent = 100;
+			foreach($g['pages'] as $k => $page){
+				$width = round($percent / $pages,2);
+				$percent -= $width; $pages --;
+		?>
+			<li style="width: <?php echo $width; ?>%;"<?php if($page['selected']){ ?> class="selected"<?php } ?>><a href="<?php echo $page['surl']; ?>"><?php echo $k; ?></a></li>
+		<?php
+			}
+		?>
+		</ul>
+	</div>
+<?
+	}
 ?>
 </div> 
 <?php

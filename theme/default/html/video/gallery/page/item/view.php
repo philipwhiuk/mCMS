@@ -1,6 +1,6 @@
 <?php
 
-class Template_Theme_Cuer_Blue_HTML_Video_Gallery_Page_Item_View extends Template {
+class Template_Theme_Default_HTML_Video_Gallery_Page_Item_View extends Template {
 
 	public function display(){
 ?>
