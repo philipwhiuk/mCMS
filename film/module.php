@@ -19,6 +19,9 @@ class Film_Module extends Module {
 					 'film_role','film_role_film_actor',
 					 'film_genre','film_genre_film',
 					 'exception');
+		
+		Module::Get('admin');
+		Admin::Register('film','Film_Admin','admin',$this);
 	}
 	
 }

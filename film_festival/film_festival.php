@@ -26,6 +26,16 @@ class Film_Festival {
 		}
 		return $this->features;
 	}
+	public static function Get_All(){
+		$query = System::Get_Instance()->database()->Select()->table('film_festival');
+		$result = $query->execute();
+		$return = array();
+		while($row = $result->fetch_object('Film_Festival')){
+			$return[] = $row;
+		}
+		
+		return $return;
+	}
 	public static function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
@@ -41,5 +51,9 @@ class Film_Festival {
 		}
 		
 		return $result->fetch_object('Film_Festival');
+	}
+	public static function Count_All(){
+		$query = System::Get_Instance()->database()->Count()->table('film_festival');
+		return $query->execute();
 	}
 }

@@ -7,5 +7,7 @@ class Event_Module extends Module {
 		Module::Get('content');
 		Module::Get('image');
 		$this->files('event','event_impl','exception');
+		Module::Get('admin');
+		Admin::Register('event','Event_Admin','admin',$this);
 	}
 }

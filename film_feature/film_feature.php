@@ -169,4 +169,8 @@ class Film_Feature {
 		}
 		return $return;
 	}
+	public static function Count_All(){
+		$query = System::Get_Instance()->database()->Count()->table('film_feature');
+		return $query->execute();
+	}
 }

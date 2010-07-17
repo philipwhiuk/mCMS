@@ -252,4 +252,8 @@ class Film {
 		}
 		return $return;
 	}
+	public static function Count_All(){
+		$query = System::Get_Instance()->database()->Count()->table('film');
+		return $query->execute();
+	}
 }

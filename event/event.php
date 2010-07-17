@@ -67,4 +67,8 @@ class Event {
 		}
 		return $result->fetch_object('Event');
 	}
+	public static function Count_All(){
+		$query = System::Get_Instance()->database()->Count()->table('event');
+		return $query->execute();
+	}
 }

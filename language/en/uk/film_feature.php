@@ -1,6 +1,20 @@
 <?php
 
 return array(
+	'admin' => array(
+		'menu' => array(
+			'name' => 'Features'
+		),
+		'list' => array(
+			'edit' => 'Edit',
+			'title' => 'Feature List',
+		),
+		'edit' => array(
+			'title' => 'Title:',
+			'body' => 'Body:',
+			'submit' => 'Update' 
+		)
+	),
 	'edit' => array(
 		'title' => 'Title:',
 		'synopsis' => 'Synopsis:',

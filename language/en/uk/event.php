@@ -1,6 +1,20 @@
 <?php
 
 return array(
+	'admin' => array(
+		'menu' => array(
+			'name' => 'Events'
+		),
+		'list' => array(
+			'edit' => 'Edit',
+			'title' => 'Event List',
+		),
+		'edit' => array(
+			'title' => 'Title:',
+			'body' => 'Body:',
+			'submit' => 'Update' 
+		)
+	),
 	'edit' => array(
 		'title' => 'Title:',
 		'body' => 'Body:',
