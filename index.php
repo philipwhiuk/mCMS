@@ -19,21 +19,13 @@
 
 define('CMS',true);
 
-define('CMS_REMOTE_PATH','http://www.cuer.co.uk/');
-
 /**
- * Debugging
- * 
- * This sets up the level of debugging in the system. This is used by {@link CMS::$debug} to set the runtime debugging level.
- * 
- * @var int Debug level.
- */
+ * Include Local Edits
+ **/
 
-define('CMS_DEBUG', true);
-define('CMS_DEBUG_TYPE',1);
-define('CMS_DEBUG_DEFAULT_LEVEL',0);
-define('CMS_DEBUG_LEVEL',1);
-
+if(file_exists(__FILE__ . '.local')){
+  require_once(__FILE__ . '.local';
+}
 
 /**
  * Loads the CMS file.
