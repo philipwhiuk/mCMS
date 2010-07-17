@@ -24,7 +24,7 @@ define('CMS',true);
  **/
 
 if(file_exists(__FILE__ . '.local')){
-  require_once(__FILE__ . '.local';
+  require_once(__FILE__ . '.local');
 }
 
 /**
