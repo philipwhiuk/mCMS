@@ -67,7 +67,7 @@ class Theme {
 			$data['theme'] = $this;
 			return Template::Start($path, $data);
 		} catch(Exception $e){
-			$this->parent()->start($spath, $sdata);
+			return $this->parent()->start($spath, $sdata);
 		}
 	}
 	

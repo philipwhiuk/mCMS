@@ -2,7 +2,7 @@
 
 class Content_Page_Main_Add extends Content_Page_Main {
 	
-	private $content;
+	protected $content;
 	
 	public function __construct($parent){
 		parent::__construct($parent);
