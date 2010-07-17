@@ -10,6 +10,8 @@ class Actor_Module extends Module {
 		Module::Get('content');
 		
 		$this->files('actor','exception');
+		Module::Get('admin');
+		Admin::Register('actor','Actor_Admin','admin',$this);
 	}
 	
 }
