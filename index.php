@@ -19,6 +19,8 @@
 
 define('CMS',true);
 
+define('CMS_REMOTE_PATH','http://www.cuer.co.uk/');
+
 /**
  * Debugging
  * 
@@ -27,7 +29,8 @@ define('CMS',true);
  * @var int Debug level.
  */
 
-define('CMS_DEBUG_TYPE',2);
+define('CMS_DEBUG', true);
+define('CMS_DEBUG_TYPE',1);
 define('CMS_DEBUG_DEFAULT_LEVEL',0);
 define('CMS_DEBUG_LEVEL',1);
 
