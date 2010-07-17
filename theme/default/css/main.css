@@ -290,3 +290,68 @@ div.form div.form-field-submit { display: block; text-align: center; margin: aut
 /** TinyMCE **/
 
 textarea.form-field-tinymce { width: 85%; }
+
+/** Content Admin **/
+
+div.content-admin-list,div.content-admin-edit {
+	margin: 1em;
+}
+
+div.content-admin-edit div.content-admin-edit-form div.form {
+	margin: 0; padding: 0; border: 0;
+}
+
+div.content-admin-list table {
+	width: 100%;
+	border: thin solid #666;
+}
+
+div.content-admin-list table tr.even {
+	background: #AAAAAA;
+}
+
+div.content-admin-list table tr td {
+	padding: 0.2em 0.6em;
+}
+
+div.content-admin-list table tr td.link {
+	text-align: center;
+}
+
+/** Admin **/
+
+div.admin {
+	padding: 0.5em;
+	overflow: auto;
+}
+
+div.admin div.admin-menu {
+	float: left;
+	width: 20%;
+	background: #AAAAAA;
+	overflow: auto;
+}
+
+div.admin div.admin-menu ul {
+	margin: 1em;
+	padding: 0;
+}
+
+div.admin div.admin-menu ul li {
+	list-style: none;
+	margin: 0.5em;
+}
+div.admin div.admin-menu ul li a {
+	color: white;
+	font-weight: bold;
+}
+div.admin div.admin-menu ul li.selected a, 
+div.admin div.admin-menu ul li a:hover {
+	color: #black;
+}
+
+div.admin div.admin-panel {
+	float: right;
+	width: 80%;
+	overflow: auto;
+}
