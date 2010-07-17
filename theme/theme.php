@@ -6,6 +6,7 @@ class Theme {
 	private $id;
 	private $name;
 	private $directory;
+	private $parent = 0;
 	
 	public static function Load(){
 		try {
@@ -45,16 +46,29 @@ class Theme {
 	public function url($path, $internal = false){
 		return System::Get_Instance()->url('theme/' . $this->directory . '/' . $path, array(), $internal);
 	}
+
+	public function parent(){
+		if(!($this->parent instanceof Theme)){
+			$this->parent = Theme::Get_By_ID($this->parent);
+		}
+		return $this->parent;
+	}
 	
 	public function start($path, $data = array()){
 		// Add data to path
-		$e = array_reverse(explode('/', $this->directory));
-		foreach($e as $f){
-			array_unshift($path, $f);
+		$spath = $path;
+		$sdata = $data;
+		try {
+			$e = array_reverse(explode('/', $this->directory));
+			foreach($e as $f){
+				array_unshift($path, $f);
+			}
+			array_unshift($path, 'theme');
+			$data['theme'] = $this;
+			return Template::Start($path, $data);
+		} catch(Exception $e){
+			$this->parent()->start($spath, $sdata);
 		}
-		array_unshift($path, 'theme');
-		$data['theme'] = $this;
-		return Template::Start($path, $data);
 	}
 	
 }
