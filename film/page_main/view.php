@@ -65,12 +65,23 @@ class Film_Page_Main_View extends Film_Page_Main {
 		}
 		catch (Film_Trailer_Not_Found_Exception $e) {
 		}
-		$template->description = $this->description;
-		$template->synopsis = $this->synopis;
+		if(isset($this->description)) {
+			 $template->description = $this->description;
+		}
+		else {
+			$template->description = "";
+		}
+		if(isset($this->synopsis)) {
+			$template->synopsis = $this->synopis;
+		}
+		else {
+			$template->synopsis = "";
+		}
 		try {
-			$template->tagline = $this->film->get_random_tagline()->text;
+			$template->tagline = $this->film->get_random_tagline()->text();
 		}
 		catch (Film_Tagline_Not_Found_Exception $e) {
+			$template->tagline = "";
 		}
 		if(isset($this->smallImageFiles)) {
 			$template->smallImage = $this->smallImageFiles[0]->file()->id();
