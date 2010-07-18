@@ -25,8 +25,7 @@ abstract class Content_Page_Block_Main extends Page_Block_Main {
 			}
 			
 		}
-		
-		throw new Content_Page_Unavailable_Exception($exceptions);
+		throw new Content_Page_Block_Unavailable_Exception($exceptions);
 		
 	}
 	
