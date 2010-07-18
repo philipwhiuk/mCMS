@@ -33,18 +33,21 @@ class Actor_Admin extends Admin {
 		}
 		$actors = Actor::Get_All();
 		usort($actors,array("Actor_Admin","actor_sort"));
-		if(!(($page-1)*20 <= count($actors))) {
-			$page = (int) (count($actors)/20)-1;
+		if(!(($page)*20 <= count($actors))) {
+			$page = (int) round(count($actors)/20);
 		}
-		for($i = ($page-1)*20; $i < $page*20; $i++) {
+		for($i = ($page-1)*20; ($i < $page*20 && $i < count($actors)); $i++) {
 			if($actors[$i] instanceof Actor) { $this->actor[] = $actors[$i]; }
 		}
 		$this->page = $page;
 		$count = Actor::Count_All();
-		$this->pages = ((int) ($count / 20)) + ((($count % 20) == 0) ? 0 : 1);
+		$this->page_count = ((int) ($count / 20)) + ((($count % 20) == 0) ? 0 : 1);
 		$language = Language::Retrieve();
 		$this->edit = $language->get($this->module, array('admin','list','edit'));
 		$this->title = $language->get($this->module, array('admin','list','title'));
+		for($pg = 1; $pg <= $this->page_count; $pg ++){
+			$this->pages[$pg] = $this->url('list/' . $pg);
+		}		
 	}
 
 	public function execute_edit(){
@@ -113,6 +116,7 @@ class Actor_Admin extends Admin {
 		$template->edit = $this->edit;
 		$template->title = $this->title;
 		$template->pages = $this->pages;
+		$template->page_count = $this->page_count;
 		$template->page = $this->page;
 		foreach($this->actor as $actor){
 			$template->actor[] = array(
