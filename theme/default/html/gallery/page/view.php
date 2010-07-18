@@ -3,12 +3,14 @@
 class Template_Theme_Default_HTML_Gallery_Page_View extends Template {
 
 	public function display(){
+		
 ?>
 <div class="gallery page-gallery gallery-view page-gallery-view"> 
 	<?php if($this->gallery['title'] != ''){ ?><h1><?php echo $this->gallery['title']; ?></h1><?php } ?>
 	<?php echo $this->gallery['body']; ?>
 
 <?php
+
 	$backg = array();
 	$g =& $this->gallery;
 	if(count($this->gallery['children']) != 0){
@@ -63,7 +65,7 @@ class Template_Theme_Default_HTML_Gallery_Page_View extends Template {
 <?php
 	} 
 
-	if(isset($g['pages']) && count($g['pages']) > 0){
+	if(isset($g['pages']) && count($g['pages']) > 0){ 
 ?>
 	<div class="gallery-pages">
 		<ul>
@@ -79,11 +81,11 @@ class Template_Theme_Default_HTML_Gallery_Page_View extends Template {
 		?>
 		</ul>
 	</div>
-<?
+<?php
 	}
 ?>
 </div> 
-<?php
+<?php 
 	}
 
 }
