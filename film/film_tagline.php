@@ -1,6 +1,13 @@
 <?php
 class Film_Tagline {
 	private $id;
+	private $text;
+	public function id() {
+		return $this->id;
+	}
+	public function text() {
+		return $this->text;
+	}
 	public static function Get_By_Film($film) {
 		if($film instanceof Film) {
 			$film = $film->get_id();
