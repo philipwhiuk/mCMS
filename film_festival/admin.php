@@ -41,12 +41,12 @@ class Film_Festival_Admin extends Admin {
 		if(!(($page-1)*20 <= count($film_festivals))) {
 			$page = (int) (count($film_festivals)/20)-1;
 		}
-		for($i = ($page-1)*20; $i < $page*20; $i++) {
+		for($i = ($page-1)*20; ($i < $page*20 && $i < count($film_festivals)) ; $i++) {
 			if($film_festivals[$i] instanceof Film_Festival) { $this->film_festival[] = $film_festivals[$i]; }
 		}
 		$this->page = $page;
 		$count = Film_Festival::Count_All();
-		$this->pages = ((int) ($count / 20)) + ((($count % 20) == 0) ? 0 : 1);
+		$this->page_count = ((int) ($count / 20)) + ((($count % 20) == 0) ? 0 : 1);
 		$language = Language::Retrieve();
 		$this->edit = $language->get($this->module, array('admin','list','edit'));
 		$this->title = $language->get($this->module, array('admin','list','title'));
@@ -118,6 +118,7 @@ class Film_Festival_Admin extends Admin {
 		$template->edit = $this->edit;
 		$template->title = $this->title;
 		$template->pages = $this->pages;
+		$template->page_count = $this->page_count;
 		$template->page = $this->page;
 		foreach($this->film_festival as $film_festival){
 			$template->film_festival[] = array(
