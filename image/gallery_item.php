@@ -35,7 +35,7 @@ class Image_Gallery_Item extends Gallery_Item {
 					))->order(array('sort' => false))->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
-			throw new Gallery_Item_Not_Found_Exception($operator, $operand);
+			throw new Gallery_Item_Not_Found_Exception();
 		}
 
 		return $result->fetch_object('Image_Gallery_Item');
@@ -48,7 +48,7 @@ class Image_Gallery_Item extends Gallery_Item {
 					))->order(array('sort' => true))->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){ 
-			throw new Gallery_Item_Not_Found_Exception($operator, $operand);
+			throw new Gallery_Item_Not_Found_Exception();
 		}   
 
 		return $result->fetch_object('Image_Gallery_Item');
