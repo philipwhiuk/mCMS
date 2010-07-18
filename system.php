@@ -26,7 +26,7 @@ error_reporting(error_reporting() & ~E_STRICT);
  * 
  */
 
-require_once(dirname(__FILE__) . '/system/exception.php');
+require_once(System::dirname(__FILE__) . '/system/exception.php');
 
 /**
  * System
@@ -81,7 +81,7 @@ class System {
 	
 	// Dirname (Windows compatible) 
 	
-	private function dirname($file){
+	public static function dirname($file){
 		$string = dirname($file);
 		return rtrim(str_replace('\\', '/', $string),'/');
 	}
@@ -112,7 +112,7 @@ class System {
 	
 		// Use a full url as a default (probably Apache specific)
 
-		$url = rtrim((isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']),'/') . '/';
+		$url = rtrim((isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . System::dirname($_SERVER['PHP_SELF']),'/') . '/';
 		$this->remote_path = defined('CMS_REMOTE_PATH') ? CMS_REMOTE_PATH : $url;
 
 		// Debug settings
@@ -130,7 +130,7 @@ class System {
 
 		// And the local system path
 
-		$this->local_path = defined('CMS_LOCAL_PATH') ? CMS_LOCAL_PATH : (dirname(__FILE__) . '/');
+		$this->local_path = defined('CMS_LOCAL_PATH') ? CMS_LOCAL_PATH : (System::dirname(__FILE__) . '/');
 
 		$this->request = uniqid(time() . '.', true); // Psuedo uniqid request identifier
 

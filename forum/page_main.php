@@ -4,21 +4,23 @@ abstract class Forum_Page_Main extends Page_Main {
 	public static function Load($parent){
 		$exceptions = array();
 		$forum = null;
+		$forums = array();
 		$arg = $parent->resource()->get_argument();
 		try {
 			$parents = array();
 			while(is_numeric($arg)){
 				$nforum = Forum::Get_By_ID_Parent($arg, isset($forum) ? $forum->id() : 0);
-				$forums[] = $forum;
+				if(isset($forum)) { $forums[] = $forum; }
 				$forum = $nforum;
 				$parent->resource()->consume_argument();
 				$arg = $parent->resource()->get_argument();
 			}
+			
 			if(isset($forum) && $arg == 'topic'){
 				$parent->resource->consume_argument();
 				$arg = $parent->resource()->get_argument();
 				if(is_numeric($arg)){
-					return Load_Topic($forums,$forum,$arg,$parent); 
+					return Forum_Page_Main::Load_Topic($forums,$forum,$arg,$parent); 
 				} elseif($arg == 'add'){
 					$parent->resource()->consume_argument();
 					$parent->resource()->get_module()->file('page_main/topic_add');
@@ -29,7 +31,7 @@ abstract class Forum_Page_Main extends Page_Main {
 		}
 		try {
 			if(isset($forum)){
-				return Load_Forum($forums,$forum,$parent);
+				return Forum_Page_Main::Load_Forum($forums,$forum,$parent);
 			} elseif($arg == 'add') {
 				$parent->resource()->consume_argument();
 				$parent->resource()->get_module()->file('page_main/forum_add');
@@ -40,6 +42,7 @@ abstract class Forum_Page_Main extends Page_Main {
 		throw new Forum_Page_Main_Exception($exceptions);
 	}
 	private function Load_Forum($forums,$forum,$parent) {
+		$arg = $parent->resource()->get_argument();
 		if($arg == 'edit') {
 			$parent->resource()->consume_argument();
 			$parent->resource()->get_module()->file('page_main/forum_edit');
@@ -60,7 +63,7 @@ abstract class Forum_Page_Main extends Page_Main {
 		try {
 			if(is_numeric($arg)) {	//postID
 				$post = arg;
-				return Load_Post($forums,$topic,$post,$parent);
+				return Forum_Page_Main::Load_Post($forums,$topic,$post,$parent);
 			}
 			elseif($arg == 'reply') {
 				$parent->resource()->consume_argument();

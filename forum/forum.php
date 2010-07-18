@@ -6,26 +6,27 @@ class Forum {
 	private $parent;
 	private $depth;
 	
-	private $children = array();
+	public $children = array();
 
 	private function __construct($data = array()){
 		foreach($data as $k => $v){ $this->$k = $v; }
 	}
-	public get_id() {
+	public function id() {
 		return $this->id;
 	}
-	public get_content() {
+	public function content() {
 		if(!$this->content instanceof Content) {
 			$this->content = Content::Get_By_Id($this->content);
-		return $this->name;
+		}
+		return $this->content;
 	}
-	public get_language() {
+	public function language() {
 		if(!$this->language instanceof Language) {
 			$this->language = Language::Get_By_Id($this->language);
 		}
 		return $this->language;
 	}
-	public get_parentid() {
+	public function parent_id() {
 		if($this->parent instanceof Forum) {
 			return $this->parent->id();
 		}
@@ -33,17 +34,34 @@ class Forum {
 			return $this->parent;
 		}
 	}	
-	public get_parent() {
+	public function parent() {
 		if(!$this->parent instanceof Forum) {
 			$this->parent = Forum::Get_By_ID($this->parent);
 		}
 		return $this->parent;
 	}
-	public depth() {
+	public function depth() {
 		return $this->depth;	
 	}
-	
-	public static Get_By_ID($id) {
+	public function topic_count() {
+		return $this->topic_count;	
+	}
+	public function post_count() {
+		return $this->post_count;	
+	}
+	public function lastpostdate() {
+		return $this->lastpostdate;	
+	}
+	public function lastpost() {
+		return $this->lastpost;	
+	}
+	public function lastposter() {
+		if(!$this->lastposter instanceof User) {
+			$this->lastposter = User::Get_By_ID($this->lastposter);
+		}
+		return $this->lastposter;
+	}
+	public static function Get_By_ID($id) {
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
 	public static function Get_One($operator, $operand){
@@ -54,8 +72,30 @@ class Forum {
 		}
 		return $result->fetch_object('Forum');
 	}
-	public static Get_By_Parent($parent) {
-		$query = System::Get_Instance()->database()->Select()->table('forum')->where('=', array(array('col','parent'), array('u', $parent));
+	public static function Get_By_ID_Parent($id,$parent) {
+		$operator = 'AND';
+		$operand = array(array('=', array(array('col','id'), array('u', $id))),array('=', array(array('col','parent'), array('u', $parent))));
+		$query = System::Get_Instance()->database()->Select()->table('forum')->where($operator,$operand)->limit(1);
+		$result = $query->execute();
+		if($result->num_rows == 0){
+			throw new Forum_Not_Found_Exception($operator, $operand);
+		}
+		return $result->fetch_object('Forum');
+	}
+	public static function Get_By_Parent_In($parents) {
+		$in = array();
+		$in[] = 'u';
+		if(count($parents) == 0) {
+			return array();
+		}
+		foreach($parents as $parent) { $in[] = $parent; }
+		$query = System::Get_Instance()->database()->Select()->table('forum')->where(
+			'in', 
+			array(
+				  array('col','parent'), 
+				  $in
+			)
+		);
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
@@ -69,7 +109,22 @@ class Forum {
 		}
 		return $return;
 	}
-	public static Get_All() {
+	public static function Get_By_Parent($parent) {
+		$query = System::Get_Instance()->database()->Select()->table('forum')->where('=', array(array('col','parent'), array('u', $parent)));
+		if(isset($limit)){
+			$query->limit($limit);
+			if(isset($skip)){
+				$query->offset($skip);
+			}
+		}
+		$result = $query->execute();
+		$return = array();
+		while($row = $result->fetch_object('Forum')){
+			$return[] = $row;
+		}
+		return $return;
+	}
+	public static function Get_All() {
 		$query = System::Get_Instance()->database()->Select()->table('forum')->order(array('title' => true));
 		if(isset($limit)){
 			$query->limit($limit);

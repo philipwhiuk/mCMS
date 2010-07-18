@@ -59,7 +59,7 @@ class Topic_Post {
 		return $result->fetch_object('Topic_Post');
 	}
 	public static function Get_By_Topic($topic) {
-		$query = System::Get_Instance()->database()->Select()->table('topic_post')->where('=', array(array('col','topic'), array('u', $topic));
+		$query = System::Get_Instance()->database()->Select()->table('topic_post')->where('=', array(array('col','topic'), array('u', $topic)));
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
@@ -74,7 +74,7 @@ class Topic_Post {
 		return $return;
 	}
 	public static function Get_By_Parent($parent) {
-		$query = System::Get_Instance()->database()->Select()->table('topic_post')->where('=', array(array('col','parent'), array('u', $parent));
+		$query = System::Get_Instance()->database()->Select()->table('topic_post')->where('=', array(array('col','parent'), array('u', $parent)));
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){

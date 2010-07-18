@@ -20,14 +20,6 @@
 define('CMS',true);
 
 /**
- * Include Local Edits
- **/
-
-if(file_exists(dirname(__FILE__) . '/index.local.php')){
-  require_once(dirname(__FILE__) . '/index.local.php');
-}
-
-/**
  * Loads the CMS file.
  * 
  * This loads the main CMS system as {@link CMS::File()} is not available yet.
@@ -35,7 +27,16 @@ if(file_exists(dirname(__FILE__) . '/index.local.php')){
  * @see cms.php
  * 
  */
+		
+require_once(rtrim(str_replace('\\', '/', dirname(__FILE__)),'/') . '/system.php');
 
-require_once(dirname(__FILE__) . '/system.php');
+
+/**
+ * Include Local Edits
+ **/
+
+if(file_exists(System::dirname(__FILE__) . '/index.local.php')){
+  require_once(System::dirname(__FILE__) . '/index.local.php');
+}
 
 System::Get_Instance()->run();

@@ -5,7 +5,6 @@ class Topic {
 	private $content;
 	private $locked;
 	private $hidden;
-	private $module;
 	private $views;
 	private $forum;
 	private $firstauthor;
@@ -14,46 +13,46 @@ class Topic {
 	private $lastdate;
 	private $posts;
 
-	public get_id() {
+	public function get_id() {
 		return $this->id;
 	}
-	public get_type() {
+	public function get_type() {
 		return $this->type;
 	}
-	public get_content() {
+	public function get_content() {
 		if(!$this->content instanceof Content) {
 			$this->content = Content::Get_By_ID($this->content);
 		}
 		return $this->content;
 	}
-	public get_locked() {
+	public function get_locked() {
 		return $this->locked;
 	}
-	public get_hidden() {
+	public function get_hidden() {
 		return $this->hidden;
 	}
-	public get_views() {
+	public function get_views() {
 		return $this->get_views();
 	}
-	public get_firstauthor() {
+	public function get_firstauthor() {
 		if(!$this->firstauthor instanceof User) {
 			$this->firstauthor = User::Get_By_ID($this->firstauthor);
 		}
 		return $this->firstauthor;
 	}
-	public get_firstdate() {
+	public function get_firstdate() {
 		return $this->firstdate;
 	}
-	public get_lastauthor() {
+	public function get_lastauthor() {
 		if(!$this->lastauthor instanceof User) {
 			$this->lastauthor = User::Get_By_ID($this->lastauthor);
 		}
 		return $this->firstauthor;
 	}
-	public get_lastdate() {
+	public function get_lastdate() {
 		return $this->lastdate;
 	}
-	public static Get_By_ID($id) {
+	public static function Get_By_ID($id) {
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
 	public static function Get_One($operator, $operand){
@@ -64,7 +63,7 @@ class Topic {
 		}
 		return $result->fetch_object('Topic');
 	}
-	public static Get_All() {
+	public static function Get_All() {
 		$query = System::Get_Instance()->database()->Select()->table('topic')->order(array('lastdate' => true));
 		if(isset($limit)){
 			$query->limit($limit);

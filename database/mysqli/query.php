@@ -77,6 +77,7 @@ abstract class Database_MySQLi_Query implements IDatabase_Query {
 					throw new Database_MySQLi_Query_Clause_Invalid_Exception($operator, $operand);
 				}
 				$sqls = array();
+				
 				foreach($operand as $op){
 					$sqls[] = $this->generate_param_clause($op[0], $op[1]);
 				}
