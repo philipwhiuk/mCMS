@@ -68,10 +68,25 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 	public function display(){
 		$system = System::Get_Instance();
 		$usermodule = Module::Get('user');
+		$forummodule = Module::Get('forum');
 		$template = $system->output()->start(array('forum','page','forum','view'));
 		$template->title = $this->forum->content()->get_title();
+		$template->url = $this->url;
 		$template->description = $this->forum->content()->get_body();
 		$template->sub_forums = array();
+		foreach($this->parents as $parent) {
+			$pa = array();
+			$pa['title'] = $parent->content()->get_title();
+			if(!isset($parenturl)) {
+				$parenturl = System::Get_Instance()->url(Resource::Get_By_Argument($forummodule,$parent->id())->url());
+				$pa['url'] = $parenturl;
+			}
+			else {
+				$pa['url'] = $parenturl.$parent->id().'/';
+			}				
+			$template->parents[] = $pa;
+		}
+
 		foreach($this->sub_forums as $sub_forum) {
 			if($this->forum->depth() > 0) {
 				$template->sub_forums[] = $this->display_sf($sub_forum,$this->forum->depth(),$this->url);

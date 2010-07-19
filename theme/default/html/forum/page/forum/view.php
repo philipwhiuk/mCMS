@@ -3,14 +3,25 @@
 class Template_Theme_Default_HTML_Forum_Page_Forum_View extends Template {
 	public $topics = array();
 	public $sub_forums = array();
+	public $parents = array();
 	public function display() {
-		?>
-        <div class="page-view forum-view page-forum-view">
+	?>
+	<div class="page-view forum-view page-forum-view">
+		<div class="forum_structure">
+			<?php foreach($this->parents as $parent) { ?>
+				<a href="<?php echo $parent['url']; ?>"><?php echo $parent['title']; ?></a>
+				 < 
+			<?php }?>
+			<a href="<?php echo $this->url; ?>"><?php echo $this->title; ?></a>
+		</div>
         <h1><?php echo $this->title; ?></h1>
         <?php if(count($this->sub_forums) != 0) { ?>
-        <h2>Sub-Forums</h2>
             <table class="sub_forums">
+			<thead>
             <tr><th>Forum</th><th>Topics</th><th>Posts</th><th>Last Post</th></tr>
+			</thead>
+			<tfoot><tr><td colspan="4">&nbsp;</td></tr></tfoot>
+			<tbody>
             <?php
                 foreach($this->sub_forums as $sub_forum) { ?>
                     <tr>
@@ -32,12 +43,16 @@ class Template_Theme_Default_HTML_Forum_Page_Forum_View extends Template {
                     </tr>
                 <?php } 
 			?>
+			</tbody>
         </table>        
 		<?php } ?>
         <?php if(!count($this->topics) == 0) { ?>
-        <h2>Topics</h2>
         <table class="topics">
+		<thead>
         <tr><th>Active Topics</th><th>Posts</th><th>Views</th><th>Last Post</th></tr>
+		</thead>
+		<tfoot><tr><td colspan="4">&nbsp;</td></tr></tfoot>
+		<tbody>
 			<?php foreach($this->topics as $topic) {
 				?><tr>
                 	<td><a href="<?php echo $topic['topicurl']; ?>"><?php echo $topic['title']; ?></a>,
@@ -47,9 +62,10 @@ class Template_Theme_Default_HTML_Forum_Page_Forum_View extends Template {
                     <td><?php echo $topic['lastposter']; ?></td>
                 </tr><?php
 			} ?>
+		</tbody>
         </table>
         <?php }?>
-        </div>
-        <?php
+	</div>
+	<?php
 	}
 }
