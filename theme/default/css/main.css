@@ -293,44 +293,44 @@ textarea.form-field-tinymce { width: 85%; }
 
 /** Content Admin **/
 
-div.content-admin-list,div.content-admin-edit {
+div.admin-list,div.admin-edit {
 	margin: 1em;
 }
 
-div.content-admin-edit div.content-admin-edit-form div.form {
+div.admin-edit div.admin-edit-form div.form {
 	margin: 0; padding: 0; border: 0;
 }
 
-div.content-admin-list table {
+div.admin-list table {
 	width: 100%;
 	margin: 1em 0;
 	border: thin solid #666;
 }
 
-div.content-admin-list table tr.even {
+div.admin-list table tr.even {
 	background: #AAAAAA;
 }
 
-div.content-admin-list table tr td {
+div.admin-list table tr td {
 	padding: 0.2em 0.6em;
 }
 
-div.content-admin-list table tr td.link {
+div.admin-list table tr td.link {
 	width: 5%;
 	text-align: center;
 }
 
-a.content-admin-list-previous {
+a.admin-list-previous {
 	float: left;
 	text-align: left;
 }
 
-a.content-admin-list-next {
+a.admin-list-next {
 	float: right;
 	text-align: right;
 }
 
-a.content-admin-list-previous, a.content-admin-list-next {
+a.admin-list-previous, a.admin-list-next {
 	width: 49%;
 	background: #666666;
 	color: white;
@@ -339,11 +339,11 @@ a.content-admin-list-previous, a.content-admin-list-next {
 	margin-top: 1em;
 }
 
-a:hover.content-admin-list-previous, a:hover.content-admin-list-next {
+a:hover.admin-list-previous, a:hover.admin-list-next {
 	background: #AAAAAA;
 }
 
-a.content-admin-list-previous div, a.content-admin-list-next div {
+a.admin-list-previous div, a.admin-list-next div {
 	padding: 0.2em 0.5em;
 	display: block;
 }

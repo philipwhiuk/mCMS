@@ -8,5 +8,10 @@ return array(
 	),
 	'list' => array(
 		'title' => 'File List'
+	),
+	'admin' => array(
+		'menu' => array(
+			'name' => 'Files'
+		)
 	)
 );

@@ -3,15 +3,15 @@
 class Template_Theme_Default_HTML_Content_Admin_List extends Template {
 	public function display(){
 ?>		
-<div class="content-admin-list">
+<div class="admin-list content-admin-list">
 	<h1><?php echo $this->title; ?></h1>
 	<?php if($this->page > 1){ ?>
-	<a class="content-admin-list-previous" href="<?php echo $this->pages[$this->page - 1]; ?>">
+	<a class="admin-list-previous content-admin-list-previous" href="<?php echo $this->pages[$this->page - 1]; ?>">
 		<div>&laquo;<?php echo $this->page - 1; ?></div>
 	</a>
 	<?php } ?>
 	<?php if($this->page < $this->page_count){ ?>
-	<a class="content-admin-list-next" href="<?php echo $this->pages[$this->page + 1]; ?>">
+	<a class="admin-list-next content-admin-list-next" href="<?php echo $this->pages[$this->page + 1]; ?>">
 		<div><?php echo $this->page + 1; ?>&raquo;</div>
 	</a>
 	<?php } ?>
@@ -36,12 +36,12 @@ class Template_Theme_Default_HTML_Content_Admin_List extends Template {
 ?> 
 	</table>
 	<?php if($this->page > 1){ ?>
-	<a class="content-admin-list-previous" href="<?php echo $this->pages[$this->page - 1]; ?>">
+	<a class="admin-list-previous content-admin-list-previous" href="<?php echo $this->pages[$this->page - 1]; ?>">
 		<div>&laquo;<?php echo $this->page - 1; ?></div>
 	</a>
 	<?php } ?>
 	<?php if($this->page < $this->page_count){ ?>
-	<a class="content-admin-list-next" href="<?php echo $this->pages[$this->page + 1]; ?>">
+	<a class="admin-list-next content-admin-list-next" href="<?php echo $this->pages[$this->page + 1]; ?>">
 		<div><?php echo $this->page + 1; ?>&raquo;</div>
 	</a>
 	<?php } ?>

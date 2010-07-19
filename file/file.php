@@ -144,8 +144,20 @@ class File {
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
 
-	public static function Get_All(){
-		$query = System::Get_Instance()->database()->Select()->table('file')->order(array('name' => true));
+        public static function Count_All(){
+                $query = System::Get_Instance()->database()->Count()->table('file');
+                return $query->execute();
+        }
+
+        public static function Get_All($limit = null, $skip = null){
+                $query = System::Get_Instance()->database()->Select()->table('file')->order(array('name' => true));
+
+		if(isset($limit)){
+                        $query->limit($limit);
+                        if(isset($skip)){
+                                $query->offset($skip);
+                        }
+                }
 
 		$result = $query->execute();
 
