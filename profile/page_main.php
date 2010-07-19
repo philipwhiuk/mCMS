@@ -1,14 +1,14 @@
 <?php
-class Profile_Page_Main {
+abstract class Profile_Page_Main extends Page_Main {
 	public static function Load($parent){
 		$exceptions = array();
 		$arg = $parent->resource()->get_argument();
 		if($arg == 'user') {
 			$parent->resource()->consume_argument();
-			$user = $parent->resource()->get_argument();
-			if(is_numeric($user)) {
+			$arg = $parent->resource()->get_argument();
+			if(is_numeric($arg)) {
 				try {
-					User::Get_By_ID($user);
+					$user = Profile::Get_By_ID($arg);
 					$parent->resource()->consume_argument();
 					$arg = $parent->resource()->get_argument();
 					if($arg == 'edit') {
@@ -21,11 +21,11 @@ class Profile_Page_Main {
 							$parent->resource()->consume_argument();
 						}
 						$parent->resource()->get_module()->file('page_main/user_view');
-						return new Profile_Page_Main_User_Edit($user,$parent);
+						return new Profile_Page_Main_User_View($user,$parent);
 					}
 				}
 				catch (Exception $e) {
-					throw new Profile_User_Page_Not_Found_Exception();
+					throw new Profile_User_Page_Not_Found_Exception($arg);
 				}
 			}
 			else {

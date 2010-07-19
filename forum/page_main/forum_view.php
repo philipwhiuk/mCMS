@@ -98,9 +98,9 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 			$t['title'] = $topic->topic()->get_content()->get_title();
 			$t['posts'] = $topic->topic()->get_posts();
 			$t['views'] = $topic->topic()->get_views();
-			$t['firstposter'] = $topic->topic()->get_firstauthor()->name();
+			$t['firstposter'] = $topic->topic()->get_firstauthor()->get('display_name');
 			$t['firstposterurl'] = $system->url(Resource::Get_By_Argument($usermodule,$topic->topic()->get_firstauthor()->get_id())->url());
-			$t['firstpostdate'] = date('jS F Y',$topic->topic()->get_firstdate());
+			$t['firstpostdate'] = date('D M dS Y H:ia',$topic->topic()->get_firstdate());
 			$t['lastposter'] = $topic->topic()->get_lastauthor()->name();
 			$t['lastposterurl'] = $system->url(Resource::Get_By_Argument($usermodule,$topic->topic()->get_lastauthor()->get_id())->url());
 			$t['lastpostdate'] = date('jS F Y',$topic->topic()->get_lastdate());

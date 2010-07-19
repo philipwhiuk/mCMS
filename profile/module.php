@@ -1,15 +1,21 @@
 <?php
 class Profile_Module extends Module {
 	public function load(){
+		try {
 		Module::Get('permission');
 		Module::Get('form');
 		Module::Get('language');
 		Module::Get('content');
 		$this->files('profile',
-					 'profile_field','profile_field_user',
-					 'profile_textbox','profile_textbox_user',
-					 'profile_select','profile_select_option','profile_select_user'
+					 'profile_field',
+					 'profile_field_impl','profile_field_profile_impl',
 					 'exception');
 		Module::Get('admin');
 		Admin::Register('profile','Profile_Admin','admin',$this);
+		Profile_Field::Register('Profile_Field_Textbox','profile_field_textbox',$this);
+		}
+		catch (Exception $e) {
+			var_dump($e);
+		}
+	}
 }

@@ -19,6 +19,15 @@ class Forum_Page_Main_Topic_View extends Forum_Page_Main {
 		foreach($this->parents as $parent) {
 			$urlpart .= $parent->id().'/';	
 		}
+		foreach($this->posts as $post) {
+			try {
+				$post->signature = Content::Get_By_ID($post->get_author()->get('signature'));
+			}
+			catch (Exception $e){
+				$post->signature = "";
+			}
+		}
+		
 		$this->forumurl = System::Get_Instance()->url(Resource::Get_By_Argument($module, $urlpart.$this->forum->id())->url());
 		$this->topicurl = $this->forumurl.'topic/'.$this->topic->topic()->get_id().'/';
 	}
@@ -51,9 +60,20 @@ class Forum_Page_Main_Topic_View extends Forum_Page_Main {
 				$p['title'] = $post->get_content()->get_title();
 				$p['body'] = $post->get_content()->get_body();
 				$p['author'] = array();
-				$p['author']['name'] = $post->get_author()->name();
+				try {
+					$p['author']['title'] = $post->get_author()->get('title');
+				}
+				catch (Exception $e) {
+					$p['author']['title'] = "";
+				}
+				$p['author']['displayname'] = $post->get_author()->get('display_name');
+				$p['author']['posts'] = 0;
+				$p['author']['joined'] = date('jS F Y',0);
+				$p['author']['location'] = $post->get_author()->get('location');
+				$p['author']['name'] = $post->get_author()->get('first_name').' '.$post->get_author()->get('last_name');
+				$p['author']['avatarurl'] = $system->url(Resource::Get_By_Argument(Module::Get('file'),$post->get_author()->get('avatar'))->url());
 				$p['author']['url'] = $system->url(Resource::Get_By_Argument($usermodule,$post->get_author()->get_id())->url());
-				$p['author']['signature'] = "";
+				$p['author']['signature'] = $post->signature->get_body();
 				$p['date'] = date('jS F Y',$post->get_date());
 				$p['url'] = $this->topicurl.'post/'.$post->get_id().'/';
 				try {

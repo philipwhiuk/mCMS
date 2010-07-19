@@ -28,8 +28,8 @@ class Topic_Post {
 		return $this->date;
 	}
 	public function get_editauthor() {
-		if(!$this->editauthor instanceof User) {
-			$this->editauthor = User::Get_By_ID($this->editauthor);
+		if(!$this->editauthor instanceof Profile) {
+			$this->editauthor = Profile::Get_By_ID($this->editauthor);
 		}
 		return $this->editauthor;
 	}
