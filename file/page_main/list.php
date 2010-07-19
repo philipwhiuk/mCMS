@@ -7,7 +7,7 @@ class File_Page_Main_List extends File_Page_Main {
 	public function __construct($parent){
 		parent::__construct($parent);
 		$this->files = File::Get_All();
-		Permission::Check(array('file'), array('view','edit','upload','delete','list'),'list');
+		Permission::Check(array('file'), array('view','edit','upload','delete','list','admin'),'view');
 	}
 	
 	public function display(){

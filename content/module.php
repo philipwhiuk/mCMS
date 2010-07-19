@@ -10,9 +10,12 @@ class Content_Module extends Module {
 		
 		$this->files('content','exception');
 
-		Module::Get('admin');
+		try {
+			Module::Get('admin');
+			Admin::Register('content','Content_Admin','admin',$this);
+		} catch(Exception $e){
 
-		Admin::Register('content','Content_Admin','admin',$this);
+		}
 
 	}
 	
