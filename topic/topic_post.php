@@ -20,18 +20,18 @@ class Topic_Post {
 	}
 	public function get_author() {
 		if(!$this->author instanceof User) {
-			$this->user = User::Get_By_ID($this->user);
+			$this->author = User::Get_By_ID($this->author);
 		}
-		return $this->content;
+		return $this->author;
 	}
 	public function get_date() {
 		return $this->date;
 	}
 	public function get_editauthor() {
-		if(!$this->author instanceof User) {
-			$this->user = User::Get_By_ID($this->user);
+		if(!$this->editauthor instanceof User) {
+			$this->editauthor = User::Get_By_ID($this->editauthor);
 		}
-		return $this->content;
+		return $this->editauthor;
 	}
 	public function get_editdate() {
 		return $this->date;
@@ -58,8 +58,8 @@ class Topic_Post {
 		}
 		return $result->fetch_object('Topic_Post');
 	}
-	public static function Get_By_Topic($topic) {
-		$query = System::Get_Instance()->database()->Select()->table('topic_post')->where('=', array(array('col','topic'), array('u', $topic)));
+	public static function Get_By_Topic($topic,$limit=null,$skip=null) {
+		$query = System::Get_Instance()->database()->Select()->table('topic_post')->where('=', array(array('col','topic'), array('u', $topic)))->order(array('date' => true));
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){

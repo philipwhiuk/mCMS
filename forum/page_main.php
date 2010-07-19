@@ -17,10 +17,15 @@ abstract class Forum_Page_Main extends Page_Main {
 			}
 			
 			if(isset($forum) && $arg == 'topic'){
-				$parent->resource->consume_argument();
+				$parent->resource()->consume_argument();
 				$arg = $parent->resource()->get_argument();
 				if(is_numeric($arg)){
-					return Forum_Page_Main::Load_Topic($forums,$forum,$arg,$parent); 
+					try {
+						return Forum_Page_Main::Load_Topic($forums,$forum,$arg,$parent); 
+					}
+					catch(Exception $e){
+						var_dump($e);	
+					}
 				} elseif($arg == 'add'){
 					$parent->resource()->consume_argument();
 					$parent->resource()->get_module()->file('page_main/topic_add');
@@ -56,8 +61,8 @@ abstract class Forum_Page_Main extends Page_Main {
 			return new Forum_Page_Main_Forum_View($forums,$forum,$parent);
 		}
 	}	
-	private function Load_Topic($forums,$forum,$topic,$parent) {
-		$topic = Topic::Get_By_ID($topic);
+	private function Load_Topic($forums,$forum,$topicid,$parent) {
+		$topic = Forum_Topic::Get_By_Forum_Topic($forum->id(),$topicid);
 		$parent->resource()->consume_argument();
 		$arg = $parent->resource()->get_argument();
 		try {

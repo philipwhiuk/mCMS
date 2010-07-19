@@ -32,7 +32,7 @@ class Topic {
 		return $this->hidden;
 	}
 	public function get_views() {
-		return $this->get_views();
+		return $this->views;
 	}
 	public function get_firstauthor() {
 		if(!$this->firstauthor instanceof User) {
@@ -51,6 +51,9 @@ class Topic {
 	}
 	public function get_lastdate() {
 		return $this->lastdate;
+	}
+	public function get_posts() {
+		return $this->posts;
 	}
 	public static function Get_By_ID($id) {
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));

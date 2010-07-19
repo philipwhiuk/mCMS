@@ -50,9 +50,9 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 		try {
 			$this->topics = Forum_Topic::Get_By_Forum($this->forum->id());
 			foreach($this->topics as $topic) {
-				$topic->get_content()->title();
-				$topic->get_firstauthor();
-				$topic->get_lastauthor();
+				$topic->topic()->get_content()->get_title();
+				$topic->topic()->get_firstauthor();
+				$topic->topic()->get_lastauthor();
 			}
 		}
 		catch(Exception $e) {
@@ -66,7 +66,9 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 		$this->url = System::Get_Instance()->url(Resource::Get_By_Argument($module, $urlpart.$this->forum->id())->url());
 	}
 	public function display(){
-		$template = $this->system->output()->start(array('forum','page','forum','view'));
+		$system = System::Get_Instance();
+		$usermodule = Module::Get('user');
+		$template = $system->output()->start(array('forum','page','forum','view'));
 		$template->title = $this->forum->content()->get_title();
 		$template->description = $this->forum->content()->get_body();
 		$template->sub_forums = array();
@@ -74,6 +76,20 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 			if($this->forum->depth() > 0) {
 				$template->sub_forums[] = $this->display_sf($sub_forum,$this->forum->depth(),$this->url);
 			}
+		}
+		foreach($this->topics as $topic) {
+			$t = array();
+			$t['topicurl'] = $this->url.'topic/'.$topic->topic()->get_id();
+			$t['title'] = $topic->topic()->get_content()->get_title();
+			$t['posts'] = $topic->topic()->get_posts();
+			$t['views'] = $topic->topic()->get_views();
+			$t['firstposter'] = $topic->topic()->get_firstauthor()->name();
+			$t['firstposterurl'] = $system->url(Resource::Get_By_Argument($usermodule,$topic->topic()->get_firstauthor()->get_id())->url());
+			$t['firstpostdate'] = date('jS F Y',$topic->topic()->get_firstdate());
+			$t['lastposter'] = $topic->topic()->get_lastauthor()->name();
+			$t['lastposterurl'] = $system->url(Resource::Get_By_Argument($usermodule,$topic->topic()->get_lastauthor()->get_id())->url());
+			$t['lastpostdate'] = date('jS F Y',$topic->topic()->get_lastdate());
+			$template->topics[] = $t;
 		}
 		return $template;
 	}

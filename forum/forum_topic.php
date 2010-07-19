@@ -47,6 +47,20 @@ class Forum_Topic {
 			throw new Forum_Topic_Exception($e);
 		}
 	}
+	public static function Get_By_Forum_Topic($forum,$topic) {
+		$operand = 'AND';
+		$operator = 
+		array(
+			array('=',array(array('col','forum'), array('u', $forum))),
+			array('=',array(array('col','topic'), array('u', $topic)))
+		);
+		$query = System::Get_Instance()->database()->Select()->table('forum_topic')->where($operand,$operator)->limit(1);
+		$result = $query->execute();
+		if($result->num_rows == 0){
+			throw new Forum_Topic_Not_Found_Exception($operator, $operand);
+		}
+		return $result->fetch_object('Forum_Topic');
+	}
 	public static function Get_By_Topic($topic,$limit = null, $skip = null) {
 		$query = System::Get_Instance()->database()->Select()->table('forum_topic')->where('=', array(array('col','topic'), array('u', $topic)));
 		if(isset($limit)){

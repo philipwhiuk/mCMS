@@ -39,5 +39,8 @@ class User {
 	
 	private $id;
 	private $name;
+	public function name() {
+		return $this->name;	
+	}
 	
 }

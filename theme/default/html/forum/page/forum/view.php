@@ -34,17 +34,21 @@ class Template_Theme_Default_HTML_Forum_Page_Forum_View extends Template {
 			?>
         </table>        
 		<?php } ?>
+        <?php if(!count($this->topics) == 0) { ?>
         <h2>Topics</h2>
         <table class="topics">
         <tr><th>Active Topics</th><th>Posts</th><th>Views</th><th>Last Post</th></tr>
-        <?php if(count($this->topics) == 0) {
-			?><tr><td colspan="4" class="no_topics">No Topics</td></tr><?php 
-		}
-		else {
-			foreach($this->topics as $topic) {
-			} 
-		}?>
+			<?php foreach($this->topics as $topic) {
+				?><tr>
+                	<td><a href="<?php echo $topic['topicurl']; ?>"><?php echo $topic['title']; ?></a>,
+                    	<a href="<?php echo $topic['firstposterurl']; ?>"><?php echo $topic['firstposter']; ?></a> ,<?php echo $topic['firstpostdate']; ?></td>
+                	<td><?php echo $topic['posts']; ?></td>
+                    <td><?php echo $topic['views']; ?></td>
+                    <td><?php echo $topic['lastposter']; ?></td>
+                </tr><?php
+			} ?>
         </table>
+        <?php }?>
         </div>
         <?php
 	}
