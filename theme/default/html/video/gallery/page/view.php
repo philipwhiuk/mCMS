@@ -1,5 +1,8 @@
 <?php
-
+if(class_exists('Template_Theme_Default_HTML_Video_Gallery_Page_View')) {
+	debug_backtrace();
+}
+else {
 class Template_Theme_Default_HTML_Video_Gallery_Page_View extends Template {
 
 	public function display($others = array()){
@@ -22,4 +25,5 @@ class Template_Theme_Default_HTML_Video_Gallery_Page_View extends Template {
 	}
 
 
+}
 }

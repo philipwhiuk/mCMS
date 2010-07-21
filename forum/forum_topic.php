@@ -91,4 +91,9 @@ class Forum_Topic {
 		}
 		return $return;
 	}
+	public function Count_By_Forum($forum) {
+		$query = System::Get_Instance()->database()->Count()->table('forum_topic')->where('=', array(array('col','forum'), array('u', $forum)));
+		$result = $query->execute();
+		return $result;
+	}
 }

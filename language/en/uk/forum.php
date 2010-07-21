@@ -7,12 +7,22 @@ return array(
 		'edit' => array(),
 		'delete' => array(),
 		),
-	'topic' =>	'view_topic' => 'View Topic',
+	'topic' => array(
+		'view_topic' => 'View Topic',
 		'view' => array(),
+		'add' => array(
+			'title_main' => 'Add Forum Topic',
+			'title' => 'Topic Title',
+			'description' => 'Description',
+			'post_title' => 'Post Title',
+			'post_body' => 'Post',
+			'submit' => 'Submit'			
+			),
 		'edit' => array(),
 		'delete' => array(),
 		),
-	'post' =>	'view_topic' => 'View Topic',
+	'post' => array(
+		'view_topic' => 'View Topic',
 		'view' => array(),
 		'edit' => array(),
 		'delete' => array(),

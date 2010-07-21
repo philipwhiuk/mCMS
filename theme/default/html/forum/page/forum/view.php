@@ -11,7 +11,7 @@ class Template_Theme_Default_HTML_Forum_Page_Forum_View extends Template {
 			<?php foreach($this->parents as $parent) { ?>
 				<a href="<?php echo $parent['url']; ?>"><?php echo $parent['title']; ?></a> <span class="forum_structure_divider"><</span> 
 			<?php }?>
-			<a href="<?php echo $this->url; ?>"><?php echo $this->title; ?></a>
+			<a href="<?php echo $this->url; ?>"><?php if($this->parentID != 0) { echo $this->title; } else { echo 'Board Index'; } ?></a>
 		</div>
         <h1><?php echo $this->title; ?></h1>
         <?php if(count($this->sub_forums) != 0) { ?>
@@ -26,7 +26,7 @@ class Template_Theme_Default_HTML_Forum_Page_Forum_View extends Template {
                     <tr>
                         <td>
                             <div class='sf_title'><a href='<?php echo $sub_forum['url']; ?>'><?php echo $sub_forum['title']; ?></a></div>
-                            <div class='sf_desc'><?php echo $sub_forum['description']; ?></div>
+                            <div class='sf_desc'><?php echo $sub_forum['description']; ?>&nbsp;</div>
                         </td>
                         <td class="topics"><?php echo $sub_forum['topics']; ?></td>
                         <td class="posts"><?php echo $sub_forum['posts']; ?></td>
@@ -45,31 +45,33 @@ class Template_Theme_Default_HTML_Forum_Page_Forum_View extends Template {
 			</tbody>
         </table>        
 		<?php } ?>
-        
-        <table class="topics">
-		<thead>
-        <tr><th class="atopic">Active Topics</th><th class="posts">Posts</th><th class="views">Views</th><th class="lastpost">Last Post</th></tr>
-		</thead>
-		<tfoot><tr><td colspan="4">&nbsp;</td></tr></tfoot>
-		
-		<tbody>
-		<?php if(!count($this->topics) == 0) { 
-			foreach($this->topics as $topic) {
-				?><tr>
-                	<td class="atopic"><div class="topic"><a href="<?php echo $topic['topicurl']; ?>"><?php echo $topic['title']; ?></a></div>
-                    	<div class="topicinfo">by <a href="<?php echo $topic['firstposterurl']; ?>"><?php echo $topic['firstposter']; ?></a> > <?php echo $topic['firstpostdate']; ?></div></td>
-                	<td class="posts"><?php echo $topic['posts']; ?></td>
-                    <td class="views"><?php echo $topic['views']; ?></td>
-                    <td class="lastposter"><?php echo $topic['lastposter']; ?></td>
-                </tr><?php
+		<?php if($this->has_topics) { ?>
+			<div class="addtopic"><a href="<?php echo $this->topic_add_url;?>"><span></span>Post a Reply</a></div>
+			<table class="topics">
+			<thead>
+			<tr><th class="atopic">Active Topics</th><th class="posts">Posts</th><th class="views">Views</th><th class="lastpost">Last Post</th></tr>
+			</thead>
+			<tfoot><tr><td colspan="4">&nbsp;</td></tr></tfoot>
+			
+			<tbody>
+			<?php if(!count($this->topics) == 0) { 
+				foreach($this->topics as $topic) {
+					?><tr>
+						<td class="atopic"><div class="topic"><a href="<?php echo $topic['topicurl']; ?>"><?php echo $topic['title']; ?></a></div>
+							<div class="topicinfo">by <a href="<?php echo $topic['firstposterurl']; ?>"><?php echo $topic['firstposter']; ?></a> > <?php echo $topic['firstpostdate']; ?></div></td>
+						<td class="posts"><?php echo $topic['posts']; ?></td>
+						<td class="views"><?php echo $topic['views']; ?></td>
+						<td class="lastposter"><?php echo $topic['lastposter']; ?></td>
+					</tr><?php
+				}
 			}
-		}
-		else {
-			?><tr><td colspan="4" class="no_topics">No Topics Found</td></tr><?php
-		}?>
-		</tbody>
-       
-        </table>
+			else {
+				?><tr><td colspan="4" class="no_topics">No Topics Found</td></tr><?php
+			}?>
+			</tbody>
+		   
+			</table>
+		<?php } ?>
 	</div>
 	<?php
 	}

@@ -15,7 +15,6 @@ abstract class Forum_Page_Main extends Page_Main {
 				$parent->resource()->consume_argument();
 				$arg = $parent->resource()->get_argument();
 			}
-			
 			if(isset($forum) && $arg == 'topic'){
 				$parent->resource()->consume_argument();
 				$arg = $parent->resource()->get_argument();
@@ -29,6 +28,9 @@ abstract class Forum_Page_Main extends Page_Main {
 				} elseif($arg == 'add'){
 					$parent->resource()->consume_argument();
 					$parent->resource()->get_module()->file('page_main/topic_add');
+					return new Forum_Page_Main_Topic_Add($forums,$forum,$parent);
+				} else {
+					$parent->resource()->consume_argument();
 				}
 			}
 		} catch(Exception $e){

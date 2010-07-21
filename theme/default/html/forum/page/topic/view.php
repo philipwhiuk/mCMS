@@ -12,7 +12,7 @@ class Template_Theme_Default_HTML_Forum_Page_Topic_View extends Template {
         	<a href="<?php echo $parent['url']; ?>"><?php echo $parent['title']; ?></a>
              <span class="forum_structure_divider"><</span> 
 		<?php }?>
-        <a href="<?php echo $this->forum['url']; ?>"><?php echo $this->forum['title']; ?></a>
+		<a href="<?php echo $this->forum['url']; ?>"><?php if($this->forum['parentID'] != 0) { echo $this->forum['title']; } else { echo 'Board Index'; } ?></a>
         </div>
         <h1><a href="<?php echo $this->topicurl; ?>"><?php echo $this->title; ?></a></h1>
         <?php echo $this->description; ?>

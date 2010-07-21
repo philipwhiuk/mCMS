@@ -5,6 +5,8 @@ class Forum {
 	private $language;
 	private $parent;
 	private $depth;
+	public $topic_count;
+	public $post_count;
 	
 	public $children = array();
 
@@ -33,7 +35,10 @@ class Forum {
 		else {
 			return $this->parent;
 		}
-	}	
+	}
+	public function has_topics() {
+		return (bool) $this->has_topics;
+	}
 	public function parent() {
 		if(!$this->parent instanceof Forum) {
 			$this->parent = Forum::Get_By_ID($this->parent);
@@ -42,24 +47,6 @@ class Forum {
 	}
 	public function depth() {
 		return $this->depth;	
-	}
-	public function topic_count() {
-		return $this->topic_count;	
-	}
-	public function post_count() {
-		return $this->post_count;	
-	}
-	public function lastpostdate() {
-		return $this->lastpostdate;	
-	}
-	public function lastpost() {
-		return $this->lastpost;	
-	}
-	public function lastposter() {
-		if(!$this->lastposter instanceof User) {
-			$this->lastposter = User::Get_By_ID($this->lastposter);
-		}
-		return $this->lastposter;
 	}
 	public static function Get_By_ID($id) {
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
@@ -95,7 +82,7 @@ class Forum {
 				  array('col','parent'), 
 				  $in
 			)
-		);
+		)->order(array('sort'=> true));
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
