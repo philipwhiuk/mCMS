@@ -12,6 +12,10 @@ return array(
 	'admin' => array(
 		'menu' => array(
 			'name' => 'Files'
+		),
+		'list' => array(
+			'title' => 'Files',
+			'edit' => 'Edit'
 		)
 	)
 );

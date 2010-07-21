@@ -28,8 +28,8 @@ class File_Admin extends Admin {
 		$count = File::Count_All();
 		$this->page_count = ((int) ($count / 20)) + ((($count % 20) == 0) ? 0 : 1);
 		$language = Language::Retrieve();
-		//$this->edit = $language->get($this->module, array('admin','list','edit'));
-		//$this->title = $language->get($this->module, array('admin','list','title'));
+		$this->edit = $language->get($this->module, array('admin','list','edit'));
+		$this->title = $language->get($this->module, array('admin','list','title'));
 		for($pg = 1; $pg <= $this->page_count; $pg ++){
 			$this->pages[$pg] = $this->url('list/' . $pg);
 		}
