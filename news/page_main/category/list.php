@@ -92,6 +92,7 @@ class News_Page_Main_Category_List extends News_Page_Main {
 			if($i <= 5){
 				$template->articles[] = array(
 					'title' => $article->content()->get_title(),
+					'brief' => $article->brief()->get_body(),
 					'body' => $article->content()->get_body(),
 					'time' => date($df, $article->time()),
 					'selected' => ($this->selected == $article),
