@@ -16,9 +16,11 @@ class Film_Feature_Page_Main_List extends Film_Feature_Page_Main {
 		}
 		else {
 			switch($arg){
+
 				case "archive":
 					$first = 0;
 					$last = time();
+					$sort = false;
 					$this->title = "archive";
 					break;
 				default:
@@ -26,9 +28,10 @@ class Film_Feature_Page_Main_List extends Film_Feature_Page_Main {
 					$first = time();
 					$last = strtotime("+1 year");
 					$this->title = "current";
+					$sort = true;
 			}
 		}
-		$this->showings = Film_Feature_Showing::Get_Period($first,$last);
+		$this->showings = Film_Feature_Showing::Get_Period($first,$last,$sort);
 		// var_dump($this->showings);
 		// Make Arrays
 		$arrayFeatures = array();

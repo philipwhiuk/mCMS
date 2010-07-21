@@ -68,7 +68,7 @@ class Film_Feature_Showing {
 		}
 		return $return;	
 	}
-	static function Get_Period($first,$last) {
+	static function Get_Period($first,$last,$sort) {
 		$query = System::Get_Instance()->database()
 			->Select()
 			->table('film_feature_showing')
@@ -103,7 +103,7 @@ class Film_Feature_Showing {
 		)
 	)
 )
-			->order(array('datetime' => true));
+			->order(array('datetime' => $sort));
 		$result = $query->execute();
 		$return = array();
 		while($row = $result->fetch_object('Film_Feature_Showing')){
