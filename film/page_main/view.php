@@ -54,7 +54,6 @@ class Film_Page_Main_View extends Film_Page_Main {
 		$template->release_year = $this->film->get_release_year();
 		$template->runtime = $this->film->get_runtime();
 		$template->imdbID = $this->film->get_imdb();
-		$template->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
 		try {
 			$template->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
 		}
