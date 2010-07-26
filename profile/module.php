@@ -1,7 +1,6 @@
 <?php
 class Profile_Module extends Module {
 	public function load(){
-		try {
 		Module::Get('permission');
 		Module::Get('form');
 		Module::Get('language');
@@ -10,12 +9,13 @@ class Profile_Module extends Module {
 					 'profile_field',
 					 'profile_field_impl','profile_field_profile_impl',
 					 'exception');
-		Module::Get('admin');
-		Admin::Register('profile','Profile_Admin','admin',$this);
-		Profile_Field::Register('Profile_Field_Textbox','profile_field_textbox',$this);
+		try {
+			Module::Get('admin');
+			Admin::Register('profile','Profile_Admin','admin',$this);
+			Profile_Field::Register('Profile_Field_Textbox','profile_field_textbox',$this);
 		}
 		catch (Exception $e) {
-			var_dump($e);
+		
 		}
 	}
 }

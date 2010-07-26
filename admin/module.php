@@ -3,11 +3,16 @@
 class Admin_Module extends Module {
 
 	public function load(){
-		Module::Get('permission');
-		Module::Get('form');
-		Module::Get('language');
+		try {
 		$this->files('admin','exception');
 		Admin::Register('dashboard','Admin_Dashboard','dashboard',$this, 0);
+			Module::Get('permission');
+			Module::Get('form');
+			Module::Get('language');		
+		}
+		catch(Exception $e) {
+			
+		}
 	}
 
 }
