@@ -1,6 +1,6 @@
 <?php
 
-class Template_Theme_Default_HTML_Film_Feature_Admin_List extends Template {
+class Template_Theme_Default_HTML_Film_Feature_Admin_Showings extends Template {
 	public function display(){
 ?>		
 <div class="admin-list film_feature-admin-list">
@@ -18,14 +18,20 @@ class Template_Theme_Default_HTML_Film_Feature_Admin_List extends Template {
 	<table cellspacing=0 cellpadding=0> 
 <?php 
 		$a = 0;
-		foreach($this->film_feature as $film_feature){
+		foreach($this->showing as $showing){
 ?>
 		<tr <?php if($a == 0){ ?> class="even" <?php } else { ?> class="odd" <?php } ?>>
 			<td>
-				<?php echo $film_feature['title']; ?> 
+				<?php echo $showing['title']; ?> 
+			</td>
+			<td>
+				<?php echo date('H:i',$showing['datetime']); ?> 
+			</td>
+			<td>
+				<?php echo date('d/m/Y',$showing['datetime']); ?>
 			</td>
 			<td class="link">
-				<a href="<?php echo $film_feature['edit']; ?>">
+				<a href="<?php echo $showing['edit']; ?>">
 					<?php echo $this->edit; ?> 
 				</a>
 			</td>

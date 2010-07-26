@@ -24,16 +24,13 @@ class Forum_Page_Main_Topic_Add extends Forum_Page_Main {
 		$description = Form_Field::Create('description', array('textbox'));
 		$description->set_label($language->get($module, array('topic','add','description')));
 		
-		$post_title = Form_Field::Create('post_title', array('textbox'));
-		$post_title->set_label($language->get($module, array('topic','add','post_title')));
-		
 		$post_body = Form_Field::Create('post_body', array('richtext','textarea'));
 		$post_body->set_label($language->get($module, array('topic','add','post_body')));
 		
 		$submit = Form_Field::Create('submit', array('submit'));
 		$submit->set_label($language->get($module, array('topic','add','submit')));
 		
-		$this->form->fields($title,$description,$post_title,$post_body,$submit);
+		$this->form->fields($title,$description,$post_body,$submit);
 		
 		try {
 			$data = $this->form->execute();

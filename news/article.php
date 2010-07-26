@@ -30,7 +30,25 @@ class News_Article {
 	public function time(){
 		return $this->time;
 	}
-	
+	public static function Get_All(){
+		$query = System::Get_Instance()
+						->database()
+						->Select()
+						->table('news_article')
+						->order(array('time' => false));
+		if(isset($limit)){
+			$query->limit($limit);
+			if(isset($offset)){
+				$query->offset($offset);
+			}
+		}
+		$result = $query->execute();
+		$return = array();
+		while($row = $result->fetch_object('News_Article')){
+			$return[] = $row;
+		}
+		return $return;
+	}	
 	public static function Get_By_Category($category, $limit = null, $offset = null){
 		
 		if($category instanceof News_Category){
@@ -103,5 +121,8 @@ class News_Article {
 		return $result->fetch_object('News_Article');
 		
 	}
-	
+	public static function Count_All(){
+		$query = System::Get_Instance()->database()->Count()->table('news_article');
+		return $query->execute();
+	}
 }

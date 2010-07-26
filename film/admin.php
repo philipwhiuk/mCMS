@@ -41,7 +41,10 @@ class Film_Admin extends Admin {
 		}
 		$this->page = $page;
 		$count = Film::Count_All();
-		$this->pages = ((int) ($count / 20)) + ((($count % 20) == 0) ? 0 : 1);
+		$this->page_count = ((int) ($count / 20)) + ((($count % 20) == 0) ? 0 : 1);
+		for($pg = 1; $pg <= $this->page_count; $pg ++){
+			$this->pages[$pg] = $this->url('list/' . $pg);
+		}	
 		$language = Language::Retrieve();
 		$this->edit = $language->get($this->module, array('admin','list','edit'));
 		$this->title = $language->get($this->module, array('admin','list','title'));
@@ -113,6 +116,7 @@ class Film_Admin extends Admin {
 		$template->edit = $this->edit;
 		$template->title = $this->title;
 		$template->pages = $this->pages;
+		$template->page_count = $this->page_count;
 		$template->page = $this->page;
 		foreach($this->film as $film){
 			$template->film[] = array(

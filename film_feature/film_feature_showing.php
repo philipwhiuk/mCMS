@@ -44,6 +44,18 @@ class Film_Feature_Showing {
 		}
 		return $return;
 	}
+	static function Get_All() {
+		$query = System::Get_Instance()->database()
+			->Select()
+			->table('film_feature_showing')
+			->order(array('datetime' => false));
+		$result = $query->execute();
+		$return = array();
+		while($row = $result->fetch_object('Film_Feature_Showing')){
+			$return[] = $row;
+		}
+		return $return;
+	}
 	static function Get_By_ID($id) {
 		$query = System::Get_Instance()->database()
 			->Select()
@@ -110,5 +122,9 @@ class Film_Feature_Showing {
 			$return[] = $row;
 		}
 		return $return;
+	}
+	public static function Count_All(){
+		$query = System::Get_Instance()->database()->Count()->table('film_feature_showing');
+		return $query->execute();
 	}
 }

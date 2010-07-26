@@ -14,5 +14,19 @@ return array(
 		'list' => 'List',
 		'edit' => 'Edit',
 		'delete' => 'Delete'
+	),
+	'admin' => array(
+		'menu' => array(
+			'name' => 'News'
+		),
+		'list' => array(
+			'edit' => 'Edit',
+			'title' => 'Article List'
+		),
+		'edit' => array(
+			'title' => 'Title:',
+			'body' => 'Body:',
+			'submit' => 'Update' 
+		)
 	)
 );

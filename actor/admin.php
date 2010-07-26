@@ -98,7 +98,6 @@ class Actor_Admin extends Admin {
 				return;
 			}
 		} catch(Exception $e){
-
 		}
 		$this->execute_list();
 	}

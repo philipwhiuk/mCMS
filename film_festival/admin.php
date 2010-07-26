@@ -47,6 +47,9 @@ class Film_Festival_Admin extends Admin {
 		$this->page = $page;
 		$count = Film_Festival::Count_All();
 		$this->page_count = ((int) ($count / 20)) + ((($count % 20) == 0) ? 0 : 1);
+		for($pg = 1; $pg <= $this->page_count; $pg ++){
+			$this->pages[$pg] = $this->url('list/' . $pg);
+		}
 		$language = Language::Retrieve();
 		$this->edit = $language->get($this->module, array('admin','list','edit'));
 		$this->title = $language->get($this->module, array('admin','list','title'));

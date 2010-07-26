@@ -6,12 +6,12 @@ class Template_Theme_Default_HTML_Film_Admin_List extends Template {
 <div class="admin-list film-admin-list">
 	<h1><?php echo $this->title; ?></h1>
 	<?php if($this->page > 1){ ?>
-	<a class="actor-admin-list-previous" href="<?php echo $this->pages[$this->page - 1]; ?>">
+	<a class="admin-list-previous film-admin-list-previous" href="<?php echo $this->pages[$this->page - 1]; ?>">
 		<div>&laquo;<?php echo $this->page - 1; ?></div>
 	</a>
 	<?php } ?>
 	<?php if($this->page < $this->page_count){ ?>
-	<a class="actor-admin-list-next" href="<?php echo $this->pages[$this->page + 1]; ?>">
+	<a class="admin-list-next film-admin-list-next" href="<?php echo $this->pages[$this->page + 1]; ?>">
 		<div><?php echo $this->page + 1; ?>&raquo;</div>
 	</a>
 	<?php } ?>
@@ -36,12 +36,12 @@ class Template_Theme_Default_HTML_Film_Admin_List extends Template {
 ?> 
 	</table>
 	<?php if($this->page > 1){ ?>
-	<a class="actor-admin-list-previous" href="<?php echo $this->pages[$this->page - 1]; ?>">
+	<a class="admin-list-previous film-admin-list-previous" href="<?php echo $this->pages[$this->page - 1]; ?>">
 		<div>&laquo;<?php echo $this->page - 1; ?></div>
 	</a>
 	<?php } ?>
 	<?php if($this->page < $this->page_count){ ?>
-	<a class="actor-admin-list-next" href="<?php echo $this->pages[$this->page + 1]; ?>">
+	<a class="admin-list-next film-admin-list-next" href="<?php echo $this->pages[$this->page + 1]; ?>">
 		<div><?php echo $this->page + 1; ?>&raquo;</div>
 	</a>
 	<?php } ?>

@@ -3,7 +3,8 @@
 return array(
 	'admin' => array(
 		'menu' => array(
-			'name' => 'Features'
+			'name' => 'Features',
+			'showings_name' => 'Showings'
 		),
 		'list' => array(
 			'edit' => 'Edit',
