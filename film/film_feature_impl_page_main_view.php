@@ -80,7 +80,7 @@ class Film_Film_Feature_Impl_Page_Main_View extends Film_Feature_Impl_Page_Main_
 		$template->description = $this->description;
 		$template->synopsis = $this->synopis;
 		try {
-			$template->tagline = $this->film->get_random_tagline()->text;
+			$template->tagline = $this->film->get_random_tagline()->text();
 		}
 		catch (Film_Tagline_Not_Found_Exception $e) {
 		}

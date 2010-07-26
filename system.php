@@ -312,7 +312,6 @@ class System {
 		} catch (Exception $e){
 			$exceptions[] = $e;
 		}
-		var_dump($exceptions);
 		throw new System_Resource_Exception($path,$exceptions);
 		
 	}
