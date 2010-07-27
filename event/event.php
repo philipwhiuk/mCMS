@@ -3,6 +3,8 @@ class Event {
 	private $id;
 	private $module;
 	private $content;
+	private $starttime;
+	private $finishtime;
 	
 	public function get_id() {
 		return $this->id;
@@ -18,6 +20,12 @@ class Event {
 			$this->module = Module::Get_ID($this->module);
 		}
 		return $this->module;
+	}
+	public function get_starttime() {
+		return $this->starttime;
+	}
+	public function get_finishtime() {
+		return $this->finishtime;
 	}
 	public function get_objects() {
 		if(!isset($this->objects)){

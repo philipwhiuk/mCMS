@@ -14,6 +14,9 @@ class Language {
 	public function id() {
 		return $this->id;
 	}
+	public function name() {
+		return $this->name;
+	}
 	public function get_translation($key){
 		$k =& $this->data;
 		foreach($key as $v){
@@ -110,7 +113,21 @@ class Language {
 	public static function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
-	
+	public static function Get_All() {
+		$query = System::Get_Instance()->database()->Select()->table('language');
+		if(isset($limit)){
+			$query->limit($limit);
+			if(isset($skip)){
+				$query->offset($skip);
+			}
+		}
+		$result = $query->execute();
+		$return = array();
+		while($row = $result->fetch_object('Language')){
+			$return[] = $row;
+		}
+		return $return;
+	}
 	public static function Get_One($operator, $operand){
 		
 		$query = System::Get_Instance()->database()->Select()->table('language')->where($operator, $operand)->limit(1);

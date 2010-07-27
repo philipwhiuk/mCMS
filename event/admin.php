@@ -36,6 +36,7 @@ class Event_Admin extends Admin {
 		if(!(($page-1)*20 <= count($events))) {
 			$page = (int) round((count($events)/20), 0, PHP_ROUND_HALF_UP)+1;
 		}
+		$this->event = array();
 		for($i = ($page-1)*20; $i < $page*20; $i++) {
 			if(isset($events[$i]) && $events[$i] instanceof Event) { $this->event[] = $events[$i]; }
 		}
@@ -53,12 +54,12 @@ class Event_Admin extends Admin {
 	public function execute_edit(){
 		$this->mode = 'edit';
 		$arg = $this->parent->resource()->get_argument();
-		$this->content = Event::Get_By_ID($arg);
+		$this->event = Event::Get_By_ID($arg);
 		$this->parent->resource()->consume_argument();
 
 		$language = Language::Retrieve();
 		
-		$this->form = new Form(array('event',$this->event->id(), 'admin'), $this->url('edit/' . $this->content->id()));
+		$this->form = new Form(array('event',$this->event->get_id(), 'admin'), $this->url('edit/' . $this->event->get_id()));
 		
 		$title = Form_Field::Create('title', array('textbox'));
 		$title->set_label($language->get($this->module, array('admin','edit','title')));
@@ -68,10 +69,18 @@ class Event_Admin extends Admin {
 		$body->set_label($language->get($this->module, array('admin','edit','body')));
 		$body->set_value($this->event->get_content()->get_body());
 		
+		$starttime = Form_Field::Create('starttime', array('textbox'));
+		$starttime->set_label($language->get($this->module, array('admin','edit','starttime')));
+		$starttime->set_value($this->event->get_starttime());
+		
+		$finishtime = Form_Field::Create('finishtime', array('textbox'));
+		$finishtime->set_label($language->get($this->module, array('admin','edit','finishtime')));
+		$finishtime->set_value($this->event->get_finishtime());
+		
 		$submit = Form_Field::Create('submit', array('submit'));
 		$submit->set_label($language->get($this->module, array('admin','edit','submit')));
 		
-		$this->form->fields($title,$body, $submit);
+		$this->form->fields($title,$body,$starttime,$finishtime, $submit);
 		
 		try {
 			$data = $this->form->execute();
@@ -98,7 +107,7 @@ class Event_Admin extends Admin {
 				return;
 			}
 		} catch(Exception $e){
-
+			var_dump($e);
 		}
 		$this->execute_list();
 	}

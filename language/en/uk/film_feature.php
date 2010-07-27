@@ -15,6 +15,10 @@ return array(
 			'description' => 'Description:',
 			'category' => 'Category:',
 			'submit' => 'Update' 
+		),
+		'showing_edit' => array(
+			'datetime' => 'Date/Time:',
+			'submit' => 'Update' 
 		)
 	),
 	'edit' => array(

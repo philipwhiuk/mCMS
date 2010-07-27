@@ -81,22 +81,59 @@ class Forum_Admin extends Admin {
 		$description->set_label($language->get($this->module, array('admin','edit','description')));
 		$description->set_value($this->forum->content()->get_body());
 
-		$language_field = Form_Field::Create('language_field', array('textbox'));
+		$language_field = Form_Field::Create('language_field', array('select'));
 		$language_field->set_label($language->get($this->module, array('admin','edit','language_field')));
-		$language_field->set_value($this->forum->language()->id());
+		$langs = Language::Get_All();
+		try {
+			$current_lang = $this->forum->language()->id();
+		}
+		catch (Language_Not_Found_Exception $lnfe) {
+			$current_lang = 0;
+		}
+		if($current_lang == 0) {
+			$language_field->set_option(0,$language->get($this->module, array('admin','edit','no_lang')),true);
+		}
+		else {
+			$language_field->set_option(0,$language->get($this->module, array('admin','edit','no_lang')),false);
+		}
+		foreach ($langs as $lang) {
+			if($lang->id() == $current_lang) {
+				$language_field->set_option($lang->id(),$lang->name(),true);
+			}
+			else {
+				$language_field->set_option($lang->id(),$lang->name(),false);
+			}
+		}
 		
-		$parent = Form_Field::Create('parent', array('textbox'));
+		$parent = Form_Field::Create('parent', array('select'));
 		$parent->set_label($language->get($this->module, array('admin','edit','parent')));
-		try { 
-			$parent->set_value($this->forum->parent()->id()); 
-		} catch (Forum_Not_Found_Exception $fnfe) {
-			$parent->set_value(0); 
+		$ps = Forum::Get_All();
+		try {
+			$current_p = $this->forum->parent()->id();
+		}
+		catch (Forum_Not_Found_Exception $fnfe) {
+			$current_p = 0;
+		}
+		if($current_p == 0) {
+			$parent->set_option(0,$language->get($this->module, array('admin','edit','no_parent')),true);
+		}
+		else {
+			$parent->set_option(0,$language->get($this->module, array('admin','edit','no_parent')),false);
+		}
+		foreach ($ps as $p) {
+			if($p->id() == $current_p) {
+				$parent->set_option($p->id(),$p->content()->get_title(),true);
+			}
+			else {
+				$parent->set_option($p->id(),$p->content()->get_title(),false);
+			}
 		}
 		
 		$depth = Form_Field::Create('depth', array('textbox'));
 		$depth->set_label($language->get($this->module, array('admin','edit','depth')));
 		$depth->set_value($this->forum->depth());
 		
+		//Should be checkbox
 		$has_topics = Form_Field::Create('has_topics', array('textbox'));
 		$has_topics->set_label($language->get($this->module, array('admin','edit','has_topics')));
 		$has_topics->set_value($this->forum->has_topics());

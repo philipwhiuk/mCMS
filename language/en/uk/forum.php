@@ -60,7 +60,9 @@ return array(
 			'title' => 'Title:',
 			'description' => 'Description:',
 			'language_field' => 'Language:',
+			'no_lang' => 'No Default Language',
 			'parent' => 'Parent Forum:',
+			'no_parent' => 'No Parent',
 			'depth' => 'Forum Depth:',
 			'has_topics' => 'Contains Topics:',
 			'submit' => 'Update' 

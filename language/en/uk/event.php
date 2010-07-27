@@ -12,6 +12,9 @@ return array(
 		'edit' => array(
 			'title' => 'Title:',
 			'body' => 'Body:',
+			'starttime' => 'Start Time:',
+			'finishtime' => 'Finish Time:',
+			'category' => 'Category:',
 			'submit' => 'Update' 
 		)
 	),

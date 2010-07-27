@@ -1,7 +1,6 @@
 <?php
 class Film_Certificate {
 	private $id;
-	private $content;
 	private $image;
 	public function get_id() {
 		return $this->id;
@@ -22,5 +21,14 @@ class Film_Certificate {
 		}
 		$return = array();
 		return $row = $result->fetch_object('Film_Certificate');
+	}
+	public static function Get_All(){
+		$query = System::Get_Instance()->database()->Select()->table('film_certificate');
+		$result = $query->execute();
+		$return = array();
+		while($row = $result->fetch_object('Film_Certificate')){
+			$return[] = $row;
+		}
+		return $return;
 	}
 }

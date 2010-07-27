@@ -1,10 +1,8 @@
 <?php
 
 class Film_Feature_Admin extends Admin {
-
 	protected $parent;
 	protected $mode;
-
 	public function __construct($a,$b){
 		parent::__construct($a,$b);
 		$this->url = $this->url();
@@ -83,8 +81,7 @@ class Film_Feature_Admin extends Admin {
 		$language = Language::Retrieve();
 		$this->edit = $language->get($this->module, array('admin','list','edit'));
 		$this->title = $language->get($this->module, array('admin','list','title'));
-	}
-	
+	}	
 	public function execute_edit(){
 		$this->mode = 'edit';
 		$arg = $this->parent->resource()->get_argument();
@@ -103,15 +100,28 @@ class Film_Feature_Admin extends Admin {
 		$description->set_label($language->get($this->module, array('admin','edit','description')));
 		$description->set_value($this->film_feature->get_content()->get_body());
 		
-		$category = Form_Field::Create('category', array('textbox'));
+		$category = Form_Field::Create('category', array('select'));
 		$category->set_label($language->get($this->module, array('admin','edit','category')));
-		$category->set_value($this->film_feature->get_category()->get_id());
+		$cats = Film_Feature_Category::Get_All();
+		try {
+			$current_cat = $this->film_feature->get_category()->get_id();
+		}
+		catch (Film_Feature_Category_Not_Found_Exception $e) {
+			$current_cat = 0;
+		}
+		foreach ($cats as $cat) {
+			if($cat->get_id() == $current_cat) {
+				$category->set_option($cat->get_id(),$cat->description()->get_title(),true);
+			}
+			else {
+				$category->set_option($cat->get_id(),$cat->description()->get_title(),false);
+			}
+		}
+		
 		
 		$submit = Form_Field::Create('submit', array('submit'));
 		$submit->set_label($language->get($this->module, array('admin','edit','submit')));
-		
 		$this->form->fields($title,$description,$category,$submit);
-		
 		try {
 			$data = $this->form->execute();
 			
@@ -120,9 +130,34 @@ class Film_Feature_Admin extends Admin {
 			System::Get_Instance()->redirect($this->url('list'));
 		} catch(Form_Incomplete_Exception $e){
 		}
+	}
+	public function execute_showing_edit(){
+		$this->mode = 'showing_edit';
+		$arg = $this->parent->resource()->get_argument();
+		$this->film_feature_showing = Film_Feature_Showing::Get_By_ID($arg);
+		$this->parent->resource()->consume_argument();
+
+		$language = Language::Retrieve();
+		
+		$this->form = new Form(array('film',$this->film_feature_showing->get_id(), 'admin'), $this->url('edit/' . $this->film_feature_showing->get_id()));
+		
+		$datetime = Form_Field::Create('datetime', array('textbox'));
+		$datetime->set_label($language->get($this->module, array('admin','showing_edit','datetime')));
+		$datetime->set_value($this->film_feature_showing->get_datetime());
+		
+		$submit = Form_Field::Create('submit', array('submit'));
+		$submit->set_label($language->get($this->module, array('admin','showing_edit','submit')));
+		$this->form->fields($datetime,$submit);
+		try {
+			$data = $this->form->execute();
+			
+			$this->content->update($data);
+			
+			System::Get_Instance()->redirect($this->url('showings'));
+		} catch(Form_Incomplete_Exception $e){
+		}
 
 	}
-
 	public function execute($parent){
 		$this->parent = $parent;
 		$arg = $this->parent->resource()->get_argument();
@@ -135,6 +170,10 @@ class Film_Feature_Admin extends Admin {
 				$this->parent->resource()->consume_argument();
 				$this->execute_showings();
 				return;
+			} elseif($arg == 'showing_edit') {
+				$this->parent->resource()->consume_argument();
+				$this->execute_showing_edit();
+				return;
 			} elseif($arg == 'edit'){
 				$this->parent->resource()->consume_argument();
 				$this->execute_edit();
@@ -145,16 +184,12 @@ class Film_Feature_Admin extends Admin {
 		}
 		$this->execute_list();
 	}
-
-	public function display_menu(){
-		$template = System::Get_Instance()->output()->start(array('film_feature','admin','menu'));
-		$template->url = $this->url;
-		$template->name = $this->name;
-		$template->slist_url = $this->slist_url;
-		$template->slist_name = $this->slist_name;
+	public function display_edit(){
+		$template = System::Get_Instance()->output()->start(array('film_feature','admin','edit'));
+		$template->title = $this->film_feature->get_content()->get_title();
+		$template->form = $this->form->display();
 		return $template;
 	}
-
 	public function display_list(){
 		$template = System::Get_Instance()->output()->start(array('film_feature','admin','list'));
 		$template->content = array();
@@ -171,7 +206,20 @@ class Film_Feature_Admin extends Admin {
 		}
 		return $template;
 	}
-
+	public function display_menu(){
+		$template = System::Get_Instance()->output()->start(array('film_feature','admin','menu'));
+		$template->url = $this->url;
+		$template->name = $this->name;
+		$template->slist_url = $this->slist_url;
+		$template->slist_name = $this->slist_name;
+		return $template;
+	}
+	public function display_showing_edit(){
+		$template = System::Get_Instance()->output()->start(array('film_feature','admin','showing_edit'));
+		$template->title = $this->film_feature_showing->get_feature()->get_content()->get_title();
+		$template->form = $this->form->display();
+		return $template;
+	}
 	public function display_showings(){
 		$template = System::Get_Instance()->output()->start(array('film_feature','admin','showings'));
 		$template->content = array();
@@ -189,23 +237,15 @@ class Film_Feature_Admin extends Admin {
 		}
 		return $template;
 	}
-	
-	public function display_edit(){
-		$template = System::Get_Instance()->output()->start(array('film','admin','edit'));
-		$template->title = $this->film_feature->get_content()->get_title();
-		$template->form = $this->form->display();
-		return $template;
-	}
-
-
 	public function display(){
 		if($this->mode == 'list'){
 			return $this->display_list();
-		} elseif($this->mode == 'showings'){
-			return $this->display_showings();
 		} elseif($this->mode == 'edit'){
 			return $this->display_edit();
-		} 
+		} elseif($this->mode == 'showings'){
+			return $this->display_showings();
+		} elseif($this->mode == 'showing_edit'){
+			return $this->display_showing_edit();
+		}
 	}
-
 }

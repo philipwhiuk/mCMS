@@ -73,9 +73,23 @@ class Film_Admin extends Admin {
 		$release_year->set_label($language->get($this->module, array('admin','edit','release_year')));
 		$release_year->set_value($this->film->get_release_year());
 		
-		$certificate = Form_Field::Create('certificate', array('textbox'));
+		$certificate = Form_Field::Create('certificate', array('select'));
 		$certificate->set_label($language->get($this->module, array('admin','edit','certificate')));
-		try { $certificate->set_value($this->film->get_certificate()->get_id()); } catch (Exception $e) {}
+		$certs = Film_Certificate::Get_All();
+		try {
+			$current_cert = $this->film->get_certificate()->get_id();
+		}
+		catch (Film_Certificate_Not_Found_Exception $e) {
+			$current_cert = 0;
+		}
+		foreach ($certs as $cert) {
+			if($cert->get_id() == $current_cert) {
+				$certificate->set_option($cert->get_id(),$cert->get_image()->description()->get_title(),true);
+			}
+			else {
+				$certificate->set_option($cert->get_id(),$cert->get_image()->description()->get_title(),true);
+			}
+		}
 		
 		$synopsis = Form_Field::Create('synopsis', array('richtext','textarea'));
 		$synopsis->set_label($language->get($this->module, array('admin','edit','synopsis')));
@@ -89,9 +103,23 @@ class Film_Admin extends Admin {
 		$imdb->set_label($language->get($this->module, array('admin','edit','imdb')));
 		$imdb->set_value($this->film->get_imdb());
 		
-		$language_field = Form_Field::Create('language', array('textbox'));
-		$language_field->set_label($language->get($this->module, array('admin','edit','language')));
-		$language_field->set_value($this->film->get_language()->get_id());
+		$f_language = Form_Field::Create('language', array('select'));
+		$f_language->set_label($language->get($this->module, array('admin','edit','language')));
+		$f_langs = Film_Language::Get_All();
+		try {
+			$current_cert = $this->film->get_language()->get_id();
+		}
+		catch (Film_Language_Not_Found_Exception $e) {
+			$current_cert = 0;
+		}
+		foreach ($f_langs as $f_lang) {
+			if($f_lang->get_id() == $current_cert) {
+				$f_language->set_option($f_lang->get_id(),$f_lang->get_content()->get_title(),true);
+			}
+			else {
+				$f_language->set_option($f_lang->get_id(),$f_lang->get_content()->get_title(),true);
+			}
+		}
 		
 		$english_title = Form_Field::Create('english_title', array('textbox'));
 		$english_title->set_label($language->get($this->module, array('admin','edit','english_title')));
@@ -100,7 +128,7 @@ class Film_Admin extends Admin {
 		$submit = Form_Field::Create('submit', array('submit'));
 		$submit->set_label($language->get($this->module, array('admin','edit','submit')));
 		
-		$this->form->fields($title,$description,$release_year,$certificate,$synopsis,$runtime,$imdb,$language_field,$english_title,$submit);
+		$this->form->fields($title,$description,$release_year,$certificate,$synopsis,$runtime,$imdb,$f_language,$english_title,$submit);
 		
 		try {
 			$data = $this->form->execute();
@@ -127,7 +155,6 @@ class Film_Admin extends Admin {
 				return;
 			}
 		} catch(Exception $e){
-			var_dump($e);
 		}
 		$this->execute_list();
 	}
