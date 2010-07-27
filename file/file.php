@@ -121,7 +121,12 @@ class File {
 	public function name(){
 		return $this->name;
 	}
-
+	public function time(){
+		return $this->time;
+	}
+	public function path(){
+		return $this->path;
+	}
 	public function location(){
 		return System::Get_Instance()->local_path($this->path);
 	}

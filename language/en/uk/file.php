@@ -16,6 +16,14 @@ return array(
 		'list' => array(
 			'title' => 'Files',
 			'edit' => 'Edit'
+		),
+		'edit' => array(
+			'name' => 'Name:',
+			'mime' => 'Mime:',
+			'size' => 'Size:',
+			'time' => 'Time:',
+			'path' => 'Path:',
+			'submit' => 'Update'
 		)
 	)
 );

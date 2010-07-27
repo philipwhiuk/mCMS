@@ -1,13 +1,13 @@
 <?php
 
-class Template_Theme_Default_HTML_Content_Admin_Edit extends Template {
+class Template_Theme_Default_HTML_File_Admin_Edit extends Template {
 	public function display(){
 ?>		
-<div class="content-admin-edit">
-	<div class="content-admin-edit-head">
+<div class="file-admin-edit">
+	<div class="file-admin-edit-head">
 		<h1><?php echo $this->title; ?></h1>
 	</div>
-	<div class="content-admin-edit-form">
+	<div class="file-admin-edit-form">
 		<?php echo $this->form->display(); ?> 
 	</div> 
 </div>
