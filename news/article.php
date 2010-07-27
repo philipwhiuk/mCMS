@@ -107,6 +107,9 @@ class News_Article {
 			array('=', array(array('col','category'), array('u', $category))),
 		));
 	}
+	public static function Get_By_ID($id){
+		return self::Get_One('=', array(array('col','id'), array('u', $id)));
+	}
 	
 	public static function Get_One($operator, $operand){
 		

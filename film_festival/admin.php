@@ -58,12 +58,12 @@ class Film_Festival_Admin extends Admin {
 	public function execute_edit(){
 		$this->mode = 'edit';
 		$arg = $this->parent->resource()->get_argument();
-		$this->content = Film_Festival::Get_By_ID($arg);
+		$this->film_festival = Film_Festival::Get_By_ID($arg);
 		$this->parent->resource()->consume_argument();
 
 		$language = Language::Retrieve();
 		
-		$this->form = new Form(array('film_festival',$this->film_festival->id(), 'admin'), $this->url('edit/' . $this->content->id()));
+		$this->form = new Form(array('film_festival',$this->film_festival->get_id(), 'admin'), $this->url('edit/' . $this->film_festival->get_id()));
 		
 		$title = Form_Field::Create('title', array('textbox'));
 		$title->set_label($language->get($this->module, array('admin','edit','title')));

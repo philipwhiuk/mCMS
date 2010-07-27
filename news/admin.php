@@ -19,6 +19,12 @@ class News_Admin extends Admin {
 			return $this->display_edit();
 		} 
 	}
+	public function display_edit(){
+		$template = System::Get_Instance()->output()->start(array('news','admin','edit'));
+		$template->title = $this->news_article->content()->get_title();
+		$template->form = $this->form->display();
+		return $template;
+	}
 	public function display_list(){
 		$template = System::Get_Instance()->output()->start(array('news','admin','list'));
 		$template->content = array();
@@ -59,9 +65,38 @@ class News_Admin extends Admin {
 				return;
 			}
 		} catch(Exception $e){
-
+			var_dump($e);
 		}
 		$this->execute_list();
+	}
+	public function execute_edit(){
+		$this->mode = 'edit';
+		$arg = $this->parent->resource()->get_argument();
+		$this->news_article = News_Article::Get_By_ID($arg);
+		$this->parent->resource()->consume_argument();
+		$language = Language::Retrieve();
+		$this->form = new Form(array('news',$this->news_article->id(), 'admin'), $this->url('edit/' . $this->news_article->id()));
+
+		$title = Form_Field::Create('title', array('textbox'));
+		$title->set_label($language->get($this->module, array('admin','edit','title')));
+		$title->set_value($this->news_article->content()->get_title());
+
+		$time = Form_Field::Create('time', array('textbox'));
+		$time->set_label($language->get($this->module, array('admin','edit','time')));
+		$time->set_value($this->news_article->time());
+		
+		$brief = Form_Field::Create('brief', array('richtext','textarea'));
+		$brief->set_label($language->get($this->module, array('admin','edit','brief')));
+		$brief->set_value($this->news_article->brief()->get_body());
+		
+		$content = Form_Field::Create('content', array('richtext','textarea'));
+		$content->set_label($language->get($this->module, array('admin','edit','content')));
+		$content->set_value($this->news_article->content()->get_body());
+
+		$submit = Form_Field::Create('submit', array('submit'));
+		$submit->set_label($language->get($this->module, array('admin','edit','submit')));
+
+		$this->form->fields($title,$time,$brief,$content,$submit);
 	}
 	public function execute_list(){
 		$this->mode = 'list';  
@@ -76,6 +111,7 @@ class News_Admin extends Admin {
 		if(!(($page-1)*20 <= count($news_articles))) {
 			$page = (int) (count($news_articles)/20)-1;
 		}
+		$this->news_article = array();
 		for($i = ($page-1)*20; $i < $page*20 && $i < count($news_articles); $i++) {
 			if($news_articles[$i] instanceof News_Article) { $this->news_article[] = $news_articles[$i]; }
 		}

@@ -44,6 +44,7 @@ class Film_Feature_Admin extends Admin {
 		if(!(($page-1)*20 <= count($film_features))) {
 			$page = (int) (count($film_features)/20)-1;
 		}
+		$this->film_feature = array();
 		for($i = ($page-1)*20; $i < $page*20; $i++) {
 			if($film_features[$i] instanceof Film_Feature) { $this->film_feature[] = $film_features[$i]; }
 		}
@@ -87,25 +88,29 @@ class Film_Feature_Admin extends Admin {
 	public function execute_edit(){
 		$this->mode = 'edit';
 		$arg = $this->parent->resource()->get_argument();
-		$this->content = Film::Get_By_ID($arg);
+		$this->film_feature = Film_Feature::Get_By_ID($arg);
 		$this->parent->resource()->consume_argument();
 
 		$language = Language::Retrieve();
 		
-		$this->form = new Form(array('film',$this->content->id(), 'admin'), $this->url('edit/' . $this->content->id()));
+		$this->form = new Form(array('film',$this->film_feature->get_id(), 'admin'), $this->url('edit/' . $this->film_feature->get_id()));
 		
 		$title = Form_Field::Create('title', array('textbox'));
 		$title->set_label($language->get($this->module, array('admin','edit','title')));
 		$title->set_value($this->film_feature->get_content()->get_title());
 		
-		$body = Form_Field::Create('body', array('richtext','textarea'));
-		$body->set_label($language->get($this->module, array('admin','edit','body')));
-		$body->set_value($this->film_feature->get_content()->get_body());
+		$description = Form_Field::Create('description', array('richtext','textarea'));
+		$description->set_label($language->get($this->module, array('admin','edit','description')));
+		$description->set_value($this->film_feature->get_content()->get_body());
+		
+		$category = Form_Field::Create('category', array('textbox'));
+		$category->set_label($language->get($this->module, array('admin','edit','category')));
+		$category->set_value($this->film_feature->get_category()->get_id());
 		
 		$submit = Form_Field::Create('submit', array('submit'));
 		$submit->set_label($language->get($this->module, array('admin','edit','submit')));
 		
-		$this->form->fields($title,$body, $submit);
+		$this->form->fields($title,$description,$category,$submit);
 		
 		try {
 			$data = $this->form->execute();
@@ -136,7 +141,7 @@ class Film_Feature_Admin extends Admin {
 				return;
 			}
 		} catch(Exception $e){
-
+			var_dump($e);
 		}
 		$this->execute_list();
 	}

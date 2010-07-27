@@ -23,6 +23,7 @@ class Film_Admin extends Admin {
 		}
 	}
 	public function execute_list(){
+		$this->film = array();
 		$this->mode = 'list';  
 		$arg = $this->parent->resource()->get_argument();
 		if(is_numeric($arg) && ((int) $arg) > 0){
@@ -53,30 +54,58 @@ class Film_Admin extends Admin {
 	public function execute_edit(){
 		$this->mode = 'edit';
 		$arg = $this->parent->resource()->get_argument();
-		$this->content = Film::Get_By_ID($arg);
+		$this->film = Film::Get_By_ID($arg);
 		$this->parent->resource()->consume_argument();
 
 		$language = Language::Retrieve();
 		
-		$this->form = new Form(array('film',$this->content->id(), 'admin'), $this->url('edit/' . $this->content->id()));
+		$this->form = new Form(array('film',$this->film->get_id(), 'admin'), $this->url('edit/' . $this->film->get_id()));
 		
 		$title = Form_Field::Create('title', array('textbox'));
 		$title->set_label($language->get($this->module, array('admin','edit','title')));
 		$title->set_value($this->film->get_description()->get_title());
 		
-		$body = Form_Field::Create('body', array('richtext','textarea'));
-		$body->set_label($language->get($this->module, array('admin','edit','body')));
-		$body->set_value($this->content->get_description()->get_body());
+		$description = Form_Field::Create('description', array('richtext','textarea'));
+		$description->set_label($language->get($this->module, array('admin','edit','description')));
+		$description->set_value($this->film->get_description()->get_body());
+		
+		$release_year = Form_Field::Create('release_year', array('textbox'));
+		$release_year->set_label($language->get($this->module, array('admin','edit','release_year')));
+		$release_year->set_value($this->film->get_release_year());
+		
+		$certificate = Form_Field::Create('certificate', array('textbox'));
+		$certificate->set_label($language->get($this->module, array('admin','edit','certificate')));
+		try { $certificate->set_value($this->film->get_certificate()->get_id()); } catch (Exception $e) {}
+		
+		$synopsis = Form_Field::Create('synopsis', array('richtext','textarea'));
+		$synopsis->set_label($language->get($this->module, array('admin','edit','synopsis')));
+		try { $synopsis->set_value($this->film->get_synopsis()->get_body()); } catch (Exception $e) {}
+		
+		$runtime = Form_Field::Create('runtime', array('textbox'));
+		$runtime->set_label($language->get($this->module, array('admin','edit','runtime')));
+		$runtime->set_value($this->film->get_runtime());
+		
+		$imdb = Form_Field::Create('imdb', array('textbox'));
+		$imdb->set_label($language->get($this->module, array('admin','edit','imdb')));
+		$imdb->set_value($this->film->get_imdb());
+		
+		$language_field = Form_Field::Create('language', array('textbox'));
+		$language_field->set_label($language->get($this->module, array('admin','edit','language')));
+		$language_field->set_value($this->film->get_language()->get_id());
+		
+		$english_title = Form_Field::Create('english_title', array('textbox'));
+		$english_title->set_label($language->get($this->module, array('admin','edit','english_title')));
+		$english_title->set_value($this->film->get_english_title());
 		
 		$submit = Form_Field::Create('submit', array('submit'));
 		$submit->set_label($language->get($this->module, array('admin','edit','submit')));
 		
-		$this->form->fields($title,$body, $submit);
+		$this->form->fields($title,$description,$release_year,$certificate,$synopsis,$runtime,$imdb,$language_field,$english_title,$submit);
 		
 		try {
 			$data = $this->form->execute();
 			
-			$this->content->update($data);
+			$this->film->update($data);
 			
 			System::Get_Instance()->redirect($this->url('list'));
 		} catch(Form_Incomplete_Exception $e){
@@ -98,7 +127,7 @@ class Film_Admin extends Admin {
 				return;
 			}
 		} catch(Exception $e){
-
+			var_dump($e);
 		}
 		$this->execute_list();
 	}

@@ -53,12 +53,12 @@ class Actor_Admin extends Admin {
 	public function execute_edit(){
 		$this->mode = 'edit';
 		$arg = $this->parent->resource()->get_argument();
-		$this->content = Actor::Get_By_ID($arg);
+		$this->actor = Actor::Get_By_ID($arg);
 		$this->parent->resource()->consume_argument();
 
 		$language = Language::Retrieve();
 		
-		$this->form = new Form(array('actor',$this->content->id(), 'admin'), $this->url('edit/' . $this->actor->id()));
+		$this->form = new Form(array('actor',$this->actor->id(), 'admin'), $this->url('edit/' . $this->actor->id()));
 		
 		$title = Form_Field::Create('title', array('textbox'));
 		$title->set_label($language->get($this->module, array('admin','edit','title')));
@@ -128,7 +128,7 @@ class Actor_Admin extends Admin {
 
 	public function display_edit(){
 		$template = System::Get_Instance()->output()->start(array('actor','admin','edit'));
-		$template->title = $this->film->get_description()->get_title();
+		$template->title = $this->actor->get_description()->get_title();
 		$template->form = $this->form->display();
 		return $template;
 	}

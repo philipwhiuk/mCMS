@@ -12,7 +12,8 @@ return array(
 		),
 		'edit' => array(
 			'title' => 'Title:',
-			'body' => 'Body:',
+			'description' => 'Description:',
+			'category' => 'Category:',
 			'submit' => 'Update' 
 		)
 	),

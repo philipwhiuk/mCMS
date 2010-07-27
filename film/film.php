@@ -69,6 +69,9 @@ class Film {
 	public function get_imdb() {
 		return $this->imdb;
 	}
+	public function get_english_title() {
+		return $this->english_title;
+	}
 	public function get_largeImage() {
 		if(!$this->largeImage instanceof Image){
 			$this->largeImage = Image::Get_By_ID($this->largeImage);

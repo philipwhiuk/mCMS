@@ -25,7 +25,9 @@ return array(
 		),
 		'edit' => array(
 			'title' => 'Title:',
-			'body' => 'Body:',
+			'content' => 'Content:',
+			'brief' => 'Brief:',
+			'time' => 'Time:',
 			'submit' => 'Update' 
 		)
 	)

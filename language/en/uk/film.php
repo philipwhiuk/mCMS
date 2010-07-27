@@ -11,7 +11,15 @@ return array(
 		),
 		'edit' => array(
 			'title' => 'Title:',
-			'body' => 'Body:',
+			'description' => 'Description:',
+			'release_year' => 'Release Year:',
+			'certificate' => 'Certificate:',
+			'synopsis' => 'Synopsis:',
+			'runtime' => 'Runtime:',
+			'imdb' => 'IMDB ID:',
+			'language' => 'Language:',
+			'english_title' => 'English Title:',
+			'description' => 'Description:',
 			'submit' => 'Update' 
 		)
 	),
