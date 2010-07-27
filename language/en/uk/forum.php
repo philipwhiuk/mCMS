@@ -50,15 +50,19 @@ return array(
 	),
 	'admin' => array(
 		'menu' => array(
-			'name' => 'Content'
+			'name' => 'Forum'
 		),
 		'list' => array(
 			'edit' => 'Edit',
-			'title' => 'Content List'
+			'title' => 'Forum List'
 		),
 		'edit' => array(
 			'title' => 'Title:',
-			'body' => 'Body:',
+			'description' => 'Description:',
+			'language_field' => 'Language:',
+			'parent' => 'Parent Forum:',
+			'depth' => 'Forum Depth:',
+			'has_topics' => 'Contains Topics:',
 			'submit' => 'Update' 
 		)
 	)

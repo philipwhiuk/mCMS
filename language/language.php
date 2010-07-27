@@ -11,7 +11,9 @@ class Language {
 	
 	public function __construct(){
 	}
-	
+	public function id() {
+		return $this->id;
+	}
 	public function get_translation($key){
 		$k =& $this->data;
 		foreach($key as $v){

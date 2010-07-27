@@ -81,4 +81,8 @@ class Topic {
 		}
 		return $return;
 	}
+	public static function Count_All(){
+		$query = System::Get_Instance()->database()->Count()->table('topic');
+		return $query->execute();
+	}
 }

@@ -112,7 +112,7 @@ class Forum {
 		return $return;
 	}
 	public static function Get_All() {
-		$query = System::Get_Instance()->database()->Select()->table('forum')->order(array('title' => true));
+		$query = System::Get_Instance()->database()->Select()->table('forum');
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
@@ -125,5 +125,9 @@ class Forum {
 			$return[] = $row;
 		}
 		return $return;
+	}
+	public static function Count_All(){
+		$query = System::Get_Instance()->database()->Count()->table('forum');
+		return $query->execute();
 	}
 }
