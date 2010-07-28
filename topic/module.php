@@ -7,6 +7,6 @@ class Topic_Module extends Module {
 		Module::Get('user');
 		$this->files('topic','topic_post','exception');
 		Module::Get('admin');
-		Admin::Register('topic','Topic_Admin','admin',$this, 0);
+		Admin::Register('topic','Topic_Admin','admin',$this);
 	}
 }

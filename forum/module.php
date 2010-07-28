@@ -8,6 +8,6 @@ class Forum_Module extends Module {
 		Module::Get('profile');
 		$this->files('forum','forum_topic','exception');
 		Module::Get('admin');
-		Admin::Register('forum','Forum_Admin','admin',$this, 0);
+		Admin::Register('forum','Forum_Admin','admin',$this);
 	}
 }

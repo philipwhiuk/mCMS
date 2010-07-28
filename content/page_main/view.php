@@ -12,6 +12,7 @@ class Content_Page_Main_View extends Content_Page_Main {
 	
 	public function display(){
 		$template = System::Get_Instance()->output()->start(array('content','page','view'));
+		$template->id = $this->content->id();
 		$template->title = $this->content->get_title();
 		$template->body = $this->content->get_body();
 		$template->modes = $this->modes;
