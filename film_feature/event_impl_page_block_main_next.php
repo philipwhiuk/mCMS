@@ -12,6 +12,14 @@ class Film_Feature_Event_Impl_Page_Block_Main_Next extends Event_Impl_Page_Block
 		foreach($this->films as $film) {			
 			$this->implViews[] = new $class($film);
 		}
+		if(count($this->films) > 0) {
+			try {
+				$this->smallImage = $this->films[0]->get_film()->get_smallImage();
+			}
+			catch (Exception $e) {
+				unset($this->smallImage);
+			}
+		}
 	}
 	function display() {
 		$this->system = System::Get_Instance();
@@ -19,6 +27,9 @@ class Film_Feature_Event_Impl_Page_Block_Main_Next extends Event_Impl_Page_Block
 		$template = $this->system->output()->start(array('film_feature', 'event','page','block','next'));
 		foreach($this->implViews as $implView) {
 			$template->films[] = $implView->display();
+		}
+		if(isset($this->smallImage)) {
+			$template->smallImage = $this->smallImage;
 		}
 		$date = 0;
 		$showingsCount = 0;
