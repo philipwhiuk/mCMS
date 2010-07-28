@@ -13,6 +13,14 @@ class Film_Feature_Film_Festival_Impl_Event_Impl_Page_Block_Main_Next extends Fi
 		foreach($this->films as $film) {			
 			$this->implViews[] = new $class($film);
 		}
+		if(count($this->films) > 0) {
+			try {
+				$this->smallImage = $this->films[0]->get_film()->get_smallImage();
+			}
+			catch (Exception $e) {
+				unset($this->smallImage);
+			}
+		}
 		$system = System::Get_Instance();
 		$this->url = $system->url(Resource::Get_By_Argument($ffmodule, $this->film_feature->get_id())->url());
 	}
@@ -20,6 +28,9 @@ class Film_Feature_Film_Festival_Impl_Event_Impl_Page_Block_Main_Next extends Fi
 		$this->system = System::Get_Instance();
 		$this->module = Module::Get('event');
 		$template = $this->system->output()->start(array('film_feature','film_festival','event','page','block','next'));
+		if(isset($this->smallImage)) {
+			$template->smallImage = $this->smallImage;
+		}
 		$showingsCount = 0;
 		$date = 0;
 		foreach($this->film_feature->get_showings() as $showing) {
