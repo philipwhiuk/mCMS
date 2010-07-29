@@ -36,6 +36,7 @@ abstract class Admin {
 		$panels = array();
 		$exceptions = array();
 		foreach($registered as $p => $pl){
+			ksort($pl);
 			foreach($pl as $i => $panel){
 				try {
 					$panel['module']->file($panel['file']);
