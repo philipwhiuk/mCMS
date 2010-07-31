@@ -72,12 +72,15 @@ abstract class Content_Page_Main extends Page_Main {
 			} catch(Exception $f){
 				$exceptions[] = $f;
 				// Content Invalid / Unavailable
-			}
-
-			
-			
+			}			
 		}
-		
+		try {
+			$parent->resource()->get_module()->file('page_main/list');
+			return new Content_Page_Main_List($parent);
+		}
+		catch(Exception $e) {
+			$exceptions[] = $e;
+		}
 		throw new Content_Page_Unavailable_Exception($exceptions);
 		
 	}
