@@ -3,7 +3,7 @@
 return array(
 	'admin' => array(
 		'menu' => array(
-			'name' => 'User'
+			'name' => 'Users'
 		),
 		'list' => array(
 			'edit' => 'Edit',
