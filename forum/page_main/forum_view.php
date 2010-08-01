@@ -68,7 +68,12 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 			unset($sub_forums[$i]);
 		}
 		/** Move the top level sub_forums to this object **/
-		$this->sub_forums = $sub_forums[0];
+		if(isset($sub_forums[0])) {
+			$this->sub_forums = $sub_forums[0];
+		}
+		else {
+			$this->sub_forums = array();
+		}
 		if($this->forum->has_topics()) {		
 			try {
 				$this->topics = Forum_Topic::Get_By_Forum($this->forum->id());
