@@ -61,7 +61,6 @@ class Template_Theme_Default_HTML_Menu_Page_Block_View extends Template {
 <?php
 		}
 	?> 
-		</li>
 	</ul>
 </div>
 <?php	
