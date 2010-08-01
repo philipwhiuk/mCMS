@@ -164,14 +164,11 @@ class Film {
 	}
 	
 	public function update($data){
-		try {
 		$query = System::Get_Instance()->database()->Update()->table('film')
 			->set(array(
 					'release_year' => array('s', $data['release_year']),
 					'runtime' => array('u', $data['runtime']),
 					'imdb' => array('u', $data['imdb']),
-					'largeImage' => array('u', $data['largeImage']),
-					'smallImage' => array('u', $data['smallImage']),
 					'certificate' => array('u', $data['certificate']),
 			))
 			->where('=', array(array('col','id'), array('u', $this->id)))->limit(1);
@@ -181,14 +178,7 @@ class Film {
 		$this->release_year = $data['release_year'];
 		$this->runtime = $data['runtime'];
 		$this->imdbID = $data['imdbID'];
-		$this->largeImage = $data['largeImage'];
-		$this->smallImage = $data['smallImage'];
 		$this->certificate = $data['certificate'];
-		}
-		catch(Exception $e) {
-			print_r($e);
-			die();	
-		}
 	}
 	
 	public static function Get_All(){
