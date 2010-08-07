@@ -7,6 +7,11 @@ class Team_Module extends Module {
 		Module::Get('member');
 		
 		$this->files('team','member','exception');
+		try {
+			Module::Get('admin');
+			Admin::Register('team','Team_Admin','admin',$this);
+		} catch(Exception $e){
+		}
 	}
 
 }
