@@ -317,11 +317,9 @@ class System {
 	}
 
 	public function dump($level, $exception, $debug){
-
 		if($debug && ($level > $this->debug_level || !$this->debugging)){
 			return;
 		}
-
 		switch($this->debug_type){
 			case System::dump_screen:
 				if(!headers_sent()){
@@ -361,7 +359,6 @@ class System {
 	}
 	
 	public function error($e, $fatal = false){
-		
 		if($fatal && !headers_sent()){ 
 			 header("HTTP/1.1 500 Internal Server Error");
 		}

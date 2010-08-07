@@ -5,7 +5,7 @@ System::Get_Instance()->files('database/mysqli/exception','database/mysqli/query
 class Database_MySQLi extends MySQLi implements IDatabase {
 	
 	public function __construct($config){
-		parent::__construct(
+		@parent::__construct(
 			(isset($config['host']) ? $config['host'] : ''), 
 			isset($config['username']) ? $config['username'] : '', 
 			isset($config['password']) ? $config['password'] : '', 
@@ -14,7 +14,7 @@ class Database_MySQLi extends MySQLi implements IDatabase {
 			isset($config['socket']) ? $config['socket'] : '');
 		
 		// PHP 5.2.9 and PHP 5.3.0 support means procedural style! :-(
-		
+	
 		if(mysqli_connect_error()){
 			throw new Database_MySQLi_Connect_Exception(mysqli_connect_error());
 		}

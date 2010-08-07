@@ -31,6 +31,10 @@ class System_Load_Exception extends System_Exception {
 		return "System Failed To Load: " . $this->data[0]->message();
 	}
 
+	public function dump(){
+		return "System Load Failiure. \r\n\t" . join("\n\t",explode("\n",$this->data[0]->dump()));
+	}
+
 }
 class System_Not_Installed_Exception extends System_Exception {
 
