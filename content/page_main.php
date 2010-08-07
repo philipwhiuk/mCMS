@@ -12,7 +12,7 @@ abstract class Content_Page_Main extends Page_Main {
 
 	protected function check($mode){
 		$id = $this->content->id();
-		$perms = Permission::Check(array('content',$id), array('view','edit','add','delete','list','admin'),'view');
+		$perms = Permission::Check(array('content',$id), array('view','edit','add','delete','list','admin'),$mode);
 		$system = System::Get_Instance();
 		$language = Language::Retrieve();
 		$module = Module::Get('content');
