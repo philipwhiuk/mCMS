@@ -76,6 +76,10 @@ class System_File_Not_Found_Exception extends System_Exception {
 
 class System_Resource_Exception extends System_Exception {
 	protected $level = System::dump_error;
+
+	public function message(){
+		return get_class($this) . ' ' . join('/', $this->data[0]);
+	}
 }
 
 class System_Load_Resource_Exception extends System_Exception {
