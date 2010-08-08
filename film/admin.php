@@ -87,7 +87,7 @@ class Film_Admin extends Admin {
 				$certificate->set_option($cert->get_id(),$cert->get_image()->description()->get_title(),true);
 			}
 			else {
-				$certificate->set_option($cert->get_id(),$cert->get_image()->description()->get_title(),true);
+				$certificate->set_option($cert->get_id(),$cert->get_image()->description()->get_title(),false);
 			}
 		}
 		
@@ -107,17 +107,17 @@ class Film_Admin extends Admin {
 		$f_language->set_label($language->get($this->module, array('admin','edit','language')));
 		$f_langs = Film_Language::Get_All();
 		try {
-			$current_cert = $this->film->get_language()->get_id();
+			$current_lang = $this->film->get_language()->get_id();
 		}
 		catch (Film_Language_Not_Found_Exception $e) {
-			$current_cert = 0;
+			$current_lang = 0;
 		}
 		foreach ($f_langs as $f_lang) {
-			if($f_lang->get_id() == $current_cert) {
+			if($f_lang->get_id() == $current_lang) {
 				$f_language->set_option($f_lang->get_id(),$f_lang->get_content()->get_title(),true);
 			}
 			else {
-				$f_language->set_option($f_lang->get_id(),$f_lang->get_content()->get_title(),true);
+				$f_language->set_option($f_lang->get_id(),$f_lang->get_content()->get_title(),false);
 			}
 		}
 		
