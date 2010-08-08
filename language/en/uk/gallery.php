@@ -3,6 +3,9 @@
 return array(
 	'admin' => array(
 		'menu' => array(
+			'items' => array(
+				'name' => 'Gallery Items'
+			),
 			'name' => 'Gallery'
 		),
 		'list' => array(

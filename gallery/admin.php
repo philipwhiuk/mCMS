@@ -10,6 +10,7 @@ class Gallery_Admin extends Admin {
 		$this->url = $this->url();
 		Permission::Check(array('gallery'), array('view','edit','add','delete','list','admin'),'admin');
 		$this->name = Language::Retrieve()->get($this->module, array('admin','menu','name'));
+		$this->nameb = Language::Retrieve()->get($this->module, array('admin','menu','items','name'));
 	}
 
 	public function execute_list(){
@@ -92,6 +93,7 @@ class Gallery_Admin extends Admin {
 		$template = System::Get_Instance()->output()->start(array('gallery','admin','menu'));
 		$template->url = $this->url;
 		$template->name = $this->name;
+		$template->nameb = $this->nameb;
 		return $template;
 	}
 
