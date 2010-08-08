@@ -78,7 +78,7 @@ class System_Resource_Exception extends System_Exception {
 	protected $level = System::dump_error;
 
 	public function message(){
-		return get_class($this) . ' ' . join('/', $this->data[0]);
+		return get_class($this) . ' ' . (is_array($this->data[0]) ? join('/', $this->data[0]) : $this->data[0]);
 	}
 }
 
