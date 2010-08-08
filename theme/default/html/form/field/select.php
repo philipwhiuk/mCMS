@@ -22,7 +22,7 @@ class Template_Theme_Default_HTML_Form_Field_Select extends Template {
 		return $return;
 	}
 	
-	public function display(){
+	public function display(){	
 ?> 
 	<div class="form-field form-field-select">
 <?php 
@@ -38,7 +38,7 @@ class Template_Theme_Default_HTML_Form_Field_Select extends Template {
 			<div class="form-field-input-inner">
 				<select id="<?php echo $this->id(); ?>" name="<?php echo $this->name(); ?>" class="form-field form-field-textbox">
 				<?php foreach($this->options as $option){ ?>
-					<option value="<?php echo $option['value']; ?>" <?php if($option['value'] == $this->value){ ?>selected="selected"<?php } ?>>
+					<option value="<?php echo $option['value']; ?>" <?php if(isset($this->value) && $option['value'] == $this->value){ ?>selected="selected"<?php } ?>>
 						<?php echo $option['label']; ?>
 					</option>
 				<?php } ?>
