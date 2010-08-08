@@ -36,7 +36,9 @@ class Form_Field_Select extends Form_Field {
 		$id[] = $this->name;
 		
 		$template->id = $id;
-		
+		if(isset($this->value)) {
+			$template->value = $this->value;
+		}
 		$template->label = isset($this->label) ? $this->label : null;
 		$template->options = $this->options;
 		
