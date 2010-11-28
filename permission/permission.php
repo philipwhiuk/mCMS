@@ -40,13 +40,13 @@ abstract class Permission {
 		
 		if(System::Get_Instance()->permission_group){
 			$groups = Group::Get_By_User($user);
-
 			foreach($groups as $group){
 				try {
-					$slocal = Permission_Group::Get_By_Check('',$group);
+					$slocal = Permission_Group::Get_By_Check('',$group)->get_permission();
 				} catch(Exception $e){
 					$slocal = CMS_PERM_NOT_SET;
 				}
+
 				if($super == CMS_PERM_NOT_SET && $slocal == CMS_PERM_ALLOWED){
 					$super = $slocal;
 				} elseif($slocal == CMS_PERM_DISALLOWED){
