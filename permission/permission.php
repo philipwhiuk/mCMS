@@ -40,6 +40,7 @@ abstract class Permission {
 		
 		if(System::Get_Instance()->permission_group){
 			$groups = Group::Get_By_User($user);
+
 			foreach($groups as $group){
 				try {
 					$slocal = Permission_Group::Get_By_Check('',$group);
@@ -78,7 +79,6 @@ abstract class Permission {
 		foreach($permissions as $mode){
 			$modes[] = CMS_PERM_NOT_SET;
 		}
-		
 		foreach($descriptors as $desc){
 			$dmodes = array();
 			foreach($permissions as $mode){
@@ -88,7 +88,7 @@ abstract class Permission {
 			if(System::Get_Instance()->permission_group){
 				foreach($groups as $group){
 					try {
-						$local = Permission_Group::Get_By_Check($desc, $group);
+						$local = Permission_Group::Get_By_Check($desc, $group)->get_permission();
 					} catch(Exception $e){
 						$local = CMS_PERM_NOT_SET;
 					}
@@ -138,7 +138,7 @@ abstract class Permission {
 			}
 			
 		}
-		
+
 		$result = array();
 		
 		foreach($permissions as $k => $mode){

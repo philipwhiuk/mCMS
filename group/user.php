@@ -20,6 +20,13 @@ class Group_User {
 		
 	}
 	
+	public function get_group(){
+		if(!($this->group instanceof Group)){
+			$this->group = Group::Get_By_ID($this->group);
+		}
+		return $this->group;
+	}
+
 	public static function Get_By_User($user){
 		if(!($user instanceof User)){
 			$user = User::Get_By_ID($user);
@@ -30,11 +37,11 @@ class Group_User {
 				array('col','user'),
 				array('u',$user->get_id())
 			));
-		}		
-		
+		}
+
 		$return = array();
-		foreach($user->groups as $gu){
-			$return[] = $user->groups->get_group();
+		foreach($user->groups as $k => $gu){
+			$return[] = $user->groups[$k]->get_group();
 		}
 		
 		return $return;

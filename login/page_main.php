@@ -45,7 +45,6 @@ class Login_Page_Main extends Page_Main {
 			}
 			
 			$login = Login::Get_By_Highest_Priority();
-			
 			return new Login_Page_Main($parent, $login);
 		} catch (Exception $e){
 			$exceptions[] = $e;
