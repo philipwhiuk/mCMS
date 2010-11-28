@@ -8,9 +8,12 @@ class Raven_Login extends Login {
 
 		parent::load($resource, $parent);
 		$parent = $this->parent();
-		$language = Language::Retrieve();
 
-		$module = Module::Get('raven');
+		$module = $resource->get_module();
+
+		$this->url = System::Get_Instance()->url(Resource::Get_By_Argument($module,$this->get_id() .'/raven')->url());
+	
+		print_r($resource->get_argument());
 
 		if($resource->get_argument() == 'raven'){
 			// Do Login
@@ -58,7 +61,7 @@ class Raven_Login extends Login {
 	public function display(){
 		$template = System::Get_Instance()->output()->start(array('raven','login'));
 
-		//$template->url = System::Get_Instance()->url();
+		$template->url = $this->url;
 
 		return $template;
 	}

@@ -37,7 +37,8 @@ class Login_Page_Main extends Page_Main {
 			try {
 				if(isset($arg) && is_numeric($arg)){
 					$id = (int) $arg;
-					$login = Login::Get_By_ID($id);
+					$login = Login::Get_By_ID_Active($id);
+					$parent->resource()->consume_argument();
 					return new Login_Page_Main($parent, $login);
 				}
 			} catch (Exception $e){
