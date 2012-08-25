@@ -15,7 +15,9 @@ class Template_Theme_Graphene_HTML_Admin_Page extends Template {
 				if($item['hasSubItems']) { ?>wp-has-submenu <?php }
 				if($item['selected'] && $item['hasSubItems']) {?>wp-has-current-submenu <?php }
 				if(!$item['selected'] && $item['hasSubItems']) {?>wp-not-current-submenu <?php }
-				?>menu-top menu-icon-<?php echo $item['module']; ?>"><?php $item['value']->display(); ?></li>
+				?>menu-top menu-icon-<?php echo $item['module']; ?>">				
+				<?php if($item['value'] != NULL) { $item['value']->display(); }  ?>
+			</li>
 		<?php 
 			$first = false;
 		} ?>
