@@ -3,7 +3,7 @@ class Forum_Admin extends Admin {
 	protected $mode;
 
 	public static function Load_Menu($panel, $parent) {
-		$parent->resource()->get_module()->file('admin/menu');
+		$panel['module']->file('admin/menu');
 		return new Forum_Admin_Menu($panel,$parent);
 	}
 	
@@ -13,18 +13,18 @@ class Forum_Admin extends Admin {
 			switch($arg) {
 				case 'edit':
 					$parent->resource()->consume_argument();
-					$parent->resource()->get_module()->file('admin/edit');					
+					$panel['module']->file('admin/edit');					
 					return new Forum_Admin_Edit($panel,$parent);
 					break;
 				case 'list':
 					$parent->resource()->consume_argument();
 				default:
-					$parent->resource()->get_module()->file('admin/list');				
+					$panel['module']->file('admin/list');				
 					return new Forum_Admin_List($panel,$parent);
 					break;
 			}
 		} catch(Exception $e){
-			$parent->resource()->get_module()->file('admin/list');		
+			$panel['module']->file('admin/list');		
 			return new Forum_Admin_List($panel,$parent);		
 		}
 	}

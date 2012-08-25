@@ -9,8 +9,8 @@ class Gallery_Admin extends Admin {
 	private $pages;
 
 	public static function Load_Menu($panel, $parent) {
-		$parent->resource()->get_module()->file('admin/menu');
-		return new Forum_Admin_Menu($panel,$parent);
+		$panel['module']->file('admin/menu');
+		return new Gallery_Admin_Menu($panel,$parent);
 	}
 	
 	public static function Load_Main($panel, $parent) {
@@ -19,18 +19,18 @@ class Gallery_Admin extends Admin {
 			switch($arg) {
 				case 'add':
 					$parent->resource()->consume_argument();
-					$parent->resource()->get_module()->file('admin/add');					
+					$panel['module']->file('admin/add');					
 					return new Gallery_Admin_Add($panel,$parent);
 					break;
 				case 'list':
 					$parent->resource()->consume_argument();
 				default:
-					$parent->resource()->get_module()->file('admin/list');				
+					$panel['module']->file('admin/list');				
 					return new Gallery_Admin_List($panel,$parent);
 					break;
 			}
 		} catch(Exception $e){
-			$parent->resource()->get_module()->file('admin/list');		
+			$panel['module']->file('admin/list');		
 			return new Gallery_Admin_List($panel,$parent);		
 		}
 	}
