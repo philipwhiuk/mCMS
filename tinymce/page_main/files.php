@@ -57,7 +57,7 @@ class TinyMCE_Page_Main_Files extends TinyMCE_Page_Main {
 	public function display(){
 		
 		$module = Module::Get('tinymce');
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		$language = Language::Retrieve();
 		
 		switch($this->type){

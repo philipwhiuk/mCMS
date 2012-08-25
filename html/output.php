@@ -20,15 +20,16 @@ class HTML_Output extends Output {
 	}
 	
 	public function render($data){
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		$template = $system->output()->start(array('main'));
+		$template->siteName = $system->site()->get("name");
 		$template->head = $this->head;
 		$template->main = $data;
-		$template->url = $system->get_remote_path();
+		$template->url = $system->remote_path();
 		$template->display();
 	}
 	
-	public function logic($path){		
+	public function logic($path){	
 		return Page::Load($path);
 	}
 	

@@ -1,6 +1,6 @@
 <?php
 
-class News_Exception extends CMS_Exception {}
+class News_Exception extends MCMS_Exception {}
 
 class News_Category_Exception extends News_Exception {}
 

@@ -19,7 +19,7 @@ class Feed {
 	}
 	
 	public function url($url){
-		return System::Get_Instance()->url($url);
+		return MCMS::Get_Instance()->url($url);
 	}
 
 	public function display(){

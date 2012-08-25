@@ -28,12 +28,12 @@ class Forum_Page_Main_Topic_View extends Forum_Page_Main {
 			}
 		}
 		
-		$this->forumurl = System::Get_Instance()->url(Resource::Get_By_Argument($module, $urlpart.$this->forum->id())->url());
+		$this->forumurl = MCMS::Get_Instance()->url(Resource::Get_By_Argument($module, $urlpart.$this->forum->id())->url());
 		$this->topicurl = $this->forumurl.'topic/'.$this->topic->topic()->get_id().'/';
 	}
 	public function display() {
 		try {
-			$system = System::Get_Instance();
+			$system = MCMS::Get_Instance();
 			$usermodule = Module::Get('user');
 			$forummodule = Module::Get('forum');
 			$template = $system->output()->start(array('forum','page','topic','view'));
@@ -41,7 +41,7 @@ class Forum_Page_Main_Topic_View extends Forum_Page_Main {
 				$pa = array();
 				$pa['title'] = $parent->content()->get_title();
 				if(!isset($parenturl)) {
-					$parenturl = System::Get_Instance()->url(Resource::Get_By_Argument($forummodule,$parent->id())->url());
+					$parenturl = MCMS::Get_Instance()->url(Resource::Get_By_Argument($forummodule,$parent->id())->url());
 					$pa['url'] = $parenturl;
 				}
 				else {

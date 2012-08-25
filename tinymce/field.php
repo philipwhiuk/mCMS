@@ -32,7 +32,7 @@ class TinyMCE_Field extends Form_Field {
 	
 	public function display($parent){	
 	
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		
 		$template = $system->output()->start(array('tinymce','field'), array('filebrowser' => $system->url($this->filemanager)));
 		

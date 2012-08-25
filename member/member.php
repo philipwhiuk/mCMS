@@ -14,7 +14,7 @@ class Member {
 	}
 
 	public static function Get_One($operator, $operand){
-		$query = System::Get_Instance()->database()->Select()->table('member')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('member')->where($operator, $operand)->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
 			throw new Member_Not_Found_Exception($operator, $operand);

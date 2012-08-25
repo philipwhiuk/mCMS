@@ -1,6 +1,8 @@
 <?php
 
 class Template_Theme_Default_HTML_News_Admin_List extends Template {
+	public $news_articles = array();
+	
 	public function display(){
 ?>		
 <div class="admin-list news-admin-list">
@@ -18,7 +20,7 @@ class Template_Theme_Default_HTML_News_Admin_List extends Template {
 	<table cellspacing=0 cellpadding=0> 
 <?php 
 		$a = 0;
-		foreach($this->news_article as $news_article){
+		foreach($this->news_articles as $news_article){
 ?>
 		<tr <?php if($a == 0){ ?> class="even" <?php } else { ?> class="odd" <?php } ?>>
 			<td>

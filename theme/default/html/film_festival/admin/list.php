@@ -1,6 +1,8 @@
 <?php
 
 class Template_Theme_Default_HTML_Film_Festival_Admin_List extends Template {
+	public $film_festivals = array();
+
 	public function display(){
 ?>		
 <div class="admin-list film_festival-admin-list">
@@ -18,7 +20,7 @@ class Template_Theme_Default_HTML_Film_Festival_Admin_List extends Template {
 	<table cellspacing=0 cellpadding=0> 
 <?php 
 		$a = 0;
-		foreach($this->film_festival as $film_festival){
+		foreach($this->film_festivals as $film_festival){
 ?>
 		<tr <?php if($a == 0){ ?> class="even" <?php } else { ?> class="odd" <?php } ?>>
 			<td>

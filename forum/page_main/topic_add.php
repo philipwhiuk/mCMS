@@ -13,7 +13,7 @@ class Forum_Page_Main_Topic_Add extends Forum_Page_Main {
 		foreach($this->parents as $parent) {
 			$urlpart .= $parent->id().'/';	
 		}		
-		$this->forumurl = System::Get_Instance()->url(Resource::Get_By_Argument($module, $urlpart.$this->forum->id())->url());
+		$this->forumurl = MCMS::Get_Instance()->url(Resource::Get_By_Argument($module, $urlpart.$this->forum->id())->url());
 		
 		$this->form = new Form(array('forum', 'topic_add'), $this->parent->url($this->parent->resource()->url()));
 		$this->title = $language->get($module, array('topic','add','title_main'));
@@ -39,14 +39,14 @@ class Forum_Page_Main_Topic_Add extends Forum_Page_Main {
 		
 	}
 	function display() {
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		$forummodule = Module::Get('forum');
 		$template = $system->output()->start(array('forum','page','topic','add'));
 		foreach($this->parents as $parent) {
 			$pa = array();
 			$pa['title'] = $parent->content()->get_title();
 			if(!isset($parenturl)) {
-				$parenturl = System::Get_Instance()->url(Resource::Get_By_Argument($forummodule,$parent->id())->url());
+				$parenturl = MCMS::Get_Instance()->url(Resource::Get_By_Argument($forummodule,$parent->id())->url());
 				$pa['url'] = $parenturl;
 			}
 			else {

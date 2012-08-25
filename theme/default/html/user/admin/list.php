@@ -21,7 +21,10 @@ class Template_Theme_Default_HTML_User_Admin_List extends Template {
 ?>
 		<tr <?php if($a == 0){ ?> class="even" <?php } else { ?> class="odd" <?php } ?>>
 			<td>
-				<?php echo $user['title']; ?> 
+				<?php echo $user['id']; ?> 
+			</td>
+			<td>
+				<?php echo $user['username']; ?> 
 			</td>
 			<td class="link">
 				<a href="<?php echo $user['edit']; ?>">

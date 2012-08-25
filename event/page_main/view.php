@@ -18,18 +18,13 @@ class Event_Page_Main_View extends Event_Page_Main {
 	}
 	
 	public function display(){
-	try{
-		$template = System::Get_Instance()->output()->start(array('event','page','view'));
+		$template = MCMS::Get_Instance()->output()->start(array('event','page','view'));
 		$template->title = $this->event->get_content()->get_title();
 		$template->description = $this->event->get_content()->get_body();
 		$template->objects = array();
 		foreach($this->implViews as $implView) {
 			$template->objects[] = $implView->display();
 		}
-		return $template;
-	}
-	catch(Exception $e) {
-		var_dump($e);
-	}
+		return $template;	
 	}
 }

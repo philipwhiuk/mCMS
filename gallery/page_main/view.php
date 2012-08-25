@@ -53,6 +53,8 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 
 
 		$continue = true;
+		//g = gallery, oc = object_count, c = children, o = objects on page X
+		
 		while($continue){
 			$g->selected = true;
 			$c = $g->children();
@@ -61,7 +63,10 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 			$g->items = array();
 			$o = $g->objects($page * 10, 10);
 
-			foreach($c as $child){ $child->content(); }
+			foreach($c as $child){ 
+				$child->content(); 
+			}
+			//If there's no gallery selected
 			if($gp !== -1 && isset($this->selected['gallery'][$gp]) && isset($c[$this->selected['gallery'][$gp]])){
 				// Select Gallery!
 				$g = $c[$this->selected['gallery'][$gp]];
@@ -77,7 +82,9 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 				$continue = false;
 				reset($o);
 				$oo = current($o);
-				$oo->selected = true;
+				if($oo) {
+					$oo->selected = true;
+				}
 			}
 
 			if(!$continue && $oc > 0){
@@ -142,7 +149,7 @@ class Gallery_Page_Main_View extends Gallery_Page_Main {
 	}
 
 	public function display(){
-		$this->system = System::Get_Instance();
+		$this->system = MCMS::Get_Instance();
 		$this->module = Module::Get('gallery');
 		$template = $this->system->output()->start(array('gallery','page','view'));
 		

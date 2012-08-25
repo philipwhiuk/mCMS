@@ -1,32 +1,15 @@
 <?php
 
-// Load exceptions
-
-System::Get_Instance()->files('site/exception');
+MCMS::Get_Instance()->files('site/exception');
 
 class Site {
-	
-	private $id;
-	private $name;
-	
-	private function __construct(){
-		
-	}
-	
-	public function get($key){
-		if(isset($this->$key)){
-			return $this->$key;
-		}
-		throw new Site_Key_Not_Found_Exception($key);
-	}
-	
 	public static function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('site')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->storage()->Get()->From('site')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		
@@ -44,14 +27,26 @@ class Site {
 		
 		
 		try {
-			$config = System::Get_Instance()->config()->get('site');
+			$config = MCMS::Get_Instance()->config()->get('site');
 		} catch(Exception $e){
 			throw new Site_Configuration_Exception($e);
 		}
 		
 		return Site::Get_By_ID($config);
 		
+	}	
+	private $id;
+	private $name;
+	
+	private function __construct(){
+		
+	}
+	public function get($key){
+		if(isset($this->$key)){
+			return $this->$key;
+		}
+		throw new Site_Key_Not_Found_Exception($key);
 	}
 	
-	
+
 }

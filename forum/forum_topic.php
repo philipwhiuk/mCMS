@@ -29,7 +29,7 @@ class Forum_Topic {
 	}
 	public static function Get_By_Forum($forum,$limit = null, $skip = null) {
 		try {
-			$query = System::Get_Instance()->database()->Select()->table('forum_topic')->where('=', array(array('col','forum'), array('u', $forum)));
+			$query = MCMS::Get_Instance()->Storage()->Get()->From('forum_topic')->where('=', array(array('col','forum'), array('u', $forum)));
 			if(isset($limit)){
 				$query->limit($limit);
 				if(isset($skip)){
@@ -54,7 +54,7 @@ class Forum_Topic {
 			array('=',array(array('col','forum'), array('u', $forum))),
 			array('=',array(array('col','topic'), array('u', $topic)))
 		);
-		$query = System::Get_Instance()->database()->Select()->table('forum_topic')->where($operand,$operator)->limit(1);
+		$query = MCMS::Get_Instance()->database()->Select()->table('forum_topic')->where($operand,$operator)->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
 			throw new Forum_Topic_Not_Found_Exception($operator, $operand);
@@ -62,7 +62,7 @@ class Forum_Topic {
 		return $result->fetch_object('Forum_Topic');
 	}
 	public static function Get_By_Topic($topic,$limit = null, $skip = null) {
-		$query = System::Get_Instance()->database()->Select()->table('forum_topic')->where('=', array(array('col','topic'), array('u', $topic)));
+		$query = MCMS::Get_Instance()->database()->Select()->table('forum_topic')->where('=', array(array('col','topic'), array('u', $topic)));
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
@@ -77,7 +77,7 @@ class Forum_Topic {
 		return $return;
 	}
 	public static function Get_All($limit = null, $skip = null){
-		$query = System::Get_Instance()->database()->Select()->table('forum_topic');
+		$query = MCMS::Get_Instance()->database()->Select()->table('forum_topic');
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
@@ -91,8 +91,8 @@ class Forum_Topic {
 		}
 		return $return;
 	}
-	public function Count_By_Forum($forum) {
-		$query = System::Get_Instance()->database()->Count()->table('forum_topic')->where('=', array(array('col','forum'), array('u', $forum)));
+	public static function Count_By_Forum($forum) {
+		$query = MCMS::Get_Instance()->Storage()->Count()->From('forum_topic')->where('=', array(array('col','forum'), array('u', $forum)));
 		$result = $query->execute();
 		return $result;
 	}

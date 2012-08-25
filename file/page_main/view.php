@@ -15,7 +15,7 @@ class File_Page_Main_View extends File_Page_Main {
 		$language = Language::Retrieve();
 		$module = Module::Get('file');
 		
-		$template = System::Get_Instance()->output()->start(array('file','page','view'));
+		$template = MCMS::Get_Instance()->output()->start(array('file','page','view'));
 		$template->name = $this->file->name();
 		$template->path = $this->file->url();
 		// Interperet: $template->time = $this->file->time();

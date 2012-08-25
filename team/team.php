@@ -52,9 +52,9 @@ class Team {
 			$parent = $parent->id();
 		}
 		
-		$query = System::Get_Instance()	->database()
-						->Select()
-						->table('team')
+		$query = MCMS::Get_Instance()	->storage()
+						->Get()
+						->From('team')
 						->where('=', array(array('col','parent'), array('u', $parent)))
 						->order(array('sort' => true));
 		
@@ -67,9 +67,28 @@ class Team {
 		
 		return $return;
 	}
+	public static function Get_All($limit = null, $skip = null){
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('team')->order(array('id' => true));
 
+		if(isset($limit)){
+			$query->limit($limit);
+			if(isset($skip)){
+				$query->offset($skip);
+			}
+		}
+		
+		$result = $query->execute();
+		
+		$return = array();
+		
+		while($row = $result->fetch_object('Team')){
+			$return[] = $row;
+		}
+		
+		return $return;
+	}
 	public static function Get_One($operator, $operand){
-		$query = System::Get_Instance()->database()->Select()->table('team')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->storage()->Get()->From('team')->where($operator, $operand)->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
 			throw new Team_Not_Found_Exception($operator, $operand);
@@ -90,5 +109,10 @@ class Team {
 			array('=', array(array('col','parent'), array('u', $parent))),
 		));
 	}
+	public static function Count_All(){
+		
+		$query = MCMS::Get_Instance()->Storage()->Count()->From('team');
+		return $query->execute();
 
+	}
 }

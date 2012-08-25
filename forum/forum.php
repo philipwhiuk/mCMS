@@ -5,8 +5,10 @@ class Forum {
 	private $language;
 	private $parent;
 	private $depth;
-	public $topic_count;
-	public $post_count;
+	private $sort;	
+	private $lastposter;
+	private $topic_count;
+	private $post_count;
 	
 	public $children = array();
 
@@ -45,14 +47,30 @@ class Forum {
 		}
 		return $this->parent;
 	}
+	public function lastposter() {
+		if(!$this->lastposter instanceof User) {
+			$this->lastposter = User::Get_By_ID($this->lastposter);
+		} 
+		return $this->lastposter;
+	}
+	
 	public function depth() {
 		return $this->depth;	
+	}
+	public function sort() {
+		return $this->sort;	
+	}
+	public function topic_count() {
+		return $this->topic_count;	
+	}
+	public function post_count() {
+		return $this->post_count;	
 	}
 	public static function Get_By_ID($id) {
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
 	public static function Get_One($operator, $operand){
-		$query = System::Get_Instance()->database()->Select()->table('forum')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('forum')->where($operator, $operand)->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
 			throw new Forum_Not_Found_Exception($operator, $operand);
@@ -62,7 +80,7 @@ class Forum {
 	public static function Get_By_ID_Parent($id,$parent) {
 		$operator = 'AND';
 		$operand = array(array('=', array(array('col','id'), array('u', $id))),array('=', array(array('col','parent'), array('u', $parent))));
-		$query = System::Get_Instance()->database()->Select()->table('forum')->where($operator,$operand)->limit(1);
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('forum')->where($operator,$operand)->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
 			throw new Forum_Not_Found_Exception($operator, $operand);
@@ -76,7 +94,7 @@ class Forum {
 			return array();
 		}
 		foreach($parents as $parent) { $in[] = $parent; }
-		$query = System::Get_Instance()->database()->Select()->table('forum')->where(
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('forum')->where(
 			'in', 
 			array(
 				  array('col','parent'), 
@@ -92,12 +110,12 @@ class Forum {
 		$result = $query->execute();
 		$return = array();
 		while($row = $result->fetch_object('Forum')){
-			$return[] = $row;
+			$return[$row->id()] = $row;
 		}
 		return $return;
 	}
 	public static function Get_By_Parent($parent) {
-		$query = System::Get_Instance()->database()->Select()->table('forum')->where('=', array(array('col','parent'), array('u', $parent)));
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('forum')->where('=', array(array('col','parent'), array('u', $parent)));
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
@@ -112,7 +130,7 @@ class Forum {
 		return $return;
 	}
 	public static function Get_All() {
-		$query = System::Get_Instance()->database()->Select()->table('forum');
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('forum');
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
@@ -127,7 +145,7 @@ class Forum {
 		return $return;
 	}
 	public static function Count_All(){
-		$query = System::Get_Instance()->database()->Count()->table('forum');
+		$query = MCMS::Get_Instance()->Storage()->Count()->From('forum');
 		return $query->execute();
 	}
 }

@@ -1,10 +1,47 @@
 <?php
 class Forum_Admin extends Admin {
 	protected $mode;
+
+	public static function Load_Menu($panel, $parent) {
+		$parent->resource()->get_module()->file('admin/menu');
+		return new Forum_Admin_Menu($panel,$parent);
+	}
+	
+	public static function Load_Main($panel, $parent) {
+		$arg = $parent->resource()->get_argument();
+		try {
+			switch($arg) {
+				case 'edit':
+					$parent->resource()->consume_argument();
+					$parent->resource()->get_module()->file('admin/edit');					
+					return new Forum_Admin_Edit($panel,$parent);
+					break;
+				case 'list':
+					$parent->resource()->consume_argument();
+				default:
+					$parent->resource()->get_module()->file('admin/list');				
+					return new Forum_Admin_List($panel,$parent);
+					break;
+			}
+		} catch(Exception $e){
+			$parent->resource()->get_module()->file('admin/list');		
+			return new Forum_Admin_List($panel,$parent);		
+		}
+	}
+	
 	public function __construct($a,$b){
 		parent::__construct($a,$b);
 		$this->url = $this->url();
-		$this->name = Language::Retrieve()->get($this->module, array('admin','menu','name'));
+		Permission::Check(array('film_festival'), array('view','edit','add','delete','list','admin'),'admin');
+		$this->menu_title = Language::Retrieve()->get($this->module, array('admin','menu','title'));
+		$this->menu_items = array(
+			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Add')),
+				  'url' => $this->url().'add/'),
+			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Manage')),
+				  'url' => $this->url().'list/'),
+			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Permissions')),
+				  'url' => $this->url().'permissions/'),			  
+		);
 	}
 	public function display() {
 		if($this->mode == 'list'){
@@ -16,13 +53,13 @@ class Forum_Admin extends Admin {
 		} 
 	}
 	public function display_edit(){
-		$template = System::Get_Instance()->output()->start(array('news','admin','edit'));
+		$template = MCMS::Get_Instance()->output()->start(array('news','admin','edit'));
 		$template->title = $this->forum->content()->get_title();
 		$template->form = $this->form->display();
 		return $template;
 	}
 	public function display_list(){
-		$template = System::Get_Instance()->output()->start(array('forum','admin','list'));
+		$template = MCMS::Get_Instance()->output()->start(array('forum','admin','list'));
 		$template->forum = array();
 		$template->edit = $this->edit;
 		$template->title = $this->title;
@@ -37,10 +74,12 @@ class Forum_Admin extends Admin {
 		}
 		return $template;
 	}
-	public function display_menu() {
-		$template = System::Get_Instance()->output()->start(array('forum','admin','menu'));
+	public function display_menu($selected) {
+		$template = MCMS::Get_Instance()->output()->start(array('forum','admin','menu'));
+		$template->title = $this->menu_title;
+		$template->items = $this->menu_items;
 		$template->url = $this->url;
-		$template->name = $this->name;
+		$template->selected = $selected;
 		return $template;
 	}
 	public function execute($parent){

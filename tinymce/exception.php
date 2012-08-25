@@ -1,6 +1,6 @@
 <?php
 
-class TinyMCE_Exception extends CMS_Exception {}
+class TinyMCE_Exception extends MCMS_Exception {}
 
 class TinyMCE_Page_Main_Exception extends TinyMCE_Exception {}
 

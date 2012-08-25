@@ -59,7 +59,7 @@ class Topic {
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
 	public static function Get_One($operator, $operand){
-		$query = System::Get_Instance()->database()->Select()->table('topic')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('topic')->where($operator, $operand)->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
 			throw new Topic_Not_Found_Exception($operator, $operand);
@@ -67,7 +67,7 @@ class Topic {
 		return $result->fetch_object('Topic');
 	}
 	public static function Get_All() {
-		$query = System::Get_Instance()->database()->Select()->table('topic')->order(array('lastdate' => true));
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('topic')->order(array('lastdate' => true));
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
@@ -82,7 +82,7 @@ class Topic {
 		return $return;
 	}
 	public static function Count_All(){
-		$query = System::Get_Instance()->database()->Count()->table('topic');
+		$query = MCMS::Get_Instance()->Storage()->Count()->From('topic');
 		return $query->execute();
 	}
 }

@@ -1,6 +1,7 @@
 <?php
 
 class Template_Theme_Default_HTML_Film_Feature_Admin_List extends Template {
+	public $film_features = array();
 	public function display(){
 ?>		
 <div class="admin-list film_feature-admin-list">
@@ -18,7 +19,7 @@ class Template_Theme_Default_HTML_Film_Feature_Admin_List extends Template {
 	<table cellspacing=0 cellpadding=0> 
 <?php 
 		$a = 0;
-		foreach($this->film_feature as $film_feature){
+		foreach($this->film_features as $film_feature){
 ?>
 		<tr <?php if($a == 0){ ?> class="even" <?php } else { ?> class="odd" <?php } ?>>
 			<td>

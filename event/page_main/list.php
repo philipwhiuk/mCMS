@@ -6,11 +6,11 @@ class Event_Page_Main_List extends Event_Page_Main {
 		Permission::Check(array('event'), array('view','edit','add','delete','list'),'list');
 	}
 	public function display() {
-		$template = System::Get_Instance()->output()->start(array('event','page','list'));
+		$template = MCMS::Get_Instance()->output()->start(array('event','page','list'));
 		
 		$language = Language::Retrieve();
 		
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		
 		$module = Module::Get('event');
 		

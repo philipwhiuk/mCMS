@@ -1,7 +1,8 @@
 <?php
 
 class Template_Theme_Default_HTML_Film_Feature_Page_List extends Template {
-	
+	public $title;
+	public $items = array();
 	public $features = array();
 	
 	public function display(){

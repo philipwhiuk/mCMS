@@ -10,7 +10,7 @@ abstract class Feed_Main {
 
 	abstract function display();
 
-	abstract public static function Load($parent);
+	//abstract public static function Load($parent);
 
 }
 

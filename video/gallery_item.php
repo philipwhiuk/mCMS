@@ -19,7 +19,7 @@ class Video_Gallery_Item extends Gallery_Item {
 	}
 
 	public function previous(){
-		$query = System::Get_Instance()->database()->Select()->table('gallery_video')->where('AND', array(
+		$query = MCMS::Get_Instance()->database()->Select()->table('gallery_video')->where('AND', array(
 					array('=', array(array('col','gallery'), array('u', $this->gallery))),
 					array('<', array(array('col','sort'), array('u', $this->sort)))
 					))->order(array('sort' => false))->limit(1);
@@ -32,7 +32,7 @@ class Video_Gallery_Item extends Gallery_Item {
 	}   
 
 	public function next(){
-		$query = System::Get_Instance()->database()->Select()->table('gallery_video')->where('AND', array(
+		$query = MCMS::Get_Instance()->database()->Select()->table('gallery_video')->where('AND', array(
 					array('=', array(array('col','gallery'), array('u', $this->gallery))),
 					array('>', array(array('col','sort'), array('u', $this->sort)))
 					))->order(array('sort' => true))->limit(1);
@@ -49,7 +49,7 @@ class Video_Gallery_Item extends Gallery_Item {
 			$gallery = $gallery->id();
 		}
 
-		$query = System::Get_Instance() ->database()
+		$query = MCMS::Get_Instance() ->database()
 			->Count()
 			->table('gallery_video')
 			->where('=', array(array('col','gallery'), array('u', $gallery)));
@@ -71,7 +71,7 @@ class Video_Gallery_Item extends Gallery_Item {
 
 	public static function Get_One($operator, $operand){
 
-		$query = System::Get_Instance()->database()->Select()->table('gallery_video')->where($operator, $operand)->limit(1);	
+		$query = MCMS::Get_Instance()->database()->Select()->table('gallery_video')->where($operator, $operand)->limit(1);	
 		$result = $query->execute();
 
 		if($result->num_rows == 0){
@@ -89,7 +89,7 @@ class Video_Gallery_Item extends Gallery_Item {
 			$gallery = $gallery->id();
 		}
 
-		$query = System::Get_Instance()	->database()
+		$query = MCMS::Get_Instance()	->database()
 			->Select()
 			->table('gallery_video')
 			->where('=', array(array('col','gallery'), array('u', $gallery)))

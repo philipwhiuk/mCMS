@@ -4,12 +4,48 @@ class Event_Admin extends Admin {
 
 	protected $parent;
 	protected $mode;
-
+	private $pages;
+	private $events = array();
+	
+	public static function Load_Menu($panel, $parent) {
+		$parent->resource()->get_module()->file('admin/menu');
+		return new Event_Admin_Menu($panel,$parent);
+	}
+	
+	public static function Load_Main($panel, $parent) {
+		$arg = $parent->resource()->get_argument();
+		try {
+			switch($arg) {
+				case 'edit':
+					$parent->resource()->consume_argument();
+					$parent->resource()->get_module()->file('admin/edit');					
+					return new Event_Admin_Edit($panel,$parent);
+					break;
+				case 'list':
+					$parent->resource()->consume_argument();
+				default:
+					$parent->resource()->get_module()->file('admin/list');				
+					return new Event_Admin_List($panel,$parent);
+					break;
+			}
+		} catch(Exception $e){
+			$parent->resource()->get_module()->file('admin/list');		
+			return new Event_Admin_List($panel,$parent);		
+		}
+	}
 	public function __construct($a,$b){
 		parent::__construct($a,$b);
 		$this->url = $this->url();
 		Permission::Check(array('event'), array('view','edit','add','delete','list','admin'),'admin');
-		$this->name = Language::Retrieve()->get($this->module, array('admin','menu','name'));
+		$this->title = Language::Retrieve()->get($this->module, array('admin','menu','title'));
+		$this->menu_items = array(
+			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Add')),
+				  'url' => $this->url().'add/'),
+			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Manage')),
+				  'url' => $this->url().'list/'),
+			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Permissions')),
+				  'url' => $this->url().'permissions/'),			  
+		);			
 	}
 	public static function event_sort($a,$b) {
 		if(
@@ -48,7 +84,7 @@ class Event_Admin extends Admin {
 		}
 		$language = Language::Retrieve();
 		$this->edit = $language->get($this->module, array('admin','list','edit'));
-		$this->title = $language->get($this->module, array('admin','list','title'));
+		$this->page_title = $language->get($this->module, array('admin','list','title'));
 	}
 
 	public function execute_edit(){
@@ -87,7 +123,7 @@ class Event_Admin extends Admin {
 			
 			$this->event->update($data);
 			
-			System::Get_Instance()->redirect($this->url('list'));
+			MCMS::Get_Instance()->redirect($this->url('list'));
 		} catch(Form_Incomplete_Exception $e){
 		}
 
@@ -112,23 +148,25 @@ class Event_Admin extends Admin {
 		$this->execute_list();
 	}
 
-	public function display_menu(){
-		$template = System::Get_Instance()->output()->start(array('event','admin','menu'));
+	public function display_menu($selected){
+		$template = MCMS::Get_Instance()->output()->start(array('event','admin','menu'));
 		$template->url = $this->url;
-		$template->name = $this->name;
+		$template->title = $this->title;
+		$template->selected = $selected;
+		$template->items = $this->menu_items;
 		return $template;
 	}
 
 	public function display_list(){
-		$template = System::Get_Instance()->output()->start(array('event','admin','list'));
+		$template = MCMS::Get_Instance()->output()->start(array('event','admin','list'));
 		$template->content = array();
 		$template->edit = $this->edit;
-		$template->title = $this->title;
+		$template->title = $this->page_title;
 		$template->pages = $this->pages;
 		$template->page_count = $this->page_count;
 		$template->page = $this->page;
-		foreach($this->event as $event){
-			$template->event[] = array(
+		foreach($this->events as $event){
+			$template->events[] = array(
 				'title' => $event->get_content()->get_title(),
 				'edit' => $this->url('edit/' . $event->get_id())
 			);
@@ -137,7 +175,7 @@ class Event_Admin extends Admin {
 	}
 
 	public function display_edit(){
-		$template = System::Get_Instance()->output()->start(array('event','admin','edit'));
+		$template = MCMS::Get_Instance()->output()->start(array('event','admin','edit'));
 		$template->title = $this->event->get_content()->get_title();
 		$template->form = $this->form->display();
 		return $template;

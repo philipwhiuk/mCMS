@@ -43,7 +43,7 @@ class News_Feed_Main extends Feed_Main {
 	}
 
 	public function display(){
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		$module = Module::Get('news');
 		$template = $system->output()->start(array('news','feed'));
 		$url = join('/', $this->category->parents()) . '/';

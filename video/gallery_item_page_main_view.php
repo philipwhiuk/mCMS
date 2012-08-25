@@ -15,7 +15,7 @@ class Video_Gallery_Item_Page_Main_View extends Gallery_Item_Page_Main_View  {
 	}
 
 	public function display(){
-		$this->system = System::Get_Instance();
+		$this->system = MCMS::Get_Instance();
 		$this->module = Module::Get('gallery');
 		$template = $this->system->output()->start(array('video', 'gallery','page','view'));
 		$template->title = $this->video->content()->get_title();

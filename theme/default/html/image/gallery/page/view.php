@@ -4,7 +4,7 @@ class Template_Theme_Default_HTML_Image_Gallery_Page_View extends Template {
 
 	public function display($others = array()){
 		 $p = count($others);
-		 $system = System::Get_Instance();
+		 $system = MCMS::Get_Instance();
 
 ?>
 		<div class="gallery-items-images-selector">

@@ -4,10 +4,23 @@ class News_Admin extends Admin {
 
 	protected $parent;
 	protected $mode;
+	
+	private $pages;
+	private $news_articles = array();
+	
 	public function __construct($a,$b){
 		parent::__construct($a,$b);
 		$this->url = $this->url();
-		$this->name = Language::Retrieve()->get($this->module, array('admin','menu','name'));
+		Permission::Check(array('news'), array('view','edit','add','delete','list','admin'),'admin');
+		$this->menu_title = Language::Retrieve()->get($this->module, array('admin','menu','title'));
+		$this->menu_items = array(
+			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Add')),
+				  'url' => $this->url().'add/'),
+			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Manage')),
+				  'url' => $this->url().'list/'),
+			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Permissions')),
+				  'url' => $this->url().'permissions/'),			  
+		);
 	}
 
 	public function display(){
@@ -20,31 +33,33 @@ class News_Admin extends Admin {
 		} 
 	}
 	public function display_edit(){
-		$template = System::Get_Instance()->output()->start(array('news','admin','edit'));
+		$template = MCMS::Get_Instance()->output()->start(array('news','admin','edit'));
 		$template->title = $this->news_article->content()->get_title();
 		$template->form = $this->form->display();
 		return $template;
 	}
 	public function display_list(){
-		$template = System::Get_Instance()->output()->start(array('news','admin','list'));
+		$template = MCMS::Get_Instance()->output()->start(array('news','admin','list'));
 		$template->content = array();
 		$template->edit = $this->edit;
 		$template->title = $this->title;
 		$template->pages = $this->pages;
 		$template->page_count = $this->page_count;
 		$template->page = $this->page;
-		foreach($this->news_article as $news_article){
-			$template->news_article[] = array(
+		foreach($this->news_articles as $news_article){
+			$template->news_articles[] = array(
 				'title' => $news_article->content()->get_title(),
 				'edit' => $this->url('edit/' . $news_article->id())
 			);
 		}
 		return $template;
 	}
-	public function display_menu(){
-		$template = System::Get_Instance()->output()->start(array('news','admin','menu'));
+	public function display_menu($selected){
+		$template = MCMS::Get_Instance()->output()->start(array('news','admin','menu'));
+		$template->title = $this->menu_title;
+		$template->items = $this->menu_items;
 		$template->url = $this->url;
-		$template->name = $this->name;
+		$template->selected = $selected;
 		return $template;
 	}
 	public function execute($parent){
@@ -113,7 +128,7 @@ class News_Admin extends Admin {
 		}
 		$this->news_article = array();
 		for($i = ($page-1)*20; $i < $page*20 && $i < count($news_articles); $i++) {
-			if($news_articles[$i] instanceof News_Article) { $this->news_article[] = $news_articles[$i]; }
+			if($news_articles[$i] instanceof News_Article) { $this->news_articles[] = $news_articles[$i]; }
 		}
 		$this->page = $page;
 		$count = News_Article::Count_All();

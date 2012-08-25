@@ -14,7 +14,7 @@ class News_Page_Block_Main_Article_View extends News_Page_Block_Main {
 	}
 	
 	public function display(){
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		$template = $system->output()->start(array('news','page','block','article','view'));
 		
 		$language = Language::Retrieve();

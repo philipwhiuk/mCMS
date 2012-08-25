@@ -1,0 +1,20 @@
+<?php
+
+class Template_Theme_Flix_HTML_Admin_Page extends Template {
+	public function display(){
+?>		
+<div class="admin page-admin">
+	<div class="admin-menu">
+		<ul>
+		<?php foreach($this->menu as $item){ ?>
+			<li <?php if($item['selected']){ ?>class="selected"<?php } ?>><?php $item['value']->display(); ?></li>
+		<?php } ?>
+		</ul>
+	</div>
+	<div class="admin-panel">
+		<?php $this->panel->display(); ?>
+	</div>
+</div>
+<?php	
+	}	
+}

@@ -20,7 +20,7 @@ abstract class Forum_Page_Main extends Page_Main {
 				$arg = $parent->resource()->get_argument();
 				if(is_numeric($arg)){
 					try {
-						return Forum_Page_Main::Load_Topic($forums,$forum,$arg,$parent); 
+						return self::Load_Topic($forums,$forum,$arg,$parent); 
 					}
 					catch(Exception $e){
 						var_dump($e);	
@@ -38,7 +38,7 @@ abstract class Forum_Page_Main extends Page_Main {
 		}
 		try {
 			if(isset($forum)){
-				return Forum_Page_Main::Load_Forum($forums,$forum,$parent);
+				return self::Load_Forum($forums,$forum,$parent);
 			} elseif($arg == 'add') {
 				$parent->resource()->consume_argument();
 				$parent->resource()->get_module()->file('page_main/forum_add');
@@ -48,7 +48,7 @@ abstract class Forum_Page_Main extends Page_Main {
 		}
 		throw new Forum_Page_Main_Exception($exceptions);
 	}
-	private function Load_Forum($forums,$forum,$parent) {
+	private static function Load_Forum($forums,$forum,$parent) {
 		$arg = $parent->resource()->get_argument();
 		if($arg == 'edit') {
 			$parent->resource()->consume_argument();
@@ -63,7 +63,7 @@ abstract class Forum_Page_Main extends Page_Main {
 			return new Forum_Page_Main_Forum_View($forums,$forum,$parent);
 		}
 	}	
-	private function Load_Topic($forums,$forum,$topicid,$parent) {
+	private static function Load_Topic($forums,$forum,$topicid,$parent) {
 		$topic = Forum_Topic::Get_By_Forum_Topic($forum->id(),$topicid);
 		$parent->resource()->consume_argument();
 		$arg = $parent->resource()->get_argument();

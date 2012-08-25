@@ -51,7 +51,7 @@ class Topic_Post {
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
 	public static function Get_One($operator, $operand){
-		$query = System::Get_Instance()->database()->Select()->table('topic_post')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->database()->Select()->table('topic_post')->where($operator, $operand)->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
 			throw new Post_Not_Found_Exception($operator, $operand);
@@ -59,7 +59,7 @@ class Topic_Post {
 		return $result->fetch_object('Topic_Post');
 	}
 	public static function Get_By_Topic($topic,$limit=null,$skip=null) {
-		$query = System::Get_Instance()->database()->Select()->table('topic_post')->where('=', array(array('col','topic'), array('u', $topic)))->order(array('date' => true));
+		$query = MCMS::Get_Instance()->database()->Select()->table('topic_post')->where('=', array(array('col','topic'), array('u', $topic)))->order(array('date' => true));
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
@@ -74,7 +74,7 @@ class Topic_Post {
 		return $return;
 	}
 	public static function Get_By_Parent($parent) {
-		$query = System::Get_Instance()->database()->Select()->table('topic_post')->where('=', array(array('col','parent'), array('u', $parent)));
+		$query = MCMS::Get_Instance()->database()->Select()->table('topic_post')->where('=', array(array('col','parent'), array('u', $parent)));
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){
@@ -89,7 +89,7 @@ class Topic_Post {
 		return $return;
 	}
 	public static function Get_All() {
-		$query = System::Get_Instance()->database()->Select()->table('topic_post')->order(array('date' => true));
+		$query = MCMS::Get_Instance()->database()->Select()->table('topic_post')->order(array('date' => true));
 		if(isset($limit)){
 			$query->limit($limit);
 			if(isset($skip)){

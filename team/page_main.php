@@ -2,7 +2,7 @@
 
 abstract class Team_Page_Main extends Page_Main {
 
-	// 1/2/3/4/member/view
+	// 1/2/3/4/member/1/view
 
 	public static function Load($parent){
 		$arg = $parent->resource()->get_argument();

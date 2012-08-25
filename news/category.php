@@ -55,9 +55,9 @@ class News_Category {
 			$parent = $parent->id();
 		}
 		
-		$query = System::Get_Instance()	->database()
-						->Select()
-						->table('news_category')
+		$query = MCMS::Get_Instance()->Storage()
+						->Get()
+						->From('news_category')
 						->where('=', array(array('col','parent'), array('u', $parent)));
 		
 		$result = $query->execute();
@@ -68,6 +68,9 @@ class News_Category {
 		}
 		
 		return $return;
+	}
+	public static function Get_By_ID($id){
+		return self::Get_One('=',array(array('col','id'), array('u', $id)));
 	}
 	
 	public static function Get_By_ID_Parent($id, $parent){
@@ -82,7 +85,7 @@ class News_Category {
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('news_category')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('news_category')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		

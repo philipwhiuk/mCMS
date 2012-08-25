@@ -19,9 +19,16 @@ abstract class Event_Page_Block_Main extends Page_Block_Main {
 					else {
 						$skip = 0;
 					}
-					$parent->resource()->get_module()->file('page_block_main/next');
-					$event = Event::Get_Next_By_Category($cat,$skip);
-					return new Event_Page_Block_Main_Next($parent, $event);
+					try {
+						$event = Event::Get_Next_By_Category($cat,$skip);
+						$parent->resource()->get_module()->file('page_block_main/next');
+						return new Event_Page_Block_Main_Next($parent, $event);	
+					} catch(Event_Not_Found_Exception $e) {
+						$event = null;
+					}
+					
+
+					
 				}
 				$parent->resource()->get_module()->file('page_block_main/next');
 				$event = Event::Get_Next();
@@ -30,6 +37,7 @@ abstract class Event_Page_Block_Main extends Page_Block_Main {
 			catch(Exception $e){
 				$exceptions[] = $e;
 			}
+			throw new Event_Page_Block_Unavailable_Exception();			
 		}
 		if(is_numeric($arg)){
 			try {
@@ -49,10 +57,10 @@ abstract class Event_Page_Block_Main extends Page_Block_Main {
 			} catch(Exception $e){
 				$exceptions[] = $e;
 			}
-			
+			throw new Event_Page_Block_Unavailable_Exception();
 		}
 		
-		throw new Event_Page_Unavailable_Exception($exceptions);
+		throw new Event_Page_Block_Unavailable_Exception($exceptions);
 		
 	}
 	

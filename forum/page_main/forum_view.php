@@ -26,7 +26,7 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 		$this->forum = $forum;
 		$this->forum->content()->get_title();
 		$this->forum->content()->get_body();
-		$this->system = System::Get_Instance();
+		$this->system = MCMS::Get_Instance();
 		$this->module = Module::Get('forum');
 		/** Build the URL for the current forum **/
 		$this->url_part = "";
@@ -45,9 +45,11 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 			foreach($sub_forums[$i] as $sub_forum) {
 				$forums[] = $sub_forum->id();
 			}
-		}		
+		}	
 		/** Reverse through the levels, adding each forum to it's parent, unsetting the levels once finished.
 			Do some retrieval here, so that you can abandon forums which throw exceptions.	**/
+
+			
 		for($i = $this->forum->depth()-1; $i > 0; $i--) {
 			foreach($sub_forums[$i] as $sub_forum) {
 				try {
@@ -56,9 +58,9 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 					try {
 						$sub_forum->lastposter()->get_name();
 					}
-					catch (Exception $e) {						
+					catch (User_Not_Found_Exception $e) {						
 					}
-					$sub_forum->topic_count = Forum_Topic::Count_By_Forum($sub_forum->id());
+					
 					$sub_forums[$i-1][$sub_forum->parent_id()]->children[] = $sub_forum;
 				}
 				catch (Exception $e) {
@@ -70,6 +72,7 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 		/** Move the top level sub_forums to this object **/
 		if(isset($sub_forums[0])) {
 			$this->sub_forums = $sub_forums[0];
+
 		}
 		else {
 			$this->sub_forums = array();
@@ -92,10 +95,10 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 		foreach($this->parents as $parent) {
 			$urlpart .= $parent->id().'/';	
 		}
-		$this->url = System::Get_Instance()->url(Resource::Get_By_Argument($module, $urlpart.$this->forum->id())->url());
+		$this->url = MCMS::Get_Instance()->url(Resource::Get_By_Argument($module, $urlpart.$this->forum->id())->url());
 	}
 	public function display(){
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		$usermodule = Module::Get('user');
 		$forummodule = Module::Get('forum');
 		$template = $system->output()->start(array('forum','page','forum','view'));
@@ -113,7 +116,7 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 			$pa = array();
 			$pa['title'] = $parent->content()->get_title();
 			if(!isset($parenturl)) {
-				$parenturl = System::Get_Instance()->url(Resource::Get_By_Argument($forummodule,$parent->id())->url());
+				$parenturl = MCMS::Get_Instance()->url(Resource::Get_By_Argument($forummodule,$parent->id())->url());
 				$pa['url'] = $parenturl;
 			}
 			else {
@@ -123,7 +126,7 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 		}
 
 		foreach($this->sub_forums as $sub_forum) {
-			if($this->forum->depth() > 0) {
+			if($this->forum->depth() > 0) {			
 				$template->sub_forums[] = $this->display_sf($sub_forum,$this->forum->depth(),$this->url);
 			}
 		}
@@ -148,12 +151,12 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 		return $template;
 	}
 	private function display_sf($sub_forum,$depth,$parenturl) {
-		$sf = array();
+		$sf = array();		
 		$sf['url'] = $parenturl.$sub_forum->id().'/';
 		$sf['title'] = $sub_forum->content()->get_title();
 		$sf['description'] = $sub_forum->content()->get_body();
-		$sf['topics'] = $sub_forum->topic_count;
-		$sf['posts'] = $sub_forum->post_count;
+		$sf['topics'] = $sub_forum->topic_count();
+		$sf['posts'] = $sub_forum->post_count();
 //		try {
 //			$sf['lastposter'] = $sub_forum->lastposter();
 //			$sf['lastpost'] = $sub_forum->lastpost();
@@ -164,10 +167,15 @@ class Forum_Page_Main_Forum_View extends Forum_Page_Main {
 			$sf['lastpost'] = false;
 //		}
 		$sf['url'] = $this->system->url(Resource::Get_By_Argument($this->module, $this->url_part . $sub_forum->id().'/view')->url());
-		$sf['children'] = array();
+		$sf['
+		
+		
+		
+		
+		'] = array();		
 		foreach($sub_forum->children as $ssf) {
 			if($depth-1 > 0) {
-				$sf['children'] = display_sf($ssf,$depth-1);
+				$sf['children'] = $this->display_sf($ssf,$depth-1,$sf['url']);
 			}
 		}
 		return $sf;

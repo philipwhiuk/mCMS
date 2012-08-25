@@ -11,9 +11,9 @@ class File_Page_Main_List extends File_Page_Main {
 	}
 	
 	public function display(){
-		$template = System::Get_Instance()->output()->start(array('file','page','list'));
+		$template = MCMS::Get_Instance()->output()->start(array('file','page','list'));
 		
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		
 		$module = Module::Get('file');
 		

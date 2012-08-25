@@ -31,6 +31,7 @@ abstract class Event_Page_Main extends Page_Main {
 			} catch(Exception $e){
 				// Content Invalid / Unavailable
 				$exceptions[] = $e;
+				var_dump($e);
 			}
 			
 		} else { // list or N/A

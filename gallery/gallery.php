@@ -73,9 +73,9 @@ class Gallery {
 			$parent = $parent->id();
 		}
 
-		$query = System::Get_Instance()	->database()
-			->Select()
-			->table('gallery')
+		$query = MCMS::Get_Instance()->Storage()
+			->Get()
+			->From('gallery')
 			->where('=', array(array('col','parent'), array('u', $parent)))
 			->order(array('sort' => true));
 
@@ -90,7 +90,7 @@ class Gallery {
 	}
 
 	public static function Get_One($operator, $operand){
-		$query = System::Get_Instance()->database()->Select()->table('gallery')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->storage()->Get()->From('gallery')->where($operator, $operand)->limit(1);
 		$result = $query->execute();
 		if($result->num_rows == 0){
 			throw new Gallery_Not_Found_Exception($operator, $operand);
@@ -111,6 +111,32 @@ class Gallery {
 					array('=', array(array('col','parent'), array('u', $parent))),
 					));
 	}
+	public static function Count_All(){
+		
+		$query = MCMS::Get_Instance()->Storage()->Count()->From('gallery');
+		return $query->execute();
 
+	}
+	
+	public static function Get_All($limit = null, $skip = null){
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('gallery')->order(array('id' => true));
+
+		if(isset($limit)){
+			$query->limit($limit);
+			if(isset($skip)){
+				$query->offset($skip);
+			}
+		}
+		
+		$result = $query->execute();
+		
+		$return = array();
+		
+		while($row = $result->fetch_object('Gallery')){
+			$return[] = $row;
+		}
+		
+		return $return;
+	}
 }
 

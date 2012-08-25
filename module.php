@@ -1,40 +1,19 @@
 <?php
-
-System::Get_Instance()->files('module/exception');
-
+MCMS::Get_Instance()->files('module/exception');
 abstract class Module {
-	
-	// Used in Load_Module
-	
-	private $loaded = false;
-	private $loading = false;
-	
-	// Database
-	
-	private $id;
-	private $name;
-	private $active;
-	private $version;
-	private $system;
-	
-	private $dir; // Generated
-	
-	protected function __construct($data){
-		foreach($data as $k => $v){
-			$this->$k = $v;
+	public static function Available($module){
+		if(!isset(MCMS::Get_Instance()->modules[$module])){
+			throw new Module_Not_Available_Exception($module);
 		}
 	}
-	
-	public function id(){
-		return $this->id;
+	public static function Count_All(){
+		
+		$query = MCMS::Get_Instance()->Storage()->Count()->From('module');
+		return $query->execute();
+
 	}
-	
-	public function get_directory(){
-		return $this->dir;
-	}
-	
 	public static function Get_ID($id){
-		foreach(System::Get_Instance()->modules as $k => $module){
+		foreach(MCMS::Get_Instance()->modules as $k => $module){
 			if($module->id == $id){
 				Module::Load_Module($k);
 				return $module;
@@ -42,15 +21,12 @@ abstract class Module {
 		}
 		throw new Module_Not_Available_Exception($id);
 	}
-	
 	public static function Get_All($operator = null, $operand = null){
-		
 		if(isset($operator) && isset($operand)){
-			$query = System::Get_Instance()->database()->Select()->table('module')->where($operator, $operand);
+			$query = MCMS::Get_Instance()->storage()->Get()->From('module')->where($operator, $operand);
 		} else {
-			$query = System::Get_Instance()->database()->Select()->table('module');
+			$query = MCMS::Get_Instance()->storage()->Get()->From('module');
 		}
-		
 		$result = $query->execute();
 		
 		$modules = array();
@@ -58,7 +34,13 @@ abstract class Module {
 		while($module = $result->fetch_assoc()){
 			try {
 				$module['dir'] = strtolower($module['name']);
-				System::Get_Instance()->file("{$module['dir']}/module");
+				if($module['package'] == MCMS_NOT_PACKAGED) {
+					$file = $module['dir'].'/module';
+				}
+				else {
+					$file = Package::Get_ID($module['package'])->get_directory().'/'.$module['dir'].'/module';
+				}		
+				MCMS::Get_Instance()->file($file);
 				$class = "{$module['name']}_Module";
 				if(!class_exists($class) || !is_subclass_of($class, 'Module')){
 					throw new Module_Invalid_Exception($module);
@@ -72,51 +54,117 @@ abstract class Module {
 		return $modules;
 		
 	}
-	
-	public static function Available($module){
-		if(!isset(System::Get_Instance()->modules[$module])){
-			throw new Module_Not_Available_Exception($module);
+	public static function Get_Selection($limit = null, $skip = null){
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('module')->order(array('name' => true));
+
+		if(isset($limit)){
+			$query->limit($limit);
+			if(isset($skip)){
+				$query->offset($skip);
+			}
+		}
+		
+		$result = $query->execute();
+		
+		$modules = array();
+		
+		while($module = $result->fetch_assoc()){
+			try {
+				$module['dir'] = strtolower($module['name']);
+				if($module['package'] == MCMS_NOT_PACKAGED) {
+					$file = $module['dir'].'/module';
+				}
+				else {
+					$file = Package::Get_ID($module['package'])->get_directory().'/'.$module['dir'].'/module';
+				}		
+				MCMS::Get_Instance()->file($file);
+				$class = "{$module['name']}_Module";
+				if(!class_exists($class) || !is_subclass_of($class, 'Module')){
+					throw new Module_Invalid_Exception($module);
+				}
+				$modules[$module['dir']] = new $class($module);
+			} catch (Exception $e){
+				// Module not loaded.
+			}
+		}
+		
+		return $modules;
+	}
+	public static function Load_All() {
+		MCMS::Get_Instance()->modules = Module::Get_All('=', array(array('col', 'active'), array('u', 1)));
+		// Now we have a bunch of module classes!
+		foreach(MCMS::Get_Instance()->modules as $k => $module){
+			try {
+				Module::Load_Module($k);
+			} catch(Exception $e){
+			}
 		}
 	}
-	
-	public static function Get($module){
+	public static function Get($module) {
 		try {
 			self::Load_Module($module);
 		} catch (Exception $e){
 			throw new Module_Not_Available_Exception($module, $e);
 		}
 		
-		return System::Get_Instance()->modules[$module];
+		return MCMS::Get_Instance()->modules[$module];
 	}
-	
 	private static function Load_Module($module){
-		// Dependandcy resolver.
-		
-		if(!isset(System::Get_Instance()->modules[$module])){
+		if(!isset(MCMS::Get_Instance()->modules[$module])){
 			throw new Module_Not_Found_Exception($module);
 		}
 		// Circular depedancy resolver.
-		if(System::Get_Instance()->modules[$module]->loaded){
+		if(MCMS::Get_Instance()->modules[$module]->loaded){
 			return;
 		}
-		if(System::Get_Instance()->modules[$module]->loading){
+		if(MCMS::Get_Instance()->modules[$module]->loading){
 			throw new Module_Circular_Dependancy_Exception($module);
 		}
-		System::Get_Instance()->modules[$module]->loading = true;
+		MCMS::Get_Instance()->modules[$module]->loading = true;
 		try {
-			System::Get_Instance()->modules[$module]->load();
-			System::Get_Instance()->modules[$module]->loaded = true;
+			MCMS::Get_Instance()->modules[$module]->load();
+			MCMS::Get_Instance()->modules[$module]->loaded = true;
 		} catch(Exception $e){
-			unset(System::Get_Instance()->modules[$module]);
+			unset(MCMS::Get_Instance()->modules[$module]);
 			throw new Module_Load_Exception($module, $e);
 		}
 	}
-	
-	abstract public function load();
-	
+	//Loading
+	private $loaded = false;
+	private $loading = false;
+	//Stored
+	private $id;
+	private $name;
+	private $active;
+	private $version;
+	private $system;
+	private $package;
+	//Generated
+	private $dir;
+
+	protected function __construct($data){
+		foreach($data as $k => $v){
+			$this->$k = $v;
+		}
+	}
+	public function id(){
+		return $this->id;
+	}
+	public function name() {
+		return $this->name;
+	}
+	public function version() {
+		return $this->version;
+	}	
 	public function file($path, $once = true){
 		try {
-			return System::Get_Instance()->file("{$this->dir}/{$path}", $once);
+			if($this->package() === null) {
+				$file = $this->dir.'/'.$path;
+			}
+			else {
+				$file = $this->package()->get_directory().'/'.$this->dir.'/'.$path;
+			}
+			return MCMS::Get_Instance()->file($file, $once);
 		} catch(Exception $e){
 			throw new Module_File_Not_Found_Exception($this->name, $path);
 		}
@@ -127,7 +175,20 @@ abstract class Module {
 			$this->file($file, true);	
 		}
 	}
+	public function package() {
+		if(!$this->package instanceof Package && $this->package != MCMS_NOT_PACKAGED) {
+			$this->package = Package::Get_ID($this->package);
+		}
+		elseif(!$this->package instanceof Package && $this->package == MCMS_NOT_PACKAGED) {
+			$this->package = null;
+		}
+		return $this->package;
+	}
 	
+	public function get_directory(){
+		return $this->dir;
+	}
+	abstract public function load();
 	public function load_section($section){
 		try {
 			$this->file(strtolower($section));
@@ -140,23 +201,4 @@ abstract class Module {
 			throw new Module_Section_Exception($this->name, $section, $e);
 		}		
 	}
-	
-	public static function Load_All(){
-		
-		// First we want to get a list of all the Modules
-		
-		System::Get_Instance()->modules = Module::Get_All('=', array(array('col', 'active'), array('u', 1)));
-		
-		// Now we have a bunch of module classes!
-		
-		foreach(System::Get_Instance()->modules as $k => $module){
-			try {
-				Module::Load_Module($k);
-			} catch(Exception $e){
-				// Ignore module
-			}
-		}
-		
-	}
-	
 }

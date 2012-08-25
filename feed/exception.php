@@ -1,6 +1,6 @@
 <?php
 
-class Feed_Exception extends CMS_Exception {}
+class Feed_Exception extends MCMS_Exception {}
 
 class Feed_Fatal_Exception extends Feed_Exception {}
 

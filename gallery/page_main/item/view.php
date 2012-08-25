@@ -28,7 +28,7 @@ class Gallery_Page_Main_Item_View extends Gallery_Page_Main {
 	}
 
 	public function display(){
-		$this->system = System::Get_Instance();
+		$this->system = MCMS::Get_Instance();
 		$this->module = Module::Get('gallery');
 		$template = $this->system->output()->start(array('gallery','page','item','view'));
 		

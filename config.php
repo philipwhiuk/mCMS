@@ -1,9 +1,7 @@
 <?php
 
-System::Get_Instance()->file('config/exception');
-
+MCMS::Get_Instance()->file('config/exception');
 class Config {
-	
 	private $data;
 	
 	public function __construct($data){
@@ -24,9 +22,9 @@ class Config {
 	
 	public static function Load(){
 		
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 
-		$parse = parse_url($system->get_remote_path());
+		$parse = parse_url($system->remote_path());
 
 		if(!isset($parse['port']) && isset($_SERVER['SERVER_PORT'])){ 
 			$parse['port'] = $_SERVER['SERVER_PORT']; 

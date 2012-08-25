@@ -5,7 +5,7 @@ class Template_Theme_Default_HTML_Content_Page_View extends Template {
 ?>		
 <div class="content page-content content-view page-content-view">
 	<div class="content-head">
-		<h1	<?php if(count($this->modes) > 1){ ?> class="content-modes" <?php } ?>><?php echo $this->title; ?></h1>
+		<h1	class="content-title <?php if(count($this->modes) > 1){ ?>content-title-modes<?php } ?>" ><?php echo $this->title; ?></h1>
 		<?php if(count($this->modes) > 1){ ?>
 		<ul class="content-modes">
 			<?php foreach($this->modes as $mode){ ?> 

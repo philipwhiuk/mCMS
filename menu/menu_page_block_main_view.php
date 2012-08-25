@@ -132,7 +132,7 @@ class Menu_Menu_Page_Block_Main_View extends Menu_Page_Block_Main_View {
 	}
 
 	public function display(){
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		$template = $system->output()->start(array('menu','page','block','view'));
 		$template->level = $this->level;
 		$template->id = $this->menu->id();

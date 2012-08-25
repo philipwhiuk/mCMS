@@ -1,6 +1,8 @@
 <?php
 
 class Template_Theme_Default_HTML_Event_Admin_List extends Template {
+	private $events = array();
+
 	public function display(){
 ?>		
 <div class="admin-list event-admin-list">
@@ -18,7 +20,7 @@ class Template_Theme_Default_HTML_Event_Admin_List extends Template {
 	<table cellspacing=0 cellpadding=0> 
 <?php 
 		$a = 0;
-		foreach($this->event as $event){
+		foreach($this->events as $event){
 ?>
 		<tr <?php if($a == 0){ ?> class="even" <?php } else { ?> class="odd" <?php } ?>>
 			<td>

@@ -28,11 +28,11 @@ class News_Page_Main_Category_List extends News_Page_Main {
 	}
 	
 	public function display(){
-		$template = System::Get_Instance()->output()->start(array('news','page','category','list'));
+		$template = MCMS::Get_Instance()->output()->start(array('news','page','category','list'));
 		
 		$language = Language::Retrieve();
 		
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		
 		$module = Module::Get('news');
 		

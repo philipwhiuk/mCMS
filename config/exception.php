@@ -1,10 +1,10 @@
 <?php
 
-class Config_Exception extends CMS_Exception {}
+class Config_Exception extends MCMS_Exception {}
 
 class Config_Not_Found_Exception extends Config_Exception {
 
-	protected $level = System::dump_warning;
+	protected $level = MCMS::dump_warning;
 
 	public function dump(){ 
 		$string = $this->message();

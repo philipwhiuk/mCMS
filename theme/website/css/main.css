@@ -1,0 +1,415 @@
+@charset "UTF-8";
+/** Tags Styles **/
+a {
+	text-decoration: none;
+	color: gold;
+}
+pre {
+	font-size: 1em;
+	font-family: Tahoma, sans-serif;
+}
+body {
+	margin: 0;
+	padding: 0;
+	background: #000000;
+	color: #ffffff;
+	font-size: 85%;
+	font-family: Arial, sans-serif;
+}
+h1, h2 {
+	margin: 0.5em;	
+}
+h2 {
+	font-size: 1.3em;
+}
+/** TinyMCE Filebrowser **/
+div.tinymce-files div.tinymce-files-list {
+	float: left;
+	width: 35%;
+	padding: 0;
+	margin: 0;
+	margin-top: 1em; 
+}
+div.tinymce-files div.tinymce-files-show {
+	float: right;
+	width: 65%;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	margin-top: 1em; 
+}
+div.tinymce-files div.tinymce-files-show-inner {
+	border: thin solid #999999;
+	padding: 0.5em;
+	overflow: hidden;
+	margin: 0.5em;
+}
+div.tinymce-files div.tinymce-files-list ul {
+	list-style-type: none;
+	margin: 0.5em;
+	border: thin solid #999999;
+	padding: 0.5em;
+}
+div.tinymce-files div.tinymce-files-list ul li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0.5em;
+	font-size: 0.85em;
+	background: white;	
+}
+div.tinymce-files div.tinymce-files-show div.tinymce-image-files ul {
+	list-style: none;
+	overflow: hidden;
+	margin: 0 0 0 0;
+	padding: 1em;
+}
+div.tinymce-files div.tinymce-files-show div.tinymce-image-files ul li {
+	float: left;
+	list-style: none;
+	margin: 0 0 0 0;
+	padding: 1em;
+	background: #dddddd;
+	border: thin solid #777777;
+	display: block;
+	overflow: hidden;
+	text-align: center;
+	color: #333333;
+}
+div.tinymce-files div.tinymce-files-show div.tinymce-image-files ul li img {
+	width: 100%;
+	margin-bottom: 1em;
+	border: thin solid #555555;
+}
+/** TinyMCE **/
+textarea.form-field-tinymce { width: 85%; }
+/** Page **/
+div.page {
+	overflow: hidden;
+}
+div.page-base {
+	overflow: hidden;
+	margin: 2em;
+}
+div.page-blocks, div.page-main {
+	border: thin black solid;
+	background: #333333;
+	padding: 1em;
+	overflow: hidden;
+}
+div.page-blocks-top {
+	margin: 2em 2em 0 2em;
+}
+div.page-blocks-left {
+	margin-right: 2em;	
+}
+div.page-blocks-bottom {
+	margin: 2em;
+}
+div.page-inline div.page-main {
+	margin: 0.5em;
+	padding: 0.5em;	
+}
+div.page-blocks-left {
+	float: left;
+	width: 15%;
+}
+div.page-blocks-right {
+	float: right;
+	width: 20%;
+}
+/** Content **/
+div.content-head {
+	display: block;
+	overflow: hidden;
+}
+h1.content-modes {
+	float: left;
+}
+ul.content-modes {
+	float: right;
+	margin: 0;
+	margin-top: 0.6em;
+	padding: 0;
+	list-style: none;
+	display: block;
+}
+ul.content-modes li {
+	display: inline;
+}
+ul.content-modes li a {
+	background: #999999;
+	display: inline;
+	padding: 0.5em 2em;
+	color: white;
+}
+ul.content-modes li a:hover, ul.content-modes li.content-mode-selected a {
+	background: #777777;
+}
+ul.content-modes li.content-mode-selected a {
+	font-weight: bold;
+}
+div.content-text {
+	clear: both;
+}
+div.content-text, div.image-text {
+	margin-top: 1em;
+}
+/** Image **/
+div.image-files ul {
+	list-style: none;
+	overflow: hidden;
+	margin: 0 0 0 0;
+	padding: 1em;
+}
+div.image-files ul li {
+	float: left;
+	list-style: none;
+	margin: 0 0 0 0;
+	padding: 1em;
+	background: #dddddd;
+	border: thin solid #777777;
+	display: block;
+	overflow: hidden;
+	width: 20%;
+	text-align: center;
+	color: #333333;
+}
+div.image-files ul li img {
+	width: 100%;
+	margin-bottom: 1em;
+	border: thin solid #555555;
+}
+div.image-file img {
+	height: 200px;
+	margin: auto;
+	display: block;
+	padding: 0.5em;
+}
+div.image-file div.image-file-info {
+	padding: 1em;
+	margin: 1em;
+	border: thin solid #aaaaaa;
+	overflow: hidden;	
+}
+/** Menu **/
+li.menu-trail a.menu-trail {
+	font-weight: bold;
+}
+/** News **/
+ul.news-category-list-articles {
+	list-style-type: none;
+	padding-left: 0;
+}
+div.news-article-date {
+	font-style: italic;
+	margin: 1em 0;
+}
+/** File **/
+div.file dl {
+	border: thin solid #aaaaaa;
+	padding: 1em;
+	overflow: hidden;
+}
+div.tinymce-files div.tinymce-files-show dl dt, div.image-file dl dt, div.file dl dt {
+	float: left;
+	width: 20%;
+	margin: 0.5em;
+	font-weight: bold;
+}
+div.tinymce-files div.tinymce-files-show dl dd, div.image-file dl dd, div.file dl dd {
+	float: right;
+	width: 75%;
+	margin: 0.5em;
+	text-align: left;
+}
+/** Form **/
+div.form {
+	margin: 1em;
+	padding: 1em;
+	border: thin #aaaaaa solid;
+}
+div.form form {
+	margin: 0;
+	padding: 0;
+}
+div.form ol {list-style: none; padding: 0;}
+div.form ol li {list-style: none; margin-bottom: 1em; clear: left;}
+div.form {}
+div.form label {float: left; width: 8%; text-align: right; margin-right: 1%;}
+div.form div.form-field-submit { display: block; text-align: center; margin: auto; }
+/** Content Admin **/
+div.admin-list,div.admin-edit {
+	margin: 1em;
+}
+div.admin-edit div.admin-edit-form div.form {
+	margin: 0; padding: 0; border: 0;
+}
+div.admin-list table {
+	width: 100%;
+	margin: 1em 0;
+	border: thin solid #666;
+}
+div.admin-list table tr.even {
+	background: #AAAAAA;
+}
+div.admin-list table tr td {
+	padding: 0.2em 0.6em;
+}
+div.admin-list table tr td.link {
+	width: 5%;
+	text-align: center;
+}
+a.admin-list-previous {
+	float: left;
+	text-align: left;
+}
+a.admin-list-next {
+	float: right;
+	text-align: right;
+}
+a.admin-list-previous, a.admin-list-next {
+	width: 49%;
+	background: #666666;
+	color: white;
+	font-weight: bold;
+	margin-bottom: 1em;
+	margin-top: 1em;
+}
+a:hover.admin-list-previous, a:hover.admin-list-next {
+	background: #AAAAAA;
+}
+a.admin-list-previous div, a.admin-list-next div {
+	padding: 0.2em 0.5em;
+	display: block;
+}
+/** Admin **/
+div.admin {
+	padding: 0.5em;
+	overflow: auto;
+}
+div.admin div.admin-menu {
+	float: left;
+	width: 200px;
+	background: #AAAAAA;
+	overflow: auto;
+}
+div.admin div.admin-menu ul {
+	margin: 1em;
+	padding: 0;
+}
+div.admin div.admin-menu ul li {
+	list-style: none;
+	margin: 0.5em;
+}
+div.admin div.admin-menu ul li a {
+	color: white;
+	font-weight: bold;
+}
+div.admin div.admin-menu ul li.selected a, 
+div.admin div.admin-menu ul li a:hover {
+	color: #black;
+}
+div.admin div.admin-panel {
+	float: left;
+	width: 80%;
+	overflow: auto;
+}
+div.menu {
+	padding-top: 	0px;
+	text-align: 	left;
+	font-size:    25px;
+	margin: 	3px;
+	float: left;
+	clear: left;
+}
+div.menu ul {
+	margin: 		auto;
+	padding: 		0pt;
+	display: 		inline;
+	width:			900px;
+				}
+div.menu ul li {
+	margin: 		0px;
+	padding: 		0px;
+	list-style: 		none;
+	display: 		inline;
+	font-weight: 		100;
+}
+div.menu ul li a {
+	margin: 		0;
+	padding:		0px 1px 0px 3px;
+	text-decoration: 	none;
+}
+div.menu ul li a:hover	{
+	color:			#fff;
+	padding:		0px 1px 0px 3px;
+	background:     	url('images/transparecy.png') repeat;
+}
+div.menu ul li.menu-first {
+	margin-left: 0;
+	border-left: none;
+	list-style: none;
+	display: inline;
+	color: black;
+}
+div.error-text h2 {
+	clear: both;
+}
+div.error-class {
+	font-size: small;
+	margin-left: 30px;
+	margin-bottom: 10px;
+}
+div.error-label {
+	margin-top: 10px;
+	font-weight: bold;
+	width: 200px;
+	float: left;
+	clear: both;
+}
+div.error-value {
+	float: left;
+	margin-top: 10px;
+}
+div.error-line {
+	width: 850px;
+	clear: both;
+	text-align: left;
+	clear: left;
+	float: left;
+}
+.error-line-file {
+	width: 500px;
+	padding-right: 5px;
+	padding-left: 20px;
+	color: cyan;
+	float: left;
+}
+.error-line-function {
+	font-weight: bold;
+}
+/** Simm **/
+.simm-manifest-department-title {
+	width: 600px;
+	text-align: center;
+	font-size: large;
+	font-weight: bold;
+	margin-top: 20px;
+}
+.simm-manifest-department1-title {
+	background: #8B0000;
+}
+.simm-character-label {
+	font-weight: bold;
+	float: left;
+	width: 200px;
+	clear: both;
+}
+.simm-character-field {
+	float: left;
+	width: 400px;
+}
+.simm-character-info {
+	overflow: auto;
+}
+

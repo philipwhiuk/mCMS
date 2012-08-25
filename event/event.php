@@ -42,7 +42,7 @@ class Event {
 		return $this->objects;
 	}
 	public static function Get_All(){
-		$query = System::Get_Instance()->database()->Select()->table('event');
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('event');
 		
 		$result = $query->execute();
 		
@@ -60,7 +60,7 @@ class Event {
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('event')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('event')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		
@@ -75,7 +75,7 @@ class Event {
 		$operator = '>';
 		$operand = array(array('col','finishtime'), array('u', time()));
 		$ordering = array('starttime' => true);
-		$query = System::Get_Instance()->database()->Select()->table('event')->where($operator, $operand)->order($ordering)->limit(1);
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('event')->where($operator, $operand)->order($ordering)->limit(1);
 		$result = $query->execute();		
 		if($result->num_rows == 0){
 			throw new Event_Not_Found_Exception();
@@ -89,7 +89,7 @@ class Event {
 		array('=',array(array('col','category'), array('u', $cat)))
 		);
 		$ordering = array('starttime' => true);
-		$query = System::Get_Instance()->database()->Select()->table('event')->where($operator, $operand)->order($ordering)->limit(1)->offset($skip);
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('event')->where($operator, $operand)->order($ordering)->limit(1)->offset($skip);
 		$result = $query->execute();		
 		if($result->num_rows == 0){
 			throw new Event_Not_Found_Exception();
@@ -97,7 +97,7 @@ class Event {
 		return $result->fetch_object('Event');
 	}
 	public static function Count_All(){
-		$query = System::Get_Instance()->database()->Count()->table('event');
+		$query = MCMS::Get_Instance()->Storage()->Count()->From('event');
 		return $query->execute();
 	}
 }

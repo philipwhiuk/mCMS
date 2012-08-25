@@ -21,7 +21,7 @@ class File {
 	}
 
 	public static function Create($data){
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		$site = $system->site();
 
 		do {
@@ -95,7 +95,7 @@ class File {
 		$data['size'] = isset($data['size']) ? $data['size'] : $this->size;
 		$data['time'] = isset($data['type']) ? $data['time'] : $this->time;
 
-		$query = System::Get_Instance()->database()->Update()->table('file')
+		$query = MCMS::Get_Instance()->database()->Update()->table('file')
 			->set(array(
 					'name' => array('s', $data['name']),
 					'path' => array('s', $data['path']),
@@ -128,13 +128,13 @@ class File {
 		return $this->path;
 	}
 	public function location(){
-		return System::Get_Instance()->local_path($this->path);
+		return MCMS::Get_Instance()->local_path($this->path);
 	}
 
 	public function url(){
 		$module = Module::Get('file');
 		$resource = Resource::Get_By_Argument($module, $this->id);
-		return System::Get_Instance()->url($resource->url(), array('output' => 'raw'));
+		return MCMS::Get_Instance()->url($resource->url(), array('output' => 'raw'));
 	}
 
 	public function size(){
@@ -150,12 +150,12 @@ class File {
 	}
 
         public static function Count_All(){
-                $query = System::Get_Instance()->database()->Count()->table('file');
+                $query = MCMS::Get_Instance()->Storage()->Count()->From('file');
                 return $query->execute();
         }
 
         public static function Get_All($limit = null, $skip = null){
-                $query = System::Get_Instance()->database()->Select()->table('file')->order(array('name' => true));
+                $query = MCMS::Get_Instance()->Storage()->Get()->From('file')->order(array('name' => true));
 
 		if(isset($limit)){
                         $query->limit($limit);
@@ -177,7 +177,7 @@ class File {
 
 	public static function Get_One($operator, $operand){
 
-		$query = System::Get_Instance()->database()->Select()->table('file')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('file')->where($operator, $operand)->limit(1);
 
 		$result = $query->execute();
 

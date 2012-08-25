@@ -56,13 +56,13 @@ class News_Page_Main_Category_List extends News_Page_Main {
 	
 	public function display(){
 		
-		$system = System::Get_Instance();
+		$system = MCMS::Get_Instance();
 		$template = $system->output()->start(array('news','page','category','list'));
 		
 		$language = Language::Retrieve();
 				
 		$module = Module::Get('news');
-		
+		$template->uncategorised = array('title' => 'Uncategorised', 'url' => $system->url(Resource::Get_By_Argument($module, 0)->url()));
 		if($this->category instanceof News_Category){
 			$template->category = array(
 				'title'	=> $this->category->content()->get_title(),
@@ -90,15 +90,32 @@ class News_Page_Main_Category_List extends News_Page_Main {
 		foreach($this->articles as $article){
 			$i ++;
 			if($i <= 5){
-				$template->articles[] = array(
-					'title' => $article->content()->get_title(),
-					'brief' => $article->brief()->get_body(),
-					'body' => $article->content()->get_body(),
-					'time' => date($df, $article->time()),
-					'selected' => ($this->selected == $article),
-					'furl' => $system->url(Resource::Get_By_Argument($module, $url . 'article/' . $article->id())->url()),
-					'surl' => $system->url(Resource::Get_By_Argument($module, $url . 'list/' . $this->page . '/article/' . $article->id())->url()),
-				);
+				$tArticle = array();
+				$tArticle['id'] = $article->id();
+				$tArticle['author'] = $article->author()->get('display_name');
+				$tArticle['title'] = $article->content()->get_title();
+				try {
+					$tArticle['brief'] = $article->brief()->get_body();
+				} catch (Content_Not_Found_Exception $e) {
+					$tArticle['brief'] = '';
+				}
+				$tArticle['categories'] = array();
+				try {
+					$tCat = array();
+					$tCat['url'] = $system->url(Resource::Get_By_Argument($module, $article->category()->id())->url());
+					$tCat['title'] = $article->category()->content()->get_title();
+					$tArticle['categories'][] = $tCat;
+				} catch (Exception $e) {
+					var_dump($e);
+				}
+				$tArticle['body'] = $article->content()->get_body();
+				$tArticle['time'] = date($df, $article->time());
+				$tArticle['selected'] = ($this->selected == $article);
+				$tArticle['furl'] = $system->url(Resource::Get_By_Argument($module, $url . 'article/' . $article->id())->url());
+				$tArticle['editurl'] = $system->url(Resource::Get_By_Argument($module, $url . 'article/' . $article->id().'/edit')->url());
+				$tArticle['surl'] = $system->url(Resource::Get_By_Argument($module, $url . 'list/' . $this->page . '/article/' . $article->id())->url());
+			
+				$template->articles[] = $tArticle;
 			}
 		}
 	

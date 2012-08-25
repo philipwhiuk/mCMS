@@ -12,7 +12,7 @@
 			}
 		}
 		function display() {
-			$template = System::Get_Instance()->output()->start(array('event','page','block','next'));
+			$template = MCMS::Get_Instance()->output()->start(array('event','page','block','next'));
 			$language = Language::Retrieve();
 			$module = Module::Get('event');
 			$template->title = $language->get($module, array('next','title'));

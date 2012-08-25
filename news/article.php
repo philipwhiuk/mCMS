@@ -15,6 +15,12 @@ class News_Article {
 		return $this->brief;
 	}
 
+	public function category(){
+		if(!($this->category instanceof News_Category)){
+			$this->category = News_Category::Get_By_ID($this->category);
+		}
+		return $this->category;
+	}
 	
 	public function content(){
 		if(!($this->content instanceof Content)){
@@ -27,14 +33,21 @@ class News_Article {
 		return $this->id;
 	}
 	
+	public function author() {
+		if(!$this->author instanceof User) {
+			$this->author = User::Get_By_ID($this->author);
+		}
+		return $this->author;
+	}
+	
 	public function time(){
 		return $this->time;
 	}
 	public static function Get_All(){
-		$query = System::Get_Instance()
-						->database()
-						->Select()
-						->table('news_article')
+		$query = MCMS::Get_Instance()
+						->Storage()
+						->Get()
+						->From('news_article')
 						->order(array('time' => false));
 		if(isset($limit)){
 			$query->limit($limit);
@@ -55,10 +68,10 @@ class News_Article {
 			$category = $category->id();
 		}
 		
-		$query = System::Get_Instance()
-						->database()
-						->Select()
-						->table('news_article')
+		$query = MCMS::Get_Instance()
+						->Storage()
+						->Get()
+						->From('news_article')
 						->where('=', array(array('col','category'), array('u', $category)))
 						->order(array('time' => false));
 
@@ -87,7 +100,9 @@ class News_Article {
 		}
 		//array('=', array(array('col','category'), array('u', $category))),
 
-		$query = System::Get_Instance()->database()->Select()->table('news_article')->where('=', array(array('col','category'), array('u', $category)))->order(array('time' => false))->limit(1);
+		$query = MCMS::Get_Instance()->Storage()
+						->Get()
+						->From('news_article')->where('=', array(array('col','category'), array('u', $category)))->order(array('time' => false))->limit(1);
 		
 		$result = $query->execute();
 		
@@ -113,7 +128,9 @@ class News_Article {
 	
 	public static function Get_One($operator, $operand){
 		
-		$query = System::Get_Instance()->database()->Select()->table('news_article')->where($operator, $operand)->limit(1);
+		$query = MCMS::Get_Instance()->Storage()
+						->Get()
+						->From('news_article')->where($operator, $operand)->limit(1);
 		
 		$result = $query->execute();
 		
@@ -125,7 +142,7 @@ class News_Article {
 		
 	}
 	public static function Count_All(){
-		$query = System::Get_Instance()->database()->Count()->table('news_article');
+		$query = MCMS::Get_Instance()->Storage()->Count()->From('news_article');
 		return $query->execute();
 	}
 }
