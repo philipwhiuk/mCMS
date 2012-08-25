@@ -4,11 +4,11 @@ return array(
 	'storage' => array(
 		'driver' => 'database'),
 	'database' => array(
-		'driver' => 'mysqli',
-		'host' => '127.0.0.1',
-		'username' => 'root',
-		'password' => 'pilotman3',
-		'database' => 'mcms',
+		'driver' => '',
+		'host' => '1',
+		'username' => '',
+		'password' => '',
+		'database' => '',
 		'socket' => ini_get("mysqli.default_socket"),
 		'port' => ini_get("mysqli.default_port")
 	),
