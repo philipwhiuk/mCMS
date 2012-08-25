@@ -1,6 +1,6 @@
 <?php
 
-class Actor_Admin extends Admin {
+abstract class Actor_Admin extends Admin {
 
 	protected $parent;
 	protected $mode;
@@ -40,15 +40,7 @@ class Actor_Admin extends Admin {
 		parent::__construct($a,$b);
 		$this->url = $this->url();
 		Permission::Check(array('actor'), array('view','edit','add','delete','list','admin'),'admin');
-		$this->title = Language::Retrieve()->get($this->module, array('admin','menu','title'));
-		$this->menu_items = array(
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Add')),
-				  'url' => $this->url().'add/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Manage')),
-				  'url' => $this->url().'list/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Permissions')),
-				  'url' => $this->url().'permissions/'),			  
-		);			
+		
 	}
 	public static function actor_sort($a,$b) {
 		if(
@@ -128,14 +120,7 @@ class Actor_Admin extends Admin {
 
 	}
 
-	public function display_menu($selected){
-		$template = MCMS::Get_Instance()->output()->start(array('actor','admin','menu'));
-		$template->url = $this->url;
-		$template->title = $this->title;
-		$template->selected = $selected;
-		$template->items = $this->menu_items;
-		return $template;
-	}
+
 
 	public function display_list(){
 		$template = MCMS::Get_Instance()->output()->start(array('actor','admin','list'));

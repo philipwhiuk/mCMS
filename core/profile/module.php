@@ -6,5 +6,11 @@ class Profile_Module extends Module {
 		Module::Get('language');
 		Module::Get('content');
 		$this->files('exception');
+		try {
+			Module::Get('admin');
+			Admin::Register('profile','Profile_Admin','admin',$this);
+		} catch(Exception $e){
+
+		}	
 	}
 }

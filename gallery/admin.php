@@ -39,16 +39,7 @@ class Gallery_Admin extends Admin {
 		parent::__construct($a,$b);
 		$this->url = $this->url();
 		Permission::Check(array('gallery'), array('view','edit','add','delete','list','admin'),'admin');
-		$this->menu_title = Language::Retrieve()->get($this->module, array('admin','menu','gallery','title'));
-		$this->menu_items = array(
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','gallery','Add')),
-				  'url' => $this->url().'add/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','gallery','ManageG')),
-				  'url' => $this->url().'list/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','gallery','ManageI')),
-				  'url' => $this->url().'items/manage/'),					  
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','gallery','Permissions')),
-				  'url' => $this->url().'permissions/'));
+
 	}
 
 	public function execute_list(){

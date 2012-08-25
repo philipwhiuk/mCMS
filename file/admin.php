@@ -136,13 +136,7 @@ class File_Admin extends Admin {
 		$this->execute_list();
 	}
 
-	public function display_menu($selected){
-		$template = MCMS::Get_Instance()->output()->start(array('file','admin','menu'));
-		$template->url = $this->url;
-		$template->title = $this->title;
-		$template->items = $this->menu_items;
-		return $template;
-	}
+
 
 	public function display_list(){
 		$template = MCMS::Get_Instance()->output()->start(array('file','admin','list'));
