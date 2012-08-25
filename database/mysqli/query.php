@@ -1,22 +1,14 @@
 <?php
-
 abstract class Database_MySQLi_Query implements IDatabase_Query {
-	
-	protected $table;
-	protected $where_tor;
-	protected $where_and;
-	protected $args = array();
-	
-	public function table($table){
-		$this->table = $table;
-		return $this;
-	}
-	
 	public function execute(){
 		$this->args = array();
 		$sql = $this->generate_sql();
-		$result = System::Get_Instance()->database()->query_array($sql, $this->args);
+		$result = MCMS::Get_Instance()->storage()->query_array($sql, $this->args);
 		return $result;
+	}
+	public function From($table){
+		$this->table = $table;
+		return $this;
 	}
 	
 	abstract protected function generate_sql();
@@ -105,5 +97,4 @@ abstract class Database_MySQLi_Query implements IDatabase_Query {
 		$where .= $this->generate_clause($this->where_tor, $this->where_and);
 		return $where;
 	}
-	
 }

@@ -14,7 +14,7 @@ interface IDatabase {
 
 interface IDatabase_Query {
 	
-	public function table($table);
+	public function From($table);
 	
 }
 
