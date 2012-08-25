@@ -52,7 +52,7 @@ abstract class Admin {
 					}
 					$panels[$i] = Admin::MakePanel($class,$panel,$parent);
 				} catch (Exception $e){
-					//var_dump($e);
+					var_dump($e);
 					$exceptions[] = $e;
 				}
 			}

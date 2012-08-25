@@ -53,7 +53,6 @@ class Admin_Page_Main extends Page_Main {
 		foreach($this->panels as $i => $panel){
 			$tMItem = array();
 			$tMItem['selected'] = ($panel == $this->panel);
-			
 			$tMItem['value'] = $panel['menu']->display(($panel == $this->panel));
 			$tMItem['module'] = $panel['menu']->module()->name();
 			$tMItem['hasSubItems'] = $panel['menu']->menuHasSubItems();
