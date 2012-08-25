@@ -1,6 +1,9 @@
 <?php
 
 class Template_Theme_Graphene_HTML_Admin_Page extends Template {
+	public $menu = array();
+	public $panel;
+
 	public function display(){
 ?>		
 <div class="admin page-admin">
@@ -24,7 +27,7 @@ class Template_Theme_Graphene_HTML_Admin_Page extends Template {
 		</ul>
 	</div>
 	<div class="admin-panel">
-		<?php $this->panel->display(); ?>
+		<?php if($this->panel != NULL) {$this->panel->display(); } ?>
 	</div>
 </div>
 <?php	
