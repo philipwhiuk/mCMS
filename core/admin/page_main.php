@@ -4,13 +4,6 @@ class Admin_Page_Main extends Page_Main {
 
 	private $panels;
 	
-	public static function Load_Main() {
-	
-	}
-	public static function Load_Menu() {
-	
-	}
-	
 	public function __construct($parent){
 		parent::__construct($parent);
 		Permission::Check(array('admin'), array('panel'), 'panel');
@@ -51,16 +44,20 @@ class Admin_Page_Main extends Page_Main {
 		$template = MCMS::Get_Instance()->output()->start(array('admin','page'));
 		$template->menu = array();
 		foreach($this->panels as $i => $panel){
-			$tMItem = array();
-			$tMItem['selected'] = ($panel == $this->panel);
-			$tMItem['value'] = $panel['menu']->display(($panel == $this->panel));
-			$tMItem['module'] = $panel['menu']->module()->name();
-			$tMItem['hasSubItems'] = $panel['menu']->menuHasSubItems();
-			$template->menu[$i] = $tMItem;
+			try {
+				$panelMenu = call_user_func(array($panel['class'],'Load_Menu'),$panel['panel'], $panel['parent']);
+				$tMItem = array();
+				$tMItem['selected'] = ($panel == $this->panel);
+				$tMItem['value'] = $panelMenu->display(($panel == $this->panel));
+				$tMItem['module'] = $panelMenu->module()->name();
+				$tMItem['hasSubItems'] = $panelMenu->menuHasSubItems();
+				$template->menu[$i] = $tMItem;
+			} catch (Exception $e) {
+				//Silently ignore menu display errors
+			}
 		}
-		$template->panel = $this->panel['main']->display();
+		$template->panel = call_user_func(array($this->panel['class'],'Load_Main'),$this->panel['panel'], $this->panel['parent'])->display();
 		$template->title = "Admin";
 		return $template;
-	}
-	
+	}	
 }
