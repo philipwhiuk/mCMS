@@ -2,7 +2,6 @@
 
 abstract class Admin {
 
-	abstract public function execute($parent);
 	abstract public function display();
 	public function menuHasSubItems() {
 		return true;
