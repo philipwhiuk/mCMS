@@ -1,6 +1,6 @@
 <?php
 
-class Group_Admin extends Admin {
+abstract class Group_Admin extends Admin {
 
 	protected $parent;
 	protected $mode;
@@ -66,28 +66,7 @@ class Group_Admin extends Admin {
 		} catch(Form_Incomplete_Exception $e){
 		}		
 	}	**/
-	public function execute_list(){
-		$this->mode = 'list';  
-		$arg = $this->parent->resource()->get_argument();
-		if(is_numeric($arg) && ((int) $arg) > 0){
-			$arg = (int) $arg;
-			$this->groups = Group::Get_All(20, ($arg - 1) * 20);
-			$this->parent->resource()->consume_argument();
-			$this->page = $arg;
-		} else {
-			$this->page = 1;
-			$this->groups = Group::Get_All(20);
-		}
 
-		$count = Group::Count_All();
-		$this->page_count = ((int) ($count / 20)) + ((($count % 20) == 0) ? 0 : 1);
-		$language = Language::Retrieve();
-		$this->edit = $language->get($this->module, array('admin','list','edit'));
-		$this->title = $language->get($this->module, array('admin','list','title'));
-		for($pg = 1; $pg <= $this->page_count; $pg ++){
-			$this->pages[$pg] = $this->url('list/' . $pg);
-		}
-	}
 	/**
 	public function execute_edit(){
 		$this->mode = 'edit';
@@ -123,50 +102,6 @@ class Group_Admin extends Admin {
 
 	}
 	**/
-	public function execute($parent){
-		$this->parent = $parent;
-		$arg = $this->parent->resource()->get_argument();
-		try {
-			switch($arg) {
-				case 'add':
-					$this->parent->resource()->consume_argument();
-					$this->execute_add();
-					break;
-				case 'edit':
-					$this->parent->resource()->consume_argument();
-					$this->execute_edit();
-					return;
-					break;
-				case 'list':
-				default:
-					$this->parent->resource()->consume_argument();
-					$this->execute_list();
-					return;
-					break;
-			}
-		} catch(Exception $e){
-
-		}
-	}
-
-
-	public function display_list(){
-		$template = MCMS::Get_Instance()->output()->start(array('group','admin','list'));
-		$template->groups = array();
-		$template->edit = $this->edit;
-		$template->title = $this->title;
-		$template->pages = $this->pages;
-		$template->page_count = $this->page_count;
-		$template->page = $this->page;
-		foreach($this->groups as $group){
-			$template->groups[] = array(
-				'title' => $group->get_title(),
-				'edit' => $this->url('edit/' . $group->id())
-			);
-		}
-		return $template;
-	}
-
 	public function display_edit(){
 		$template = MCMS::Get_Instance()->output()->start(array('content','admin','edit'));
 		$template->title = $this->content->get_title();
@@ -179,17 +114,4 @@ class Group_Admin extends Admin {
 		$template->form = $this->form->display();
 		return $template;
 	}
-
-	public function display(){
-		switch($this->mode) {
-			case 'add':
-				return $this->display_add();
-			case 'edit':
-				return $this->display_edit();			
-			case 'list':
-				return $this->display_list();			
-				break;
-		}
-	}
-
 }
