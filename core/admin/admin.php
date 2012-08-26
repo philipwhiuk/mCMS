@@ -50,7 +50,7 @@ abstract class Admin {
 					if(!class_exists($class) || !is_subclass_of($class, 'Admin')){
 						throw new Admin_Invalid_Exception($panel);
 					}
-					$panels[$i] = Admin::MakePanel($class,$panel,$parent);
+					$panels[$i] = array('class' => $class, 'panel' => $panel, 'parent' => $parent);
 				} catch (Exception $e){
 					var_dump($e);
 					$exceptions[] = $e;
@@ -62,14 +62,4 @@ abstract class Admin {
 		}
 		return $panels;
 	}
-	private static function MakePanel($class,$panel,$parent) {
-		$panelData = array();
-		$panelData['menu'] = call_user_func(array($class,'Load_Menu'),$panel, $parent);
-		$panelData['main'] = call_user_func(array($class,'Load_Main'),$panel, $parent);
-		if($panelData['menu'] === null || $panelData['main'] === null) {
-			throw new Admin_Invalid_Exception($panel);
-		}
-		return $panelData;
-	}
-
 }
