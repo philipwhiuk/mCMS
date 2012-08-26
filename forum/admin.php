@@ -1,5 +1,5 @@
 <?php
-class Forum_Admin extends Admin {
+abstract class Forum_Admin extends Admin {
 	protected $mode;
 
 	public static function Load_Menu($panel, $parent) {
