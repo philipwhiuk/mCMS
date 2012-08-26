@@ -33,30 +33,7 @@ class Simm_Admin extends Admin {
 	public function __construct($a,$b){
 		parent::__construct($a,$b);
 		$this->url = $this->url();
-		Permission::Check(array('content'), array('view','edit','add','delete','list','admin'),'admin');
-		$this->menu_title = Language::Retrieve()->get($this->module, array('admin','menu','title'));
-		$this->menu_items = array(
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Characters')),
-				  'url' => $this->url().'characters/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Departments')),
-				  'url' => $this->url().'departments/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Fleets')),
-				  'url' => $this->url().'fleets/'),			
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Missions')),
-				  'url' => $this->url().'missions/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Positions')),
-				  'url' => $this->url().'positions/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Ranks')),
-				  'url' => $this->url().'ranks/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Simms')),
-				  'url' => $this->url().'simms/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Specifications')),
-				  'url' => $this->url().'specifications/'),		
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Technology')),
-				  'url' => $this->url().'technology/'),	
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Uniforms')),
-				  'url' => $this->url().'uniforms/'),					  
-		);		
+		Permission::Check(array('content'), array('view','edit','add','delete','list','admin'),'admin');	
 	}
 /**	public function execute_list(){
 		$this->mode = 'list';  
@@ -141,14 +118,7 @@ class Simm_Admin extends Admin {
 		}
 	}
 
-	public function display_menu($selected){
-		$template = MCMS::Get_Instance()->output()->start(array('simm','admin','menu'));
-		$template->title = $this->menu_title;
-		$template->items = $this->menu_items;
-		$template->url = $this->url;
-		$template->selected = $selected;
-		return $template;
-	}
+
 /**	public function display_list(){
 		$template = MCMS::Get_Instance()->output()->start(array('content','admin','list'));
 		$template->content = array();

@@ -37,15 +37,7 @@ class Menu_Admin extends Admin {
 		parent::__construct($a,$b);
 		$this->url = $this->url();
 		Permission::Check(array('menu'), array('view','edit','add','delete','list','admin'),'admin');
-		$this->menu_title = Language::Retrieve()->get($this->module, array('admin','menu','title'));
-		$this->menu_items = array(
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Add')),
-				  'url' => $this->url().'add/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Manage')),
-				  'url' => $this->url().'list/'),
-			array('title' => Language::Retrieve()->get($this->module, array('admin','menu','Permissions')),
-				  'url' => $this->url().'permissions/'),			  
-		);
+
 	}
 
 	public function execute_list(){
@@ -124,14 +116,7 @@ class Menu_Admin extends Admin {
 		$this->execute_list();
 	}
 
-	public function display_menu($selected){
-		$template = MCMS::Get_Instance()->output()->start(array('menu','admin','menu'));
-		$template->title = $this->menu_title;
-		$template->items = $this->menu_items;
-		$template->url = $this->url;
-		$template->selected = $selected;
-		return $template;
-	}
+
 
 	public function display_list(){
 		$template = MCMS::Get_Instance()->output()->start(array('menu','admin','list'));
