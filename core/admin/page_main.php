@@ -56,7 +56,12 @@ class Admin_Page_Main extends Page_Main {
 				//Silently ignore menu display errors
 			}
 		}
-		$template->panel = call_user_func(array($this->panel['class'],'Load_Main'),$this->panel['panel'], $this->panel['parent'])->display();
+		$panelMain = call_user_func(array($this->panel['class'],'Load_Main'),$this->panel['panel'], $this->panel['parent']);
+		if($panelMain != null) {
+			$template->panel = $panelMain->display();
+		} else {
+			$template->panel = null;
+		}
 		$template->title = "Admin";
 		return $template;
 	}	
