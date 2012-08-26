@@ -26,7 +26,8 @@ abstract class Film_Feature_Admin extends Admin {
 	public function __construct($a,$b){
 		parent::__construct($a,$b);
 		Permission::Check(array('film_feature'), array('view','edit','add','delete','list','admin'),'admin');
-		$this->url = $this->url('features/');
+		$this->url = $this->url('');
+		$this->flist_url = $this->url('features/');
 		$this->slist_url = $this->url('showings/');		
 
 	}
