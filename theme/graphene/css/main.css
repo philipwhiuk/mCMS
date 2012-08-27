@@ -1123,7 +1123,125 @@ display: block;
 overflow: hidden;
 padding: 7px 7px 8px;
 }
-
+.icon32.icon-dashboard, #icon-index {
+background-position: -137px -5px;
+}
+/** Widgets **/
+.widget, #widget-list .widget-top, .postbox, .menu-item-settings {
+background-color: #F7FCFE;
+}	
+.simm-admin-list .postbox {
+background-color: #EEFFEE;
+}
+.simm-admin-list .postbox h3 {
+color: #17694F;
+}
+.simm-admin-list a {
+color: #72AF17;
+}
+.widget, #widget-list .widget-top, .postbox, #titlediv, #poststuff .postarea, .stuffbox {
+border-color: #D1E5EE;
+-moz-box-shadow: inset 0 1px 0 #fff;
+-webkit-box-shadow: inset 0 1px 0 white;
+box-shadow: inset 0 1px 0 white;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+}
+.widget, .postbox, .stuffbox {
+margin-bottom: 20px;
+padding: 0;
+border-width: 1px;
+border-style: solid;
+line-height: 1;
+}
+.postbox .inside, .stuffbox .inside {
+line-height: 1.4em;
+}
+.postbox .hndle {
+cursor: move;
+-webkit-border-top-left-radius: 3px;
+-webkit-border-top-right-radius: 3px;
+border-top-left-radius: 3px;
+border-top-right-radius: 3px;
+}
+.postbox h3 {
+color: #174F69;
+}
+.widget .widget-top, .postbox h3, .stuffbox h3 {
+border-bottom-color: #D1E5EE;
+text-shadow: white 0 1px 0;
+-moz-box-shadow: 0 1px 0 #fff;
+-webkit-box-shadow: 0 1px 0 white;
+box-shadow: 0 1px 0 white;
+}
+.widget .widget-top, .postbox h3, .stuffbox h3, .widefat thead tr th, .widefat tfoot tr th, h3.dashboard-widget-title, h3.dashboard-widget-title span, h3.dashboard-widget-title small, .find-box-head, .sidebar-name, #nav-menu-header, #nav-menu-footer, .menu-item-handle, #fullscreen-topbar {
+background-color: #F5FAFD;
+background-image: -ms-linear-gradient(top,#F7FCFE,#EFF8FF);
+background-image: -moz-linear-gradient(top,#F7FCFE,#EFF8FF);
+background-image: -o-linear-gradient(top,#F7FCFE,#EFF8FF);
+background-image: -webkit-gradient(linear,left top,left bottom,from(#F7FCFE),to(#EFF8FF));
+background-image: -webkit-linear-gradient(top,#F7FCFE,#EFF8FF);
+background-image: linear-gradient(top,#F7FCFE,#EFF8FF);
+}
+#poststuff h3, .metabox-holder h3 {
+font-size: 15px;
+font-weight: normal;
+padding: 7px 10px;
+margin: 0;
+line-height: 1;
+}
+.widget .widget-top, .postbox h3, .stuffbox h3 {
+border-bottom-width: 1px;
+border-bottom-style: solid;
+-webkit-user-select: none;
+user-select: none;
+}
+.meta-box-sortables .postbox:hover .handlediv {
+background: transparent url(../images/arrows-vs.png) no-repeat 6px 7px;
+}
+.postbox .handlediv {
+float: right;
+width: 27px;
+height: 30px;
+cursor: pointer;
+}
+#dashboard_right_now .table_content {
+float: left;
+width: 45%;
+margin-left: 10px;
+}
+#dashboard_right_now .table_discussion {
+float: right;
+width: 45%;
+margin-right: 10px;
+}
+#dashboard_right_now table tr.first td {
+border-top: 0;
+}
+#dashboard_right_now .t {
+font-size: 12px;
+padding-right: 12px;
+padding-top: 6px;
+color: #777;
+}
+#dashboard_right_now td.b {
+padding-right: 6px;
+text-align: right;
+font-size: 14px;
+width: 1%;
+}
+#dashboard_right_now p.sub {
+color: #8F8F8F;
+font-size: 14px;
+border-bottom: #ECECEC 1px solid;
+}
+#dashboard_right_now .versions {
+padding: 6px 10px 12px;
+clear: both;
+}
+#dashboard_right_now td.b a {
+font-size: 18px;
+}
 /** Admin Menu **/
 .admin-menu {
 clear: left;
