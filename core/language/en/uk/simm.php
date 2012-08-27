@@ -27,6 +27,15 @@ return array(
 			'Technology' => 'Technology',
 			'Uniforms' => 'Uniforms',				
 		),
+		'overview' => array (
+			'title' => 'Overview',
+			'characters' => 'Characters',
+			'departments' => 'Departments',
+			'positions' => 'Positions',
+			'missions' => 'Missions',
+			'simms' => 'Simms',		
+			'fleets' => 'Fleets',			
+		),
 		'list' => array(
 			'edit' => 'Edit',
 			'title' => 'Installed Themes'
