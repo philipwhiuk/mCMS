@@ -62,9 +62,6 @@ class Content_Admin_List extends Content_Admin {
 		);
 		$this->mode = 'list';		
 	}
-	public function execute($parent) {
-		$this->parent = $parent;
-	}
 	public function display(){
 		$template = MCMS::Get_Instance()->output()->start(array('content','admin','list'));
 		$template->content = array();
