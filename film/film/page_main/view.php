@@ -65,13 +65,11 @@ class Film_Page_Main_View extends Film_Page_Main {
 		$template->imdbID = $this->film->get_imdb();
 		try {
 			$template->certificate = $this->film->get_certificate()->get_image()->description()->get_title();
-		}
-		catch(Film_Certificate_Not_Found_Exception $e) {
+		} catch(Film_Certificate_Not_Found_Exception $e) {
 		}
 		try {
 				$template->trailer = $this->film->get_random_trailer()->get_video()->content()->get_body();
-		}
-		catch (Film_Trailer_Not_Found_Exception $e) {
+		} catch (Film_Trailer_Not_Found_Exception $e) {
 		}
 		if(isset($this->synopsis)) {
 			$template->synopsis = $this->synopis;
@@ -81,12 +79,14 @@ class Film_Page_Main_View extends Film_Page_Main {
 		}
 		try {
 			$template->tagline = $this->film->get_random_tagline()->text();
-		}
-		catch (Film_Tagline_Not_Found_Exception $e) {
+		} catch (Film_Tagline_Not_Found_Exception $e) {
 			$template->tagline = "";
 		}
 		if(isset($this->smallImageFiles)) {
-			$template->smallImage = $this->smallImageFiles[0]->file()->id();
+			try {
+				$template->smallImage = $this->smallImageFiles[0]->file()->id();
+			} catch (File_Not_Found_Exception $e) {
+			}
 		}
 		$template->role_actors = $this->role_actors;
 		return $template;
