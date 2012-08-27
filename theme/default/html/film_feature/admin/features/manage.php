@@ -1,6 +1,6 @@
 <?php
 
-class Template_Theme_Default_HTML_Film_Feature_Admin_List extends Template {
+class Template_Theme_Default_HTML_Film_Feature_Admin_Features_Manage extends Template {
 	public $film_features = array();
 	public function display(){
 ?>		
