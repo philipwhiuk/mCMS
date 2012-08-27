@@ -3,7 +3,7 @@
 class Form_Field_Select extends Form_Field {
 	
 	private $label;
-	private $options;
+	private $options = array();
 	private $default;
 	
 	public function set_label($label){
@@ -30,7 +30,7 @@ class Form_Field_Select extends Form_Field {
 	}
 	
 	public function display($parent){
-		$template = System::Get_Instance()->output()->start(array('form','field','select'));
+		$template = MCMS::Get_Instance()->output()->start(array('form','field','select'));
 		
 		$id = $parent->get_id();
 		$id[] = $this->name;

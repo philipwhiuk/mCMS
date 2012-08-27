@@ -3,6 +3,7 @@
 class Template_Theme_Default_HTML_Form_Field_Select extends Template {
 	
 	public $label;
+	public $options = array();
 	
 	public function id(){
 		return 'form-field-' . implode($this->id, '-');
