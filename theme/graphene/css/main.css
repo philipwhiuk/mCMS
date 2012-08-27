@@ -16,6 +16,17 @@ a:hover {
 	color: #074d7c;
 	text-decoration: none;
 }
+div.page-list {
+	background: #FFFFFF;
+	border-bottom: 1px solid #CCC;
+	border-top: 1px solid #D8D8D8;
+	margin-bottom: 10px;
+	padding: 15px 0 10px;
+	overflow: visible;
+	position: relative;
+	width: 100%;
+}
+
 .bg-gradient {
 	background: url(images/bg-gradient.png) left bottom repeat-x fixed;
 	position: relative;
@@ -1812,6 +1823,17 @@ border-radius: 5px
 vertical-align: middle;
 }
 /** Film List Boxes **/
+
+div.page-film-list {
+	background: #FFFFFF;
+	border-bottom: 1px solid #CCC;
+	border-top: 1px solid #D8D8D8;
+	margin-bottom: 10px;
+	padding: 15px 0 10px;
+	overflow: visible;
+	position: relative;
+	width: 100%;
+}
 .filmlistboxes_section 		{
 	margin: 		5px auto;
 				}
