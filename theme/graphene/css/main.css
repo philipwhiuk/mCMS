@@ -38,6 +38,10 @@ display: none;
 float: left;
 }
 /** Clear **/
+br.clear {
+height: 2px;
+line-height: 2px;
+}
 .clear {
     clear: both;
     display: block;
@@ -1397,6 +1401,174 @@ color: #D54E21;
 	position: relative;
 	top: -2px;	
 }
+
+.forum-admin-list table {
+	width: 100%;
+	border: 1px solid #CCCFD3;
+	background-color: white;
+	padding: 1px;
+}
+.forum-admin-list td {
+	font-size: 0.85em;
+	padding: 4px;
+	line-height: 1.20em;
+}
+.forum-admin-list col.col1, .forum-admin-list col.col2 {
+	background-color: #F9F9F9;
+}
+.forum-admin-list col.col3 {
+	background-color: #DCEBFE;
+}
+/** Themes **/
+.icon32.icon-appearance, #icon-themes {
+background-position: -11px -5px;
+}
+h2.nav-tab-wrapper, h3.nav-tab-wrapper {
+border-bottom: 1px solid #CCC;
+padding-bottom: 0;
+}
+h2 .nav-tab {
+padding: 4px 10px 6px;
+font-weight: 200;
+font-size: 20px;
+line-height: 24px;
+}
+h2 .nav-tab, .wrap h2, .subtitle, .login form .input {
+font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+}
+.nav-tab:hover, .nav-tab-active {
+border-color: #CCC #CCC white;
+}
+.nav-tab-active {
+border-width: 1px;
+color: #464646;
+}
+.nav-tab {
+border-style: solid;
+border-color: #DFDFDF #DFDFDF white;
+border-width: 1px 1px 0;
+color: #AAA;
+text-shadow: white 0 1px 0;
+font-size: 12px;
+line-height: 16px;
+display: inline-block;
+padding: 4px 14px 6px;
+text-decoration: none;
+margin: 0 6px -1px 0;
+-webkit-border-top-left-radius: 3px;
+-webkit-border-top-right-radius: 3px;
+border-top-left-radius: 3px;
+border-top-right-radius: 3px;
+}
+#current-theme.has-screenshot {
+padding-left: 330px;
+}
+.theme-options {
+overflow: hidden;
+font-size: 14px;
+padding-bottom: 10px;
+margin-left: -330px;
+}
+#current-theme h3 {
+margin: 0;
+font-size: 12px;
+font-weight: normal;
+color: #999;
+}
+#current-theme h4 {
+margin: 3px 0 16px;
+font-size: 20px;
+}
+#current-theme img {
+float: left;
+width: 300px;
+margin-left: -330px;
+border-width: 1px;
+border-style: solid;
+border-color: #999;
+}
+#current-theme .theme-description {
+margin-top: 5px;
+max-width: 600px;
+line-height: 1.6em;
+}
+#current-theme .theme-info {
+margin: 1em 0;
+overflow: hidden;
+}
+.theme-options span {
+float: left;
+margin-right: 10px;
+text-transform: uppercase;
+font-size: 11px;
+line-height: 18px;
+color: #999;
+}
+.theme-options ul {
+float: left;
+margin: 0;
+list-style: none;
+padding: 0;
+}
+#current-theme .theme-info li, .theme-options li, .available-theme .action-links li {
+float: left;
+padding-right: 5px;
+margin-right: 5px;
+border-right: 1px solid #DFDFDF;
+}
+#current-theme a {
+border-bottom: 0;
+color: #21759B;
+}
+#current-theme ul.theme-info {
+margin: 1em 0;
+overflow: hidden;
+padding: 0;
+list-style: none;
+}
+.theme-options a {
+text-decoration: underline;
+}
+.theme-options .load-customize {
+margin-right: 30px;
+float: left;
+}
+.hide-if-customize {
+display: none;
+}
+.available-theme {
+display: inline-block;
+margin-right: 10px;
+overflow: hidden;
+padding: 20px 20px 20px 0;
+vertical-align: top;
+width: 300px;
+}
+.available-theme, .available-theme .screenshot, #current-theme img {
+width: 240px;
+}
+.available-theme img {
+width: 100%;
+}
+.available-theme .theme-author {
+line-height: 18px;
+}
+.available-theme .action-links {
+margin-top: 10px;
+overflow: hidden;
+}
+.available-theme .action-links ul {
+list-style: none;
+padding: 0;
+}
+.available-theme .action-links li {
+padding-right: 8px;
+margin-right: 8px;
+font-size: 12px;
+}
+.available-theme a {
+text-decoration: underline;
+}
 /** Topic **/
 .topic-view h2{
 	border: none;
@@ -1466,6 +1638,10 @@ td.topics, th.topics, td.posts, th.posts {
 	height: 100%;
 	width: 100%;
 }
+/** User **/
+.icon32.icon-users, #icon-users, #icon-profile, #icon-user-edit {
+background-position: -600px -5px;
+}
 /** User Profile **/
 .profile-user-view {
 	overflow: auto;
@@ -1493,6 +1669,10 @@ td.topics, th.topics, td.posts, th.posts {
 }
 .profile-user-view .profile_fields div.field_data {
 	float: left;
+}
+/** Links **/
+.icon32.icon-links, #icon-link-manager, #icon-link, #icon-link-category {
+background-position: -190px -5px;
 }
 /** News **/
 .news-archive-title {
