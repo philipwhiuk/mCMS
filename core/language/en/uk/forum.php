@@ -50,14 +50,20 @@ return array(
 	),
 	'admin' => array(
 		'menu' => array(
-			'title' => 'Forum',
+			'title' => 'Forums',
 			'Add' => 'Add forum',
 			'Manage' => 'Manage forums',
 			'Permissions' => 'Permissions',	
 		),
 		'list' => array(
+			'title' => 'Forums',
+			'description' => 'In mCMS a category is just a special type of forum. Each forum can have an unlimited number of sub-forums and you can determine whether each may be posted to or not. Here you can add, edit, delete, lock, unlock individual forums as well as set certain additional controls. If your posts and topics have got out of sync you can also resynchronise a forum.',
+			'top' => 'Board index',
+			'up' => 'Move up',
+			'down' => 'Move down',
 			'edit' => 'Edit',
-			'title' => 'Forum List'
+			'resync' => 'Resynchronise',
+			'delete' => 'Delete'
 		),
 		'edit' => array(
 			'title' => 'Title:',

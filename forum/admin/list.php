@@ -26,21 +26,43 @@ class Forum_Admin_List extends Forum_Admin {
 			$this->pages[$pg] = $this->url('list/' . $pg);
 		}	
 		$language = Language::Retrieve();
-		$this->edit = $language->get($this->module, array('admin','list','edit'));
 		$this->title = $language->get($this->module, array('admin','list','title'));
+		$this->description = $language->get($this->module, array('admin','list','description'));
+		$this->top = $language->get($this->module, array('admin','list','top'));
+		$this->up = $language->get($this->module, array('admin','list','up'));
+		$this->down = $language->get($this->module, array('admin','list','down'));
+		$this->edit = $language->get($this->module, array('admin','list','edit'));
+		$this->resync = $language->get($this->module, array('admin','list','resync'));
+		$this->delete = $language->get($this->module, array('admin','list','delete'));
+
 	}
 	public function display(){
 		$template = MCMS::Get_Instance()->output()->start(array('forum','admin','list'));
 		$template->forum = array();
-		$template->edit = $this->edit;
+		
 		$template->title = $this->title;
+		$template->description = $this->description;
+		$template->top = $this->top;
+		$template->up = $this->up;
+		$template->down = $this->down;
+		$template->edit = $this->edit;
+		$template->resync = $this->resync;
+		$template->delete = $this->delete;
+		
+		$template->addurl = $this->url().'add/';
+		
 		$template->pages = $this->pages;
 		$template->page_count = $this->page_count;
 		$template->page = $this->page;
 		foreach($this->forum as $forum){
 			$template->forum[] = array(
 				'title' => $forum->content()->get_title(),
-				'edit' => $this->url('edit/' . $forum->id())
+				'description' => $forum->content()->get_body(),
+				'edit' => $this->url('edit/' . $forum->id()),
+				'resync' => $this->url('resync/' . $forum->id()),
+				'delete' => $this->url('delete/' . $forum->id()),
+				'topic_count' => $forum->topic_count(),
+				'post_count' => $forum->post_count(),
 			);
 		}
 		return $template;
