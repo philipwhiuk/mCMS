@@ -1768,6 +1768,49 @@ background-position: -190px -5px;
 	float: right;
 	position: relative;
 }
+.post-com-count-wrapper {
+min-width: 22px;
+font-family: sans-serif;
+}
+.post-com-count {
+background-image: url('images/bubble_bg.gif');
+color: white;
+height: 1.3em;
+line-height: 1.1em;
+display: block;
+text-decoration: none;
+padding: 0 0 6px;
+cursor: pointer;
+background-position: center -80px;
+background-repeat: no-repeat;
+}
+a.post-com-count:hover span {
+background-color: #D54E21;
+}
+.fixed .column-comments {
+width: 4em;
+padding: 8px 0;
+text-align: left;
+}
+.fixed .column-comments a {
+float: left;
+}
+.post-com-count span {
+background-color: #BBB;
+color: white;
+font-size: 11px;
+font-weight: bold;
+height: 1.4em;
+line-height: 1.4em;
+min-width: .7em;
+padding: 0 6px;
+display: inline-block;
+-webkit-border-radius: 5px;
+border-radius: 5px
+}
+.widefat th#comments {
+vertical-align: middle;
+}
 /** Film List Boxes **/
 .filmlistboxes_section 		{
 	margin: 		5px auto;
