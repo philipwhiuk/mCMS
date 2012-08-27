@@ -9,8 +9,14 @@ return array(
 			'Permissions' => 'Permissions',	
 		),
 		'list' => array(
+			'add' => 'Add',
 			'edit' => 'Edit',
-			'title' => 'User List'
+			'title' => 'Users',
+			'search' => 'Search Users',
+			'grouping_type' => array(
+				'all' => 'All',
+				'validated' => 'Validated'
+			)
 		),
 		'edit' => array(
 			'name' => 'Name',
