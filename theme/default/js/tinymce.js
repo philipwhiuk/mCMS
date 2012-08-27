@@ -39,7 +39,7 @@ function tinymce_init(tinymce, filemanager, css){
 			theme_advanced_toolbar_align : "center",
 			theme_advanced_statusbar_location : "bottom",
 			theme_advanced_resizing : true,
-			theme_advanced_resize_horizontal : false,
+			theme_advanced_resize_horizontal : true,
 			
 			inline : true,
 			
