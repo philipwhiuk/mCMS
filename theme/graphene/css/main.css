@@ -831,7 +831,7 @@ display: none;
 	padding-top: 21px;
 	padding-bottom: 20px;
 }
-.page-content-view, .page-view {
+.page-view, .page-edit, .page-content-view, .page-content-edit {
 	background: #fff;
 	border-bottom: 1px solid #ccc;
 	border-top: 1px solid #d8d8d8;
@@ -1345,6 +1345,42 @@ border-bottom-color: #CAE6FF;
 color: #D54E21;
 }
 
+/** Form **/
+div.form {
+	background: #FFFFFF;
+	margin-bottom: 10px;
+	padding: 15px 0 10px;
+	overflow: visible;
+	position: relative;
+	width: 100%;
+}
+div.form-field-label {
+	font-weight: bold;
+	font-size: large;
+	width: 10%;
+	float: left;
+	clear: left;
+	padding: 2px;
+	margin-left: 5px;
+	text-align: right;
+	margin-bottom: 10px;
+	background: white;
+}
+div.form-field-input {
+	float: left;
+	width: 80%;
+}
+div.form-field-submit  {
+	clear: both;
+	margin: auto;
+	width: 60px;
+	padding-top: 10px;
+}
+div.form-field-submit div.form-field-input {
+	clear: both;
+	float: none;
+	width: 60px;
+}
 
 /** Forum **/
 .forum-view  h1 {
