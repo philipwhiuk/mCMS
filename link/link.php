@@ -6,9 +6,34 @@ class Link {
 		return $query->execute();
 
 	}
-	
+	public static function Count_Published(){
+		
+		$query = MCMS::Get_Instance()->Storage()->Count()->From('link')->where('=', array(array('col','published'), array('u', 1)));
+		return $query->execute();
+
+	}
 	public static function Get_All($limit = null, $skip = null){
 		$query = MCMS::Get_Instance()->Storage()->Get()->From('link')->order(array('id' => true));
+
+		if(isset($limit)){
+			$query->limit($limit);
+			if(isset($skip)){
+				$query->offset($skip);
+			}
+		}
+		
+		$result = $query->execute();
+		
+		$return = array();
+		
+		while($row = $result->fetch_object('Link')){
+			$return[] = $row;
+		}
+		
+		return $return;
+	}
+	public static function Get_Published($limit = null, $skip = null){
+		$query = MCMS::Get_Instance()->Storage()->Get()->From('link')->where('=', array(array('col','published'), array('u', 1)))->order(array('title' => true));
 
 		if(isset($limit)){
 			$query->limit($limit);

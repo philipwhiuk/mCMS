@@ -9,7 +9,12 @@ return array(
 		),
 		'list' => array(
 			'edit' => 'Edit',
-			'title' => 'List of Links'
+			'title' => 'Links',
+			'search' => 'Search Links',
+			'grouping_type' => array(
+				'all' => 'All',
+				'publish' => 'Publish'
+			)	
 		),
 		'edit' => array(
 			'title' => 'Title:',
