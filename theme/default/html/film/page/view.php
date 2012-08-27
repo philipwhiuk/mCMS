@@ -1,12 +1,18 @@
 <?php
 
 class Template_Theme_Default_HTML_Film_Page_View extends Template {
+	public $trailer;
+	public $title;
+	public $tagline;
+	public $certificate;
+	
+
 	public function display(){
 ?>		
 <div class="page-view film page-film film-view page-film-view"  style="border: 1px solid #444; 
 	<?php if(isset($this->backgroundImage)) { ?>background-image: url(<?php echo $this->backgroundImage; ?>); <?php } ?>">
 	<h1 class="film_title">film: <?php echo $this->title; ?></h1>
-	<div class="tagline">"<?php echo $this->tagline; ?>"</div>
+	<div class="tagline"><?php if($this->tagline != "") { echo '"'.$this->tagline.'"'; } ?></div>
         <div class="filmbox">
             <div class="filmbox_hdr">Film Details</div>
             <div class="filmbox_inner">
@@ -46,11 +52,11 @@ class Template_Theme_Default_HTML_Film_Page_View extends Template {
              </div>
              <div style="clear:left;"></div>
         </div>
-	<h2>DESCRIPTION</h2>
+	<h2>Description</h2>
 	<div class="film_feature-description">
 	<?php echo $this->description; ?>
 	</div>
-	<h2>SYNOPSIS</h2>
+	<h2>Synopsis</h2>
 	<div class="film_feature-synopsis">
 	<?php echo $this->synopsis; ?>
 	</div>
