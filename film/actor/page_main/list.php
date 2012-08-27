@@ -10,6 +10,8 @@ class Actor_Page_Main_List extends Actor_Page_Main {
 		parent::__construct($parent);
 		Permission::Check(array('actor'), array('view','edit','add','delete','list'),'list');
 		$actors = Actor::Get_All();
+		$ac_names = array();
+		$ac_url = array();
 		foreach($actors as $actor) {
 			try {
 				$ac_names[] = $actor->get_description()->get_title();
@@ -30,17 +32,12 @@ class Actor_Page_Main_List extends Actor_Page_Main {
 	}
 	
 	public function display(){
-		try {
-			$template = MCMS::Get_Instance()->output()->start(array('actor','page','list'));
-			$language = Language::Retrieve();
-			$system = MCMS::Get_Instance();
-			$module = Module::Get('actor');
+		$template = MCMS::Get_Instance()->output()->start(array('actor','page','list'));
+		$language = Language::Retrieve();
+		$system = MCMS::Get_Instance();
+		$module = Module::Get('actor');
 		$template->title = $language->get($module, array('list','title'));
 		$template->actor = $this->actors;
 		return $template;
-		}
-		catch(Exception $e) {
-			var_dump($e);
-		}
 	}
 }

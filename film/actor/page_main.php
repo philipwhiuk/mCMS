@@ -37,6 +37,9 @@ abstract class Actor_Page_Main extends Page_Main {
 		
 		$exceptions = array();
 		$arg = $parent->resource()->get_argument();
+		if($arg == null) {
+			$arg = 'list';
+		}
 		if($arg == 'add'){
 			$parent->resource()->get_module()->file('page_main/add');
 			$parent->resource()->consume_argument();
@@ -75,7 +78,6 @@ abstract class Actor_Page_Main extends Page_Main {
 			}
 			
 		}
-		var_dump($exceptions);
 		throw new Actor_Page_Unavailable_Exception($exceptions);
 	}
 	
