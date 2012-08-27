@@ -1,6 +1,7 @@
 <?php
 class File_Admin_Edit extends File_Admin {
 	public function __construct($a,$b){
+		parent::__construct($a,$b);
 		$this->mode = 'edit';
 		$arg = $this->parent->resource()->get_argument();
 		$this->file = File::Get_By_ID($arg);
@@ -45,9 +46,10 @@ class File_Admin_Edit extends File_Admin {
 		}
 
 	}
-	public function display_edit(){
+	public function display(){
 		$template = MCMS::Get_Instance()->output()->start(array('file','admin','edit'));
 		$template->title = $this->file->name();
 		$template->form = $this->form->display();
 		return $template;
 	}
+}
