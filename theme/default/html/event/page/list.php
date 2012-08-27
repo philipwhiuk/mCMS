@@ -1,6 +1,6 @@
 <?php
 
-class Template_Theme_Flix_HTML_Event_Page_List extends Template {
+class Template_Theme_Default_HTML_Event_Page_List extends Template {
 	
 	public $events = array();
 	
