@@ -1,5 +1,5 @@
 <?php
-class Film_Feature_Admin_Showings extends Film_Feature_Admin {
+abstract class Film_Feature_Admin_Showings extends Film_Feature_Admin {
 	public function execute_showings_manage(){
 		$this->mode = 'showings_manage';  
 		$arg = $this->parent->resource()->get_argument();
@@ -96,3 +96,4 @@ class Film_Feature_Admin_Showings extends Film_Feature_Admin {
 		}
 		return $template;
 	}
+}
