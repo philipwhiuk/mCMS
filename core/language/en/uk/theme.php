@@ -10,7 +10,11 @@ return array(
 		),
 		'list' => array(
 			'edit' => 'Edit',
-			'title' => 'Installed Themes'
+			'title' => 'Manage Themes'
+		),
+		'install' => array(
+			'edit' => 'Edit',
+			'title' => 'Install Themes'
 		)
 	)
 );
