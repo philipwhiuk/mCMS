@@ -1,6 +1,6 @@
 <?php
 
-class Template_Theme_Flix_HTML_Film_Admin_Edit extends Template {
+class Template_Theme_Default_HTML_Film_Admin_Edit extends Template {
 	public function display(){
 ?>		
 <div class="film-admin-edit">
