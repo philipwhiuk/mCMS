@@ -3,6 +3,11 @@ abstract class Profile_Page_Main extends Page_Main {
 	public static function Load($parent){
 		$exceptions = array();
 		$arg = $parent->resource()->get_argument();
+		if($arg == null || $arg == 'list') {
+			$parent->resource()->consume_argument();
+			$parent->resource()->get_module()->file('page_main/list');
+			return new Profile_Page_Main_List($user,$parent);
+		}		
 		if(is_numeric($arg)) {
 			try {
 				$user = User::Get_By_ID($arg);
