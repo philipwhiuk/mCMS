@@ -1,6 +1,13 @@
 <?php
 
 return array(
+	'list' => array(
+		'title' => array(
+			'year' => 'Festivals: %1$s',
+			'archive' => 'Previous Festivals at Flix',
+			'current' => 'Upcoming Festivals at Flix'
+		)
+	),
 	'admin' => array(
 		'menu' => array(
 			'title' => 'Film Festivals',

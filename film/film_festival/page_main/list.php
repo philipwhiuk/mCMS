@@ -28,27 +28,18 @@ class Film_Festival_Page_Main_List extends Film_Festival_Page_Main {
 		$this->items = array();
 	}
 	public function display() {
-	try {
 		$system = MCMS::Get_Instance();
 		$template = $system->output()->start(array('film_festival','page','list'));
 		$language = Language::Retrieve();
-		$module = Module::Get('film_feature');
-		try {
-			if(is_numeric($this->title)) {
-				$template->title = $language->get($module, array('list','title','year'))." ".$this->title;
-			}
-			else {
-				$template->title = $language->get($module, array('list','title',$this->title));
-			}
-		} catch (Exception $e) {
-			var_dump($e);
+		$module = Module::Get('film_festival');
+		if(is_numeric($this->title)) {
+			$template->title = sprintf($language->get($module, array('list','title','year')), $this->title);
+		}
+		else {
+			$template->title = $language->get($module, array('list','title',$this->title));
 		}
 		$template->items = $this->items;
 		return $template;
-	}
-	catch(Exception $e) {
-		var_dump($e);
-	}
 	}
 }
 ?>
