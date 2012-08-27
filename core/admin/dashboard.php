@@ -51,8 +51,8 @@ abstract class Admin_Dashboard extends Admin {
 					return new Admin_Dashboard_Overview($panel,$parent);
 					break;
 			}
-			return;
 		} catch(Exception $e){
+			$parent->resource()->get_module()->file('dashboard/overview');
 			return new Admin_Dashboard_Overview($panel,$parent);
 		}
 	}
