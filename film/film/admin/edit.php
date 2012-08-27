@@ -7,9 +7,13 @@ class Film_Admin_Edit extends Film_Admin {
 		$this->film = Film::Get_By_ID($arg);
 		$this->parent->resource()->consume_argument();
 
-		$language = Language::Retrieve();
+		try {
 		
 		$this->buildForm();
+		} catch (Exception $e) {
+			var_dump($e);
+			throw $e;
+		}
 		try {
 			$data = $this->form->execute();
 			$this->film->update($data);
@@ -18,15 +22,20 @@ class Film_Admin_Edit extends Film_Admin {
 		}
 	}
 	public function buildForm() {
+		$language = Language::Retrieve();
 		$this->form = new Form(array('film',$this->film->get_id(), 'admin'), $this->url('edit/' . $this->film->get_id()));
-		
+
 		$title = Form_Field::Create('title', array('textbox'));
 		$title->set_label($language->get($this->module, array('admin','edit','title')));
-		$title->set_value($this->film->get_description()->get_title());
-		
 		$description = Form_Field::Create('description', array('richtext','textarea'));
 		$description->set_label($language->get($this->module, array('admin','edit','description')));
-		$description->set_value($this->film->get_description()->get_body());
+		
+		try {
+			$title->set_value($this->film->get_description()->get_title());
+			$description->set_value($this->film->get_description()->get_body());
+		} catch (Content_Not_Found_Exception $e) {
+		
+		}
 		
 		$release_year = Form_Field::Create('release_year', array('textbox'));
 		$release_year->set_label($language->get($this->module, array('admin','edit','release_year')));
@@ -92,7 +101,11 @@ class Film_Admin_Edit extends Film_Admin {
 	}
 	public function display(){
 		$template = MCMS::Get_Instance()->output()->start(array('film','admin','edit'));
-		$template->title = $this->film->get_description()->get_title();
+		try {
+			$template->title = $this->film->get_description()->get_title();
+		} catch (Content_Not_Found_Exception $e) {
+			$template->title = '';
+		}
 		$template->form = $this->form->display();
 		return $template;
 	}
