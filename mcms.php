@@ -113,28 +113,22 @@ require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
 	public function run() {
 		try{
 			try {
+				//Try & Run Normally
 				try {
 					$this->load();
 				} catch(MCMS_Not_Installed_Exception $e) {
-					try {
-						$this->install();
-					} catch (Exception $f){
-						throw new MCMS_Install_Exception(array($e, $f));
-					}
+					$this->runNotInstalled($e);
 				} catch(Exception $e){
 					throw new MCMS_Load_Exception($e);
 				}
 				$this->output->render($this->logic->display());
 			} catch (Exception $e) {
 				$this->exceptions[] = $e;
+				//Try & Run The Error Path
 				try {
 					$this->load(false);
 				} catch(MCMS_Not_Installed_Exception $e) {
-					try {
-						$this->install();
-					} catch (Exception $f){
-						throw new MCMS_Install_Exception(array($e, $f));
-					}
+					$this->runNotInstalled($e);
 				} catch(Exception $e){
 					throw new MCMS_Load_Exception($e);
 				}
@@ -143,6 +137,13 @@ require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
 		} catch (Exception $e) {
 			$this->error($e,true);	 
 		} 
+	}
+	private function runNotInstalled($exception) {
+		try {
+			$this->install();
+		} catch (Exception $f){
+			throw new MCMS_Install_Exception(array($exception, $f));
+		}
 	}
 	public function dump($level, $exception, $debug){
 		if($debug && ($level > $this->debug_level || !$this->debugging)){
