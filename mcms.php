@@ -9,12 +9,15 @@ header('Content-type: text/plain');
 ini_set('display_errors', 1); 
 error_reporting(error_reporting());
 require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
- class MCMS {
+class MCMS {
 	private static $instance;
+	
+	/** Fixes O/S Directory Differences **/
 	public static function dirname($file){
 		$string = dirname($file);
 		return rtrim(str_replace('\\', '/', $string),'/');
 	}	
+	/** Singleton Accessor **/
 	public static function Get_Instance() {
 		// Singleton
 		if(!isset(MCMS::$instance)){
@@ -33,17 +36,18 @@ require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
 	private $remote_path;
 	private $path;
 	private $formats;
-	
 	private $storage;
 	private $config;
 	private $site;
 	public $modules;
 	public $exceptions = array();
 	
+	
+	/** Error Levels **/ 
 	const dump_notice = 2;
 	const dump_warning = 1;
 	const dump_error = 0;
-
+	/** Output Locations **/
 	const dump_screen = 0;
 	const dump_file = 1;
 	const dump_file_log = 2;
@@ -110,6 +114,8 @@ require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
 		}
 		throw new MCMS_Load_Resource_Exception($path, $exceptions);
 	}
+
+	/** Entry Point **/
 	public function run() {
 		try{
 			try {
@@ -144,6 +150,8 @@ require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
 			$this->error($e,true);	 
 		} 
 	}
+
+	/** Deal With Outputting Errors **/
 	public function dump($level, $exception, $debug){
 		if($debug && ($level > $this->debug_level || !$this->debugging)){
 			return;
@@ -186,6 +194,8 @@ require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
 		}
 		
 	}	
+
+	/** Handle Errors **/
 	public function error($e, $fatal = false){
 		if($fatal && !headers_sent()){ 
 			 header("HTTP/1.1 500 Internal Server Error");
@@ -196,6 +206,8 @@ require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
 		}
 
 	}
+
+	/** Manage Resources **/
 	public function resource($path){
 		$exceptions = array();
 		try {
@@ -224,35 +236,50 @@ require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
 		throw new MCMS_Resource_Exception($path,$exceptions);
 		
 	}
+
+	/** Accessor for Storage **/
 	public function storage() {
 		return $this->storage;
 	}
+	/** Accessor for Site **/
 	public function site(){
 		return $this->site;
 	}
+	/** Accessor for Output **/
 	public function output(){
 		return $this->output;
 	}
+	/** Accessor for Config **/
 	public function config(){
 		return $this->config;
 	}
+	
+	/** Ensures Files are Loaded **/
 	public function files(){
 		foreach(func_get_args() as $file){
 			$this->file($file, true);	
 		}
 	}
+	
+	/** Calls The Installer **/ 
 	public function install(){
 		// Install the system. Quite easy from this perspective!
 		$this->file('install');		
 		$this->output = $this->logic = Install::Load();
 	}
+	
+	/** Gets the Remote Path **/
 	public function remote_path(){
 		return $this->remote_path;
 	}
+	
+	/** Performs Instant Page Redirection **/
 	public function redirect($url){
 		header('Location: ' . $url, 303);
 		exit;
 	}
+	
+	/** Ensures a File Is Loaded **/
 	public function file($file, $once = true){
 		$path = "{$this->local_path}{$file}.php";
 		
@@ -267,6 +294,8 @@ require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
 		}
 		
 	}	
+	
+	/** Returns a Full URL **/
 	public function url($url, $get = array(), $internal = true){
 		if($internal){		
 			$url = rtrim($url, '/') . '/';
@@ -280,6 +309,8 @@ require_once(MCMS::dirname(__FILE__) . '/mcms/exception.php');
 		}
 		return $this->remote_path . $url;
 	}
+	
+	/** Returns a Local URL **/
 	public function local_path($path = ''){
 		return $this->local_path . $path;
 	}
