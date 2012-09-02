@@ -1,6 +1,11 @@
 <?php
+/*
+ * File: module.php
+ * Purpose: MCMS Module Class
+ */ 
 MCMS::Get_Instance()->files('module/exception');
 abstract class Module {
+	/** Determine if the provided module is available **/
 	public static function Available($module){
 		if(!isset(MCMS::Get_Instance()->modules[$module])){
 			throw new Module_Not_Available_Exception($module);
