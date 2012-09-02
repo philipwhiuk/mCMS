@@ -1,8 +1,6 @@
 <?php
 /*
- * Modular CMS v0.0.1
  * File: mcms.php
- * Version: 0.0.1
  * Purpose: MCMS System Class
  */ 
 header('Content-type: text/plain');
