@@ -1,6 +1,12 @@
 <?php
 MCMS::Get_Instance()->files('storage/istorage','storage/exception','storage/retrievalprocess');
+/**
+ * Storage class. 
+ */
 class Storage {
+    /**
+	 * Retrieves the configured storage system.
+	 */
 	public static function GetStorageSolution() {
 		try {
 			$config = MCMS::Get_Instance()->config()->get('storage');	
