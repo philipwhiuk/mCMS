@@ -1,5 +1,7 @@
 <?php 
-
+/**
+ * The Video module
+ */
 class Video_Module extends Module {
 
 	public function load(){

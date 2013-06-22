@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Handles administration of videos.
+ */
 class Video_Admin extends Admin {
 
 	protected $parent;

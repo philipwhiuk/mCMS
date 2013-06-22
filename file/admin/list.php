@@ -1,4 +1,7 @@
 <?php
+/**
+ * Administration list of files.
+ */
 class File_Admin_List extends File_Admin {
 	public function __construct($a,$b){
 		parent::__construct($a,$b);

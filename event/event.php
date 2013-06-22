@@ -1,10 +1,30 @@
 <?php
+/**
+ * Information on an activity that occurs at a given time.
+ */
 class Event {
+	/**
+	 * Unique identifier.
+	 */
 	private $id;
+	/**
+	 * Module containing data on the event type.
+	 */
 	private $module;
+	/**
+	 * Description and title of the event.
+	 */
 	private $content;
+	/**
+	 * Start time (seconds since Unix epoch)
 	private $starttime;
+	/**
+	 * Finish time (seconds since Unix epoch)
+	 */
 	private $finishtime;
+	/**
+	 * Category.
+	 */
 	private $category;
 	
 	public function get_id() {
@@ -41,6 +61,10 @@ class Event {
 		}
 		return $this->objects;
 	}
+	
+	/**
+	 * Retrieve all events from storage.
+	 */
 	public static function Get_All(){
 		$query = MCMS::Get_Instance()->Storage()->Get()->From('event');
 		
@@ -54,10 +78,17 @@ class Event {
 		
 		return $return;
 	}
+	
+	/**
+	 * Get an event by it's ID.
+	 */
 	public static function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
 	
+	/**
+	 * Get an event fulfilling the given condition.
+	 */
 	public static function Get_One($operator, $operand){
 		
 		$query = MCMS::Get_Instance()->Storage()->Get()->From('event')->where($operator, $operand)->limit(1);
@@ -71,6 +102,10 @@ class Event {
 		return $result->fetch_object('Event');
 		
 	}
+	
+	/**
+	 * Get the next event to occur.
+	 */
 	public static function Get_Next() {
 		$operator = '>';
 		$operand = array(array('col','finishtime'), array('u', time()));
@@ -82,6 +117,9 @@ class Event {
 		}
 		return $result->fetch_object('Event');
 	}
+	/**
+	 * Get the next event in the given category.
+	 */
 	public static function Get_Next_By_Category($cat,$skip) {
 		$operator = 'AND';
 		$operand = array(
@@ -96,6 +134,10 @@ class Event {
 		}
 		return $result->fetch_object('Event');
 	}
+	
+	/**
+	 * Count the total number of events.
+	 */
 	public static function Count_All(){
 		$query = MCMS::Get_Instance()->Storage()->Count()->From('event');
 		return $query->execute();

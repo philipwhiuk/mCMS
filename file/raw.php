@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Raw output of a file.
+ */
 class File_Raw extends Raw {
 	
 	private $file;

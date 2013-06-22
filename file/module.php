@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * The File module.
+ */
 class File_Module extends Module {
 	
 	public function load(){

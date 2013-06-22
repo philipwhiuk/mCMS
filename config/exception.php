@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Describes an exception thrown by the Config Module.
+ */
 class Config_Exception extends MCMS_Exception {}
 
+/**
+ * Indicates configuration settings could not be found
+ */
 class Config_Not_Found_Exception extends Config_Exception {
 
 	protected $level = MCMS::dump_warning;
@@ -13,7 +19,6 @@ class Config_Not_Found_Exception extends Config_Exception {
 		}
 		return $string;
 	}
-		
 
 	public function message(){
 		return 'Configuration File Not Found.';
@@ -21,6 +26,12 @@ class Config_Not_Found_Exception extends Config_Exception {
 
 }
 
+/**
+ * Indicates an error with a specified configuration key
+ */
 class Config_Key_Exception extends Config_Exception {}
 
+/**
+ * Indicates a specific configuration key could not be found
+ */
 class Config_Key_Not_Found_Exception extends Config_Key_Exception {}

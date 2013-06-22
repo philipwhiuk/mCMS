@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * List available files.
+ */
 class File_Page_Main_List extends File_Page_Main {
 	
 	private $files;

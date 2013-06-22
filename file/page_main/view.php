@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * View a given file.
+ */
 class File_Page_Main_View extends File_Page_Main {
 	
 	private $file;

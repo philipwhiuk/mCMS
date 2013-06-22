@@ -1,4 +1,7 @@
 <?php
+/**
+ * Functionality for editting files.
+ */
 class File_Admin_Edit extends File_Admin {
 	public function __construct($a,$b){
 		parent::__construct($a,$b);

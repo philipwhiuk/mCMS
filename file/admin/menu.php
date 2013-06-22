@@ -1,4 +1,7 @@
 <?php
+/**
+ * Menu for File administration.
+ */
 class File_Admin_Menu extends File_Admin {
 	public function __construct($a,$b){
 		parent::__construct($a,$b);

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Administration information for the File module.
+ */
 abstract class File_Admin extends Admin {
 
 	protected $parent;

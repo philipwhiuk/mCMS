@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Super class for pages showing information on files.
+ */
 abstract class File_Page_Main extends Page_Main {
 	
 	public static function Load($parent){

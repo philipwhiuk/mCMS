@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Information on an uploaded file.
+ */ 
 class File {
 
 	private $id;

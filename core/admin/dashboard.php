@@ -1,15 +1,24 @@
 <?php
 
+/**
+ * A super class for the dashboard.
+ */
 abstract class Admin_Dashboard extends Admin {
 	protected $parent;
 	protected $mode;
 	private $selected;
 
+	/**
+	 * Load the Menu.
+	 */
 	public static function Load_Menu($panel, $parent) {
 		$parent->resource()->get_module()->file('dashboard/menu');
 		return new Admin_Dashboard_Menu($panel,$parent);
 	}
 	
+	/**
+	 * Load the Main section.
+	 */
 	public static function Load_Main($panel, $parent) {
 		$arg = $parent->resource()->get_argument();
 		try {
@@ -56,6 +65,10 @@ abstract class Admin_Dashboard extends Admin {
 			return new Admin_Dashboard_Overview($panel,$parent);
 		}
 	}
+	
+	/**
+	 * Constructor.
+	 */
 	public function __construct($a,$b){
 		parent::__construct($a,$b);
 		$this->url = $this->url();		

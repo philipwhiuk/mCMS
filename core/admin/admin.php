@@ -1,13 +1,28 @@
 <?php
-
+/**
+ * A super class for the administration of properties.
+ */
 abstract class Admin {
 
+    /**
+	 * Display the admin menu.
+	 */ 
 	abstract public function display();
+	
+	/**
+	 * Indicates whether the menu has sub-items.
+	 */
 	public function menuHasSubItems() {
 		return true;
 	}
 
+	/**
+	 * The ID of the menu
+	 */
 	protected $id;
+	/**
+	 * The class of the menu.
+	 */
 	protected $class;
 	protected $file;
 	protected $module;
@@ -29,11 +44,16 @@ abstract class Admin {
 		return $this->module;
 	}
 	
+	/**
+	 * Register a panel with the system.
+	 */
 	public static function Register($id, $class, $file, $module, $priority = 50){
-		// Register Panel
 		MCMS::Get_Instance()->admin['panels'][$priority][$id] = array('class' => $class, 'file' => $file, 'module' => $module, 'priority' => $priority, 'id' => $id);
 	}
 
+    /**
+	 * Create the for registered panels.
+	 */
 	public static function Create_All($parent){
 		$system = MCMS::Get_Instance();
 		$registered = isset($system->admin['panels']) ? $system->admin['panels'] : array();
