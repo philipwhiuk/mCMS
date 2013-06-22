@@ -2,11 +2,19 @@
 
 MCMS::Get_Instance()->files('site/exception');
 
+/**
+ * Site information.
+ */ 
 class Site {
+    /**
+	 * Fetch a site with the given ID.
+	 */
 	public static function Get_By_ID($id){
 		return self::Get_One('=', array(array('col','id'), array('u', $id)));
 	}
-	
+	/**
+	 * Fetch one site.
+	 */
 	public static function Get_One($operator, $operand){
 		
 		$query = MCMS::Get_Instance()->storage()->Get()->From('site')->where($operator, $operand)->limit(1);
@@ -22,7 +30,9 @@ class Site {
 		return $site;
 		
 	}
-	
+	/**
+	 * Load the site as set in the configuration.
+	 */
 	public static function Load(){
 		
 		
