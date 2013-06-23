@@ -1,11 +1,22 @@
 <?php
 MCMS::Get_Instance()->files('package/exception');
+/**
+ * A Package is a set of related Modules distributed together.
+ * Often packaged modules will have circular dependencies.
+ * @author Philip Whitehouse
+ */
 abstract class Package {
+    /**
+	 * Indicates the given package is available.
+	 */	
 	public static function Available($package){
 		if(!isset(MCMS::Get_Instance()->packages[$package])){
 			throw new Package_Not_Available_Exception($package);
 		}
 	}
+	/**
+	 * Fetch a package by it's ID
+	 */
 	public static function Get_ID($id){
 		foreach(MCMS::Get_Instance()->packages as $k => $package){
 			if($package->id == $id){
@@ -15,6 +26,9 @@ abstract class Package {
 		}
 		throw new Package_Not_Available_Exception($id);
 	}
+	/**
+	 * Fetch all packages.
+	 */
 	public static function Get_All($operator = null, $operand = null){
 		if(isset($operator) && isset($operand)){
 			$query = MCMS::Get_Instance()->storage()->Get()->From('package')->where($operator, $operand);
@@ -42,6 +56,9 @@ abstract class Package {
 		return $packages;
 		
 	}
+	/**
+	 * Get a selection of packages.
+	 */ 
 	public static function Get_Selection($limit = null, $skip = null){
 		$query = MCMS::Get_Instance()->Storage()->Get()->From('package')->order(array('name' => true));
 
@@ -72,6 +89,9 @@ abstract class Package {
 		
 		return $packages;
 	}
+	/**
+	 * Load all packages.
+	 */
 	public static function Load_All() {
 		MCMS::Get_Instance()->packages = package::Get_All('=', array(array('col', 'active'), array('u', 1)));
 		// Now we have a bunch of package classes!
@@ -82,6 +102,9 @@ abstract class Package {
 			}
 		}
 	}
+	/**
+	 * Get a package by it's name.
+	 */
 	public static function Get($package) {
 		try {
 			self::Load_package($package);
@@ -91,6 +114,9 @@ abstract class Package {
 		
 		return MCMS::Get_Instance()->packages[$package];
 	}
+	/**
+	 * Load a specific package.
+	 */
 	private static function Load_package($package){
 		if(!isset(MCMS::Get_Instance()->packages[$package])){
 			throw new package_Not_Found_Exception($package);
